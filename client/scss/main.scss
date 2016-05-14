@@ -1,2 +1,17 @@
 @import 'variables';
 @import 'reset';
+
+html, body, #render-target {
+  height: 100%;
+}
+
+body, input, textarea, select, button {
+  font-family: 'Raleway';
+}
+
+#home {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
