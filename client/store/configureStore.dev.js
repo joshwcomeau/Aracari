@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware, compose }  from 'redux';
-import thunkMiddleware                            from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 
-import rootReducer  from '../reducers';
-import DevTools     from '../containers/DevTools.jsx';
+import rootReducer from '../reducers';
+import DevTools from '../containers/DevTools.jsx';
 
 
 export default function configureStore() {
@@ -14,8 +14,8 @@ export default function configureStore() {
   // mixed-in extras (like the current user's auth data.)
 
 
-  let middlewares = [];
-  middlewares.push( thunkMiddleware );
+  const middlewares = [];
+  middlewares.push(thunkMiddleware);
 
   const store = createStore(
     rootReducer,
@@ -28,13 +28,14 @@ export default function configureStore() {
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
+      // eslint-disable-next-line global-require
       const nextRootReducer = require('../reducers');
       store.replaceReducer(nextRootReducer);
     });
   }
 
   // Allow direct access to the store, for debugging/testing
-  window.__store = store;
+  window.store = store;
 
-  return store
+  return store;
 }

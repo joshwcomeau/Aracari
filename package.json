@@ -10,7 +10,7 @@
   "scripts": {
     "start": "NODE_ENV=development nodemon server.js",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive",
-    "lint": "eslint -c .eslintrc client/**",
+    "lint": "eslint -c .eslintrc client/** --ext .js --ext .jsx",
     "deploy": "NODE_ENV=production fly production"
   },
   "author": "Joshua Comeau",
@@ -30,6 +30,7 @@
     "redux-thunk": "^1.0.0",
     "reselect": "^2.1.0",
     "smooch": "^2.5.1",
+    "smooch-bot": "^1.0.1",
     "web-animations-js": "^2.1.4"
   },
   "devDependencies": {
@@ -60,7 +61,7 @@
     "mocha": "^2.3.4",
     "node-sass": "^3.4.2",
     "postcss-loader": "^0.8.0",
-    "react-addons-test-utils": "^0.14.6",
+    "react-addons-test-utils": "^15.0.2",
     "react-transform-hmr": "^1.0.0",
     "redux-devtools": "^3.0.0",
     "redux-devtools-dock-monitor": "^1.0.1",

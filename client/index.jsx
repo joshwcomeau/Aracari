@@ -10,8 +10,12 @@ require('./scss/main.scss');
 
 const store = configureStore();
 
+Smooch.on('ready', () => {
+  console.log('Smooch ready!');
+});
+
 render((
   <Provider store={store}>
     <HomeContainer />
   </Provider>
-), document.getElementById('render-target'))
+), document.getElementById('render-target'));

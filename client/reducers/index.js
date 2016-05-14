@@ -1,8 +1,8 @@
-import { Map, List, fromJS }  from 'immutable';
+// eslint-disable-next-line no-unused-vars
+import { Map, List, fromJS } from 'immutable';
 
 
-const rootReducer = ( state = Map(), action ) => {
-
+const rootReducer = (state = Map(), action) => {
   return Map({
     // Each top-level key here has a child reducer that manages that part
     // of the state. These reducers are defined in their own files, and
@@ -13,6 +13,6 @@ const rootReducer = ( state = Map(), action ) => {
     //     action
     //   )
   });
-}
+};
 
-export default rootReducer
+export default rootReducer;

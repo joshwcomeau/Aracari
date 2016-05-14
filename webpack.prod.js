@@ -49,6 +49,6 @@ module.exports = {
 
   resolve: {
     extensions: ['', '.js', '.jsx', '.sass'],
-    modulesDirectories: ['src', 'node_modules']
+    modulesDirectories: ['client', 'node_modules']
   }
 }
