@@ -1,10 +1,10 @@
-import React, { Component, PropTypes }  from 'react';
-import ReactDOM, { render }             from 'react-dom';
-import { Provider }                     from 'react-redux';
-import classNames                       from 'classnames';
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 
-import configureStore from './store';
-import HomeContainer  from './containers/HomeContainer.jsx';
+import Smooch from 'utils/smooch';
+import configureStore from 'store';
+import HomeContainer from 'containers/HomeContainer.jsx';
 
 require('./scss/main.scss');
 
