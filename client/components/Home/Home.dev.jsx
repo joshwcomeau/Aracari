@@ -1,5 +1,4 @@
-import DevTools from '../../containers/DevTools.jsx';
-
+import DevTools from 'components/DevTools';
 import HomeBase from './Home.base';
 
 

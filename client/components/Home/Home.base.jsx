@@ -8,7 +8,7 @@ export default function HomeBase(DevTools = null) {
     });
 
     return (
-      <div id="layout" className={classes}>
+      <div id="home" className={classes}>
         {children}
 
         {DevTools ? <DevTools /> : null}
@@ -17,7 +17,7 @@ export default function HomeBase(DevTools = null) {
   };
 
   Home.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.array, PropTypes.obj]),
+    children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   };
 
   return Home;
