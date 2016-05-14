@@ -29,8 +29,6 @@
     "redux": "^3.5.2",
     "redux-thunk": "^1.0.0",
     "reselect": "^2.1.0",
-    "smooch": "^2.5.1",
-    "smooch-bot": "^1.0.1",
     "web-animations-js": "^2.1.4"
   },
   "devDependencies": {
