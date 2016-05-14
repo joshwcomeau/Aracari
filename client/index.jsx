@@ -2,20 +2,23 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import Smooch from 'utils/smooch';
 import configureStore from 'store';
-import HomeContainer from 'containers/HomeContainer.jsx';
+import Header from 'components/Header';
+import Budget from 'components/Budget';
+import Home from 'components/Home';
+import SmoochWidget from 'components/SmoochWidget';
 
-require('./scss/main.scss');
+import 'scss/main.scss';
+
 
 const store = configureStore();
 
-Smooch.on('ready', () => {
-  console.log('Smooch ready!');
-});
-
 render((
   <Provider store={store}>
-    <HomeContainer />
+    <Home>
+      <Header />
+      <Budget />
+      <SmoochWidget />
+    </Home>
   </Provider>
 ), document.getElementById('render-target'));
