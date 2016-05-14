@@ -1,4 +1,5 @@
 import { Map, fromJS } from 'immutable';
+import slug from 'slug';
 
 
 // ////////////////////////
@@ -12,13 +13,7 @@ export const ADD_COST = 'SELECT_ARTIST_FOR_TRACKS';
 // REDUCER ///////////////
 // //////////////////////
 const initialState = fromJS({
-  categories: [
-    {
-      name: 'Food',
-      budget: 60000,
-      amountSpent: 10000,
-    },
-  ],
+  categories: [],
 });
 
 export default function reducer(state = initialState, action = {}) {
@@ -26,6 +21,7 @@ export default function reducer(state = initialState, action = {}) {
     case ADD_CATEGORY: {
       const newCategory = Map({
         name: action.name,
+        slug: slug(action.name).toLowerCase(),
         budget: action.budget,
         amountSpent: 0,
       });

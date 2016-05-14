@@ -29,6 +29,7 @@
     "redux": "^3.5.2",
     "redux-thunk": "^1.0.0",
     "reselect": "^2.1.0",
+    "slug": "^0.9.1",
     "web-animations-js": "^2.1.4"
   },
   "devDependencies": {
