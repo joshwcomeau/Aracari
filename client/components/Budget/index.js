@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class Budget extends Component {
-  render() {
-    return (
-      <div id="budget">Hello!</div>
-    );
-  }
+import 'scss/budget.scss';
+
+
+const Budget = ({state, actions}) => {
+  console.log("PROPS", state, actions);
+
+  return (
+    <div id="budget">Hi!</div>
+  )
 }
 
 function mapStateToProps(state) {
