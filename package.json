@@ -58,6 +58,7 @@
     "eslint-plugin-jsx-a11y": "^1.2.0",
     "eslint-plugin-react": "^5.1.1",
     "express": "^4.13.4",
+    "immutable-devtools": "0.0.7",
     "mocha": "^2.3.4",
     "node-sass": "^3.4.2",
     "postcss-loader": "^0.8.0",
