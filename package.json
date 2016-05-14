@@ -1,7 +1,11 @@
 {
-  "name": "seedling-front",
+  "name": "aracari",
   "version": "0.0.1",
-  "description": "",
+  "description": "A simple, conversational budgeting app",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/joshwcomeau/aracari.git"
+  },
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development nodemon server.js",
