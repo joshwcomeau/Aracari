@@ -32,7 +32,25 @@ export default function reducer(state = initialState, action = {}) {
     }
 
     case ADD_COST: {
-      return state.set('selectedArtistId', action.artistId);
+      const categoryEntry = state.get('categories').findEntry(
+        cat => cat.get('slug') === action.category
+      );
+
+      if (!categoryEntry) {
+        throw new Error(
+          'categoryNotFound',
+          'It appears you tried to add a cost to a category that does not exist!');
+      }
+
+      const [categoryIndex, category] = categoryEntry;
+
+      // TODO: Error handling (what if no category is found?)
+      const newAmountSpent = category.get('amountSpent') + action.amount;
+
+      return state.setIn(
+        ['categories', categoryIndex, 'amountSpent'],
+        newAmountSpent
+      );
     }
 
     default:
