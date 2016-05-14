@@ -13,7 +13,24 @@ export const ADD_COST = 'SELECT_ARTIST_FOR_TRACKS';
 // REDUCER ///////////////
 // //////////////////////
 const initialState = fromJS({
-  categories: [],
+  categories: [
+    {
+      name: 'Food',
+      slug: 'food',
+      budget: 50000,
+      amountSpent: 15000,
+    }, {
+      name: 'Entertainment',
+      slug: 'entertainment',
+      budget: 20000,
+      amountSpent: 5000,
+    }, {
+      name: 'Medication',
+      slug: 'food',
+      budget: 15000,
+      amountSpent: 3500,
+    },
+  ],
 });
 
 export default function reducer(state = initialState, action = {}) {

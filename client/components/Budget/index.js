@@ -1,25 +1,31 @@
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import BudgetCategory from 'components/BudgetCategory';
 import 'scss/budget.scss';
 
 
-const Budget = ({state, actions}) => {
-  console.log("PROPS", state, actions);
+const Budget = ({ categories }) => {
+  const categoriesJsx = categories.map(
+    category => <BudgetCategory {...category} />
+  );
 
-  return (
-    <div id="budget">Hi!</div>
-  )
-}
+  return <div id="budget">{categoriesJsx}</div>;
+};
+
+Budget.propTypes = {
+  categories: PropTypes.array.isRequired,
+};
 
 function mapStateToProps(state) {
-  return { state };
+  // NOTE: This is generally a bad practice!!
+  // When using Immutable.js, it's generally a good idea, for perf reasons,
+  // to keep the data structure immutable all the way down through components.
+  // I really like rest/spread operators, though, and this is a tiny toy app,
+  // so I don't anticipate perf concerns with such small amounts of state.
+  // Don't do this in real apps though!
+  const budget = state.get('budget').toJS();
+  return { ...budget };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {},
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Budget);
+export default connect(mapStateToProps)(Budget);
