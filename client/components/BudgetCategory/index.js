@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { getBudgetColour, formatHSLColourForCSS } from 'utils/colour.utils';
 import 'scss/budget-category.scss';
 
 
@@ -9,11 +10,14 @@ const BudgetCategory = ({
   name, slug, budget, amountSpent, monthProgress, actions,
 }) => {
   const budgetRatio = amountSpent / budget;
-
   const budgetPercentage = `${budgetRatio * 100}%`;
-  const monthPercentage = `${monthProgress * 100}vw`;
+  const budgetColour = getBudgetColour(budgetRatio, monthProgress);
+  const budgetProgressStyle = {
+    width: budgetPercentage,
+    backgroundColor: formatHSLColourForCSS(budgetColour),
+  };
 
-  const budgetProgressStyle = { width: budgetPercentage };
+  const monthPercentage = `${monthProgress * 100}vw`;
   const monthProgressStyle = { transform: `translateX(${monthPercentage})` };
 
   return (
