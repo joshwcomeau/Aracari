@@ -2,12 +2,19 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import BudgetCategory from 'components/BudgetCategory';
+import { progressThroughMonth } from 'utils/time.utils';
 import 'scss/budget.scss';
 
 
 const Budget = ({ categories }) => {
+  const monthProgress = progressThroughMonth();
+
   const categoriesJsx = categories.map(
-    category => <BudgetCategory {...category} />
+    category => <BudgetCategory
+      key={category.slug}
+      monthProgress={monthProgress}
+      {...category}
+    />
   );
 
   return <div id="budget">{categoriesJsx}</div>;

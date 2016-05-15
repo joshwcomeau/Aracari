@@ -23,10 +23,10 @@ const initialState = fromJS({
       name: 'Entertainment',
       slug: 'entertainment',
       budget: 20000,
-      amountSpent: 5000,
+      amountSpent: 20000,
     }, {
       name: 'Medication',
-      slug: 'food',
+      slug: 'medication',
       budget: 15000,
       amountSpent: 3500,
     },
