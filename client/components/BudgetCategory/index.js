@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import 'scss/budget-category.scss';
 
 
-const BudgetCategory = ({ name, slug, budget, amountSpent, monthProgress }) => {
+const BudgetCategory = ({
+  name, slug, budget, amountSpent, monthProgress, actions,
+}) => {
   const budgetRatio = amountSpent / budget;
 
   const budgetPercentage = `${budgetRatio * 100}%`;
@@ -14,10 +16,8 @@ const BudgetCategory = ({ name, slug, budget, amountSpent, monthProgress }) => {
   const budgetProgressStyle = { width: budgetPercentage };
   const monthProgressStyle = { transform: `translateX(${monthPercentage})` };
 
-  console.log(monthPercentage)
-
   return (
-    <div className="budget-category">
+    <div className="budget-category" onClick={actions.showAddCost}>
       <div className="budget-progress" style={budgetProgressStyle} />
       <div className="month-progress" style={monthProgressStyle} />
       <div className="budget-name">{name}</div>
@@ -31,6 +31,7 @@ BudgetCategory.propTypes = {
   budget: PropTypes.number.isRequired,
   amountSpent: PropTypes.number.isRequired,
   monthProgress: PropTypes.number.isRequired,
+  actions: PropTypes.object,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -45,5 +46,9 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
   };
 }
+
+// Export the component _without_ the Redux bindings,
+// for unit testing and storybook prototyping.
+export { BudgetCategory };
 
 export default connect(null, mapDispatchToProps, mergeProps)(BudgetCategory);

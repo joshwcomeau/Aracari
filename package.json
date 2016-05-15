@@ -11,7 +11,8 @@
     "start": "NODE_ENV=development nodemon server.js",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive",
     "lint": "eslint -c .eslintrc client/** --ext .js --ext .jsx",
-    "deploy": "NODE_ENV=production fly production"
+    "deploy": "NODE_ENV=production fly production",
+    "storybook": "start-storybook -p 9001"
   },
   "author": "Joshua Comeau",
   "license": "MIT",
@@ -33,6 +34,7 @@
     "web-animations-js": "^2.1.4"
   },
   "devDependencies": {
+    "@kadira/storybook": "^1.26.0",
     "autoprefixer": "^6.2.3",
     "babel": "^6.3.13",
     "babel-cli": "^6.3.17",
