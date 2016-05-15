@@ -1,6 +1,65 @@
 @import 'variables';
 
-#budget {
-  flex-grow: 1;
-  background: #F5F5F5;
+$budget-height: 60px;
+
+.budget-category {
+  position: relative;
+  margin: 4px;
+  background: #FFF;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+  height: $budget-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .budget-progress {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: $red;
+  }
+
+  .month-progress {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    background-color: rgba(0,0,0,0.1);
+    transform: translateX(0);
+    transition: 1s;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -6px;
+      width: 0;
+      height: 0;
+      border-top: 6px solid rgba(0,0,0,0.5);
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -6px;
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 6px solid rgba(0,0,0,0.5);
+    }
+
+  }
+
+  .budget-name {
+    z-index: 2;
+    font-size: 13px;
+    font-weight: bold;
+  }
 }
