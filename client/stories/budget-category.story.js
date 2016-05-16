@@ -4,7 +4,7 @@ import { storiesOf } from '@kadira/storybook';
 import { BudgetCategory } from 'components/BudgetCategory';
 import './story-helpers';
 
-function props({
+function generateProps({
   name = 'Food',
   slug = 'food',
   budget = 50000,
@@ -19,11 +19,11 @@ function props({
 
 storiesOf('BudgetCategory', module)
   .add('default', () => (
-    <BudgetCategoryController {...props()} />
+    <BudgetCategoryController {...generateProps()} />
   ))
   .add('with added cost', () => (
     <BudgetCategoryController
-      {...props({ amountSpent: 25000 })}
+      {...generateProps({ amountSpent: 25000 })}
     />
   ));
 
@@ -40,7 +40,7 @@ class BudgetCategoryController extends Component {
     this.amountSpentValues.push(this.amountSpentValues.shift());
 
     this.setState({
-      amountSpent: this.amountSpentValues[0]
+      amountSpent: this.amountSpentValues[0],
     });
   }
 
@@ -52,6 +52,6 @@ class BudgetCategoryController extends Component {
         </button>
         <BudgetCategory {...this.state} />
       </div>
-    )
+    );
   }
 }

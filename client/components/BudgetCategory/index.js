@@ -7,6 +7,7 @@ import 'scss/budget-category.scss';
 
 
 const BudgetCategory = ({
+  // eslint-disable-next-line no-unused-vars
   name, slug, budget, amountSpent, monthProgress, actions,
 }) => {
   const budgetRatio = amountSpent / budget;
