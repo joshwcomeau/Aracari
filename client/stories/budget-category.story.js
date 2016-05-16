@@ -9,7 +9,7 @@ function props({
   slug = 'food',
   budget = 50000,
   amountSpent = 20000,
-  monthProgress = 0.4,
+  monthProgress = 1,
   actions = {},
 } = {}) {
   return {

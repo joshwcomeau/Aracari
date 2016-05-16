@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import BudgetCategory from 'components/BudgetCategory';
+import BudgetDate from 'components/BudgetDate';
 import { progressThroughMonth } from 'utils/time.utils';
 import 'scss/budget.scss';
 
@@ -17,7 +18,12 @@ const Budget = ({ categories }) => {
     />
   );
 
-  return <div id="budget">{categoriesJsx}</div>;
+  return (
+    <div id="budget">
+      <BudgetDate monthProgress={monthProgress} />
+      {categoriesJsx}
+    </div>
+  );
 };
 
 Budget.propTypes = {
