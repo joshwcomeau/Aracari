@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import BudgetCategory from 'components/BudgetCategory';
 import BudgetDate from 'components/BudgetDate';
@@ -9,6 +10,7 @@ import 'scss/budget.scss';
 
 const Budget = ({ categories }) => {
   const monthProgress = progressThroughMonth();
+  const dateString = moment().format('MMMM Do');
 
   const categoriesJsx = categories.map(
     category => <BudgetCategory
@@ -20,7 +22,7 @@ const Budget = ({ categories }) => {
 
   return (
     <div id="budget">
-      <BudgetDate monthProgress={monthProgress} />
+      <BudgetDate monthProgress={monthProgress} dateString={dateString} />
       {categoriesJsx}
     </div>
   );

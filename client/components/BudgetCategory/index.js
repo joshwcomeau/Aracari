@@ -17,7 +17,7 @@ const BudgetCategory = ({
     backgroundColor: formatHSLColourForCSS(budgetColour),
   };
 
-  const monthProgressStyle = { left: `${monthProgress * 100}vw` };
+  const monthProgressStyle = { left: `${monthProgress * 100}%` };
 
   return (
     <div className="budget-category" onClick={actions.showAddCost}>
