@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -6,28 +6,52 @@ import { getBudgetColour, formatHSLColourForCSS } from 'utils/colour.utils';
 import 'scss/budget-category.scss';
 
 
-const BudgetCategory = ({
-  // eslint-disable-next-line no-unused-vars
-  name, slug, budget, amountSpent, monthProgress, actions,
-}) => {
-  const budgetRatio = amountSpent / budget;
-  const budgetPercentage = `${budgetRatio * 100}%`;
-  const budgetColour = getBudgetColour(budgetRatio, monthProgress);
-  const budgetProgressStyle = {
-    width: budgetPercentage,
-    backgroundColor: formatHSLColourForCSS(budgetColour),
-  };
+class BudgetCategory extends Component {
+  componentDidUpdate() {
+    // If the label of the category happens to overlap with the month progress
+    // indicator, we want to shorten the lines. This cannot be done in a
+    // declarative way, as far as I know, so I figure it out with the refs.
+    const progressBox = this.monthProgress.getBoundingClientRect();
+    const nameBox = this.name.getBoundingClientRect();
 
-  const monthProgressStyle = { left: `${monthProgress * 100}%` };
+    if (progressBox.left > nameBox.left && progressBox.right < nameBox.right) {
+      this.monthProgress.classList.add('contracted');
+    } else {
+      this.monthProgress.classList.remove('contracted');
+    }
+  }
 
-  return (
-    <div className="budget-category" onClick={actions.showAddCost}>
-      <div className="budget-progress" style={budgetProgressStyle} />
-      <div className="month-progress" style={monthProgressStyle} />
-      <div className="budget-name">{name}</div>
-    </div>
-  );
-};
+  render() {
+    const {
+      // eslint-disable-next-line no-unused-vars
+      name, slug, budget, amountSpent, monthProgress, actions,
+    } = this.props;
+
+    const budgetRatio = amountSpent / budget;
+    const budgetPercentage = `${budgetRatio * 100}%`;
+    const budgetColour = getBudgetColour(budgetRatio, monthProgress);
+    const budgetProgressStyle = {
+      width: budgetPercentage,
+      backgroundColor: formatHSLColourForCSS(budgetColour),
+    };
+
+    const monthProgressStyle = { left: `${monthProgress * 100}%` };
+
+    return (
+      <div className="budget-category" onClick={actions.showAddCost}>
+        <div className="budget-name" ref={el => this.name = el}>
+          {name}
+        </div>
+        <div className="budget-progress" style={budgetProgressStyle} />
+        <div
+          className="month-progress"
+          style={monthProgressStyle}
+          ref={el => this.monthProgress = el}
+        />
+      </div>
+    );
+  }
+}
 
 BudgetCategory.propTypes = {
   name: PropTypes.string.isRequired,
