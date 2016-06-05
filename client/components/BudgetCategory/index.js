@@ -29,8 +29,6 @@ class BudgetCategory extends Component {
       name, budgetRatio, monthProgress, actions,
     } = this.props;
 
-    console.log(this.props);
-
     const budgetPercentage = `${budgetRatio * 100}%`;
     const budgetColour = getBudgetColour(budgetRatio, monthProgress);
     const budgetProgressStyle = {

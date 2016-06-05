@@ -5,7 +5,7 @@ var autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: [
-    './client/index.jsx'
+    './client/index.js'
   ],
 
   output: {
