@@ -1,25 +1,30 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
+import { syncHistoryWithStore } from 'react-router-redux';
 import immutable from 'immutable';
 import installDevTools from 'immutable-devtools';
 
 import configureStore from 'store';
-import Header from 'components/Header';
 import Budget from 'components/Budget';
+import AddBudgetItem from 'components/AddBudgetItem';
 import Home from 'components/Home';
 
 import 'scss/main.scss';
 
-
 installDevTools(immutable);
 const store = configureStore();
 
+const history = syncHistoryWithStore(browserHistory, store);
+
+
 render((
   <Provider store={store}>
-    <Home>
-      <Header />
-      <Budget />
-    </Home>
+    <Router history={history}>
+      <Route path="/" component={Home}>
+        <IndexRoute component={Budget} />
+      </Route>
+    </Router>
   </Provider>
 ), document.getElementById('render-target'));

@@ -1,11 +1,42 @@
 @import 'variables';
 
 #header {
+  position: relative;
   background-color: $navy;
   color: #FFF;
   text-align: center;
   font-weight: bold;
   font-size: 20px;
-  height: 65px;
-  line-height: 65px;
+  height: $header-height;
+  line-height: $header-height;
+  overflow: hidden;
+
+  button {
+    position: absolute;
+    top: $header-height;
+    bottom: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    color: $white;
+    outline: none;
+    transition: 500ms;
+
+    i { font-size: 32px; }
+
+    &.shown {
+      top: 0;
+      transition: 350ms;
+    }
+  }
+
+  .add {
+    right: 12px;
+  }
+
+  .back {
+    left: 12px;
+
+
+  }
 }

@@ -63,8 +63,8 @@ BudgetCategory.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   // Find this category in the list
-  const category = state
-    .getIn(['budget', 'categories'])
+  const category = state.budget
+    .get('categories')
     .find(cat => cat.get('slug') === ownProps.slug);
 
   return {

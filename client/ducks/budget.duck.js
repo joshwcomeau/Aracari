@@ -29,6 +29,7 @@ const initialState = fromJS({
       ],
     },
   ],
+  addingNewItem: false,
 });
 
 
@@ -37,6 +38,7 @@ const initialState = fromJS({
 // //////////////////////
 export const ADD_CATEGORY = 'BUDGET/ADD_CATEGORY';
 export const ADD_BUDGET_ITEM = 'BUDGET/ADD_BUDGET_ITEM';
+export const TOGGLE_NEW_ITEM_DRAWER = 'BUDGET/TOGGLE_NEW_ITEM_DRAWER';
 
 
 // ////////////////////////
@@ -79,11 +81,16 @@ export default function budgetReducer(state = initialState, action = {}) {
       ));
     }
 
+    case TOGGLE_NEW_ITEM_DRAWER: {
+      const newValue = action.isOpen || !state.get('addingNewItem');
+
+      return state.set('addingNewItem', newValue);
+    }
+
     default:
       return state;
   }
 }
-
 
 
 // ////////////////////////
@@ -100,4 +107,9 @@ export const addCategory = ({ name, limit }) => ({
   type: ADD_CATEGORY,
   name,
   limit,
+});
+
+export const toggleNewItemDrawer = ({ isOpen }) => ({
+  type: TOGGLE_NEW_ITEM_DRAWER,
+  isOpen,
 });
