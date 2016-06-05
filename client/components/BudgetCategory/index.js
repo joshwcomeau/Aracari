@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { getBudgetColour, formatHSLColourForCSS } from 'utils/colour.utils';
+import { budgetRatioSelector } from 'selectors/budget.selectors';
+
 import 'scss/budget-category.scss';
 
 
@@ -24,10 +26,11 @@ class BudgetCategory extends Component {
   render() {
     const {
       // eslint-disable-next-line no-unused-vars
-      name, slug, budget, amountSpent, monthProgress, actions,
+      name, budgetRatio, monthProgress, actions,
     } = this.props;
 
-    const budgetRatio = amountSpent / budget;
+    console.log(this.props);
+
     const budgetPercentage = `${budgetRatio * 100}%`;
     const budgetColour = getBudgetColour(budgetRatio, monthProgress);
     const budgetProgressStyle = {
@@ -55,12 +58,22 @@ class BudgetCategory extends Component {
 
 BudgetCategory.propTypes = {
   name: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  budget: PropTypes.number.isRequired,
-  amountSpent: PropTypes.number.isRequired,
+  budgetRatio: PropTypes.number.isRequired,
   monthProgress: PropTypes.number.isRequired,
   actions: PropTypes.object,
 };
+
+function mapStateToProps(state, ownProps) {
+  // Find this category in the list
+  const category = state
+    .getIn(['budget', 'categories'])
+    .find(cat => cat.get('slug') === ownProps.slug);
+
+  return {
+    name: category.get('name'),
+    budgetRatio: budgetRatioSelector(category),
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -68,15 +81,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mergeProps(stateProps, dispatchProps, ownProps) {
-  return {
-    ...ownProps,
-    ...dispatchProps,
-  };
-}
-
 // Export the component _without_ the Redux bindings,
 // for unit testing and storybook prototyping.
 export { BudgetCategory };
 
-export default connect(null, mapDispatchToProps, mergeProps)(BudgetCategory);
+export default connect(mapStateToProps, mapDispatchToProps)(BudgetCategory);

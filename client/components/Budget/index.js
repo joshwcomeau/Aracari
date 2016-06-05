@@ -14,6 +14,7 @@ const Budget = ({ categories }) => {
 
   const categoriesJsx = categories.map(
     category => <BudgetCategory
+      id={category.slug}
       key={category.slug}
       monthProgress={monthProgress}
       {...category}
