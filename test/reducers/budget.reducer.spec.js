@@ -3,40 +3,40 @@ import { expect } from 'chai';
 import { List, Map, fromJS } from 'immutable';
 import * as _ from 'lodash';
 
-import reducer,
-  { ADD_COST, ADD_CATEGORY }
-from '../../client/ducks/budget.duck';
+import reducer, {
+  ADD_BUDGET_ITEM,
+  ADD_CATEGORY,
+  addBudgetItem,
+  addCategory,
+} from '../../client/ducks/budget.duck';
 
-
-function generateSampleState({
+function generateCategory({
   name = 'Food',
   slug = 'food',
-  budget = 50000,
-  amountSpent = 0,
+  limit = 50000,
+  items = [],
 } = {}) {
-  return fromJS({
-    categories: [
-      { name, slug, budget, amountSpent },
-    ],
-  });
+  return fromJS({ name, slug, limit, items });
 }
+
 
 describe('Budget reducer', () => {
   describe(ADD_CATEGORY, () => {
     it('Adds to the initial, empty state', () => {
-      const state = reducer();
-      const action = {
-        type: ADD_CATEGORY,
+      const initialState = fromJS({ categories: [] });
+
+      const state = reducer(initialState);
+      const action = addCategory({
         name: 'Food',
-        budget: 50000,
-      };
+        limit: 50000,
+      });
 
       const expectedState = fromJS({
         categories: [{
           name: 'Food',
           slug: 'food',
-          budget: 50000,
-          amountSpent: 0,
+          limit: 50000,
+          items: [],
         }],
       });
       const actualState = reducer(state, action);
@@ -45,24 +45,25 @@ describe('Budget reducer', () => {
     });
 
     it('Creates multiple categories', () => {
-      const state = reducer(generateSampleState());
-      const action = {
-        type: ADD_CATEGORY,
+      const initialState = fromJS({ categories: [ generateCategory() ] });
+
+      const state = reducer(initialState);
+      const action = addCategory({
         name: 'Entertainment',
-        budget: 10000,
-      };
+        limit: 10000,
+      });
 
       const expectedState = fromJS({
         categories: [{
           name: 'Food',
           slug: 'food',
-          budget: 50000,
-          amountSpent: 0,
+          limit: 50000,
+          items: [],
         }, {
           name: 'Entertainment',
           slug: 'entertainment',
-          budget: 10000,
-          amountSpent: 0,
+          limit: 10000,
+          items: [],
         }],
       });
       const actualState = reducer(state, action);
@@ -71,50 +72,44 @@ describe('Budget reducer', () => {
     });
   });
 
-  describe(ADD_COST, () => {
+  describe(ADD_BUDGET_ITEM, () => {
     it('adds a cost to the appropriate category', () => {
-      const state = reducer(generateSampleState({ amountSpent: 10000 }));
-      const action = {
-        type: ADD_COST,
+      const initialState = fromJS({ categories: [
+        generateCategory(),
+        generateCategory({
+          name: 'Entertainment',
+          slug: 'entertainment',
+        })
+      ] });
+
+      const state = reducer(initialState);
+      const action = addBudgetItem({
         category: 'food',
-        amount: 25000,
-      };
+        details: 'groceries',
+        value: 25000,
+      });
 
       const expectedState = fromJS({
         categories: [
           {
             name: 'Food',
             slug: 'food',
-            budget: 50000,
-            amountSpent: 35000,
+            limit: 50000,
+            items: [
+              { details: 'groceries', value: 25000 },
+            ],
+          },
+          {
+            name: 'Entertainment',
+            slug: 'entertainment',
+            limit: 50000,
+            items: [],
           },
         ],
       });
       const actualState = reducer(state, action);
 
       expect(actualState).to.equal(expectedState);
-    });
-
-    it('throws when an invalid category slug is provided', () => {
-      const state = reducer(generateSampleState());
-      const action = {
-        type: ADD_COST,
-        category: 'nonsense!',
-        amount: 100000000,
-      };
-
-      const expectedState = fromJS({
-        categories: [
-          {
-            name: 'Food',
-            slug: 'food',
-            budget: 50000,
-            amountSpent: 35000,
-          },
-        ],
-      });
-
-      expect(() => reducer(state, action)).to.throw('categoryNotFound');
     });
   });
 });
