@@ -4,7 +4,6 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import immutable from 'immutable';
-import installDevTools from 'immutable-devtools';
 
 import configureStore from 'store';
 import Budget from 'components/Budget';
@@ -13,7 +12,14 @@ import Home from 'components/Home';
 
 import 'scss/main.scss';
 
-installDevTools(immutable);
+console.log("ENV", process.env.NODE_ENV)
+
+if (process.env.NODE_ENV !== 'production') {
+  const installDevTools = require('immutable-devtools');
+
+  installDevTools(immutable);
+}
+
 const store = configureStore();
 
 const history = syncHistoryWithStore(browserHistory, store);

@@ -63,6 +63,7 @@ function budgetCategoryReducer(state, action) {
 }
 
 export default function budgetReducer(state = initialState, action = {}) {
+  console.log("Action dispatched", action)
   switch (action.type) {
     case ADD_CATEGORY: {
       return state.update('categories', categories => (

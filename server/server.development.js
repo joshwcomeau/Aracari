@@ -1,8 +1,8 @@
-var path                  = require('path');
-var webpack               = require('webpack');
-var webpackDevMiddleware  = require('webpack-dev-middleware');
-var webpackHotMiddleware  = require('webpack-hot-middleware');
-var config                = require('./webpack.dev');
+var path = require('path');
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+var config = require('../webpack.dev');
 
 var app   = new (require('express'))();
 var port  = 5678;
@@ -15,7 +15,7 @@ app.use(webpackDevMiddleware(
 app.use(webpackHotMiddleware(compiler));
 
 app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, '../index.html'));
 })
 
 app.listen(port, function(error) {

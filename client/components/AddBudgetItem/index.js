@@ -38,6 +38,7 @@ const AddBudgetItem = ({ isOpen, actions }) => {
 
 AddBudgetItem.propTypes = {
   actions: PropTypes.object,
+  isOpen: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
