@@ -8,6 +8,8 @@ import '../../scss/add-budget-item.scss';
 
 
 const AddBudgetItem = ({ isOpen, actions }) => {
+  const springSettings = { stiffness: 110, damping: 13 };
+
   return (
     <div className="add-budget-item">
       <div
@@ -16,7 +18,7 @@ const AddBudgetItem = ({ isOpen, actions }) => {
       />
       <Motion
         defaultStyle={{ y: 300 }}
-        style={{ y: spring(isOpen ? 0 : 300, { stiffness: 110, damping: 13}) }}
+        style={{ y: spring(isOpen ? 0 : 300, springSettings) }}
       >
         {({ y }) => (
           <div
