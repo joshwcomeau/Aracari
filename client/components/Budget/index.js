@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import moment from 'moment';
 
 import BudgetCategory from 'components/BudgetCategory';
@@ -29,13 +28,7 @@ const Budget = ({ categorySlugs, addingNewItem }) => {
       <BudgetDate monthProgress={monthProgress} dateString={dateString} />
       {categoriesJsx}
 
-      <ReactCSSTransitionGroup
-        transitionName="add-budget-item"
-        transitionEnterTimeout={350}
-        transitionLeaveTimeout={600}
-      >
-        {addingNewItem ? <AddBudgetItem key="budget" /> : null}
-      </ReactCSSTransitionGroup>
+      <AddBudgetItem />
     </div>
   );
 };

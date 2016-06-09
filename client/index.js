@@ -4,20 +4,21 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import immutable from 'immutable';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import configureStore from 'store';
 import Budget from 'components/Budget';
-import AddBudgetItem from 'components/AddBudgetItem';
 import Home from 'components/Home';
 
 import 'scss/main.scss';
 
-console.log("ENV", process.env.NODE_ENV)
+
+// Needed for onTouchTap
+// Check this repo: https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin();
 
 if (process.env.NODE_ENV !== 'production') {
-  const installDevTools = require('immutable-devtools');
-
-  installDevTools(immutable);
+  require('immutable-devtools')(immutable);
 }
 
 const store = configureStore();

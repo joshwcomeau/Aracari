@@ -1,38 +1,20 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Motion, spring } from 'react-motion';
 
 import { toggleNewItemDrawer } from 'ducks/budget.duck';
-import '../../scss/add-budget-item.scss';
+import Drawer from 'components/Drawer';
+import 'scss/add-budget-item.scss';
 
 
 const AddBudgetItem = ({ isOpen, actions }) => {
-  const springSettings = { stiffness: 110, damping: 13 };
-
   return (
-    <div className="add-budget-item">
-      <div
-        className="backdrop"
-        onClick={() => actions.toggleNewItemDrawer(false)}
-      />
-      <Motion
-        defaultStyle={{ y: 300 }}
-        style={{ y: spring(isOpen ? 0 : 300, springSettings) }}
-      >
-        {({ y }) => (
-          <div
-            className="drawer"
-            style={{
-              WebkitTransform: `translate3d(0, ${y}px, 0)`,
-              transform: `translate3d(0, ${y}px, 0)`,
-            }}
-          >
-            <h2>Record a Cost</h2>
-          </div>
-        )}
-      </Motion>
-    </div>
+    <Drawer
+      isOpen={isOpen}
+      onBackdropClick={() => actions.toggleNewItemDrawer(false)}
+    >
+      <h2>Record a Cost</h2>
+    </Drawer>
   );
 };
 

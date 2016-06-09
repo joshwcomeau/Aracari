@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Header from 'components/Header';
 
@@ -14,12 +16,14 @@ export default function HomeBase(DevTools = null) {
     console.log("Route", props)
 
     return (
-      <div id="home" className={classes}>
-        <Header />
-        {children}
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <div id="home" className={classes}>
+          <Header />
+          {children}
 
-        {DevTools ? <DevTools /> : null}
-      </div>
+          {DevTools ? <DevTools /> : null}
+        </div>
+      </MuiThemeProvider>
     );
   };
 
