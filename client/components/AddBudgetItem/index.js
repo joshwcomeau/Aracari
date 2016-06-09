@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { toggleNewItemDrawer } from 'ducks/budget.duck';
 import Drawer from 'components/Drawer';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import 'scss/add-budget-item.scss';
 
 
@@ -12,8 +14,19 @@ const AddBudgetItem = ({ isOpen, actions }) => {
     <Drawer
       isOpen={isOpen}
       onBackdropClick={() => actions.toggleNewItemDrawer(false)}
+      className="add-budget-item"
     >
-      <h2>Record a Cost</h2>
+      <header>
+        Record a New Cost
+        <button onClick={() => alert('hi!')}>
+          <i className="material-icons">close</i>
+        </button>
+      </header>
+      <SelectField value="food">
+        <MenuItem value="food" primaryText="Food" />
+        <MenuItem value="entertainment" primaryText="Entertainment" />
+        <MenuItem value="medication" primaryText="Medication" />
+      </SelectField>
     </Drawer>
   );
 };
