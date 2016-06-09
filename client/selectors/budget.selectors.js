@@ -14,8 +14,8 @@ export const availableSelector = createSelector(
   (limit, spent) => limit - spent
 );
 
-export const budgetRatioSelector = createSelector(
+export const budgetProgressSelector = createSelector(
   limitSelector,
   spentSelector,
-  (limit, spent) => spent / limit
+  (limit, spent) => (spent / limit) * 100
 );

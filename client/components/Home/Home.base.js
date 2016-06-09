@@ -13,8 +13,6 @@ export default function HomeBase(DevTools = null) {
       'wrapped-for-devtools': process.env.NODE_ENV !== 'production',
     });
 
-    console.log("Route", props)
-
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <div id="home" className={classes}>

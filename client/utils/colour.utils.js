@@ -15,18 +15,19 @@ export const litRange = [68, 59];
 // Returns the current colour for a given budget.
 // A scale from green to red, depending on how good/bad it is.
 // Returns a CSS colour string (HSL).
-export function getBudgetColour(budgetRatio, monthProgress) {
-  // Our budgetRatio is our budget relative to the current calendar month.
+export function getBudgetColour(monthProgress, budgetProgress) {
+  // Our budgetProgress is our budget relative to the current calendar month.
   // For example, if our budget for June is 100$ and we've spent $50,
-  // our budgetRatio is 0.5.
+  // our budgetProgress is 50.
   //
   // Our monthProgress is how far along in the month we are.
-  // On the 15th of a 30 day month, our monthProgress is 0.5.
+  // On the 15th of a 30 day month, our monthProgress is 50.
   //
   // By comparing these two numbers, we can tell whether we are currently on
   // track to meet our monthly budget goal.
-  const positionInScale = clamp(budgetRatio / monthProgress * 0.5, 1);
-  // ( we multiply monthProgress by 0.5 because when our budgetRatio is the
+
+  const positionInScale = clamp(budgetProgress / monthProgress * 0.5, 1);
+  // ( we multiply monthProgress by 0.5 because when our budgetProgress is the
   // same as our monthProgress, we are right on track, so we should be right
   // in the middle of the scale).
 

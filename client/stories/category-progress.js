@@ -7,12 +7,12 @@ import './story-helpers';
 function generateProps({
   name = 'Food',
   slug = 'food',
-  budgetRatio = 0.2,
-  monthProgress = 0.5,
+  budgetProgress = 20,
+  monthProgress = 45,
   actions = {},
 } = {}) {
   return {
-    name, slug, budgetRatio, monthProgress, actions,
+    name, slug, budgetProgress, monthProgress, actions,
   };
 }
 
@@ -22,7 +22,7 @@ storiesOf('CategoryProgress', module)
   ))
   .add('with added cost', () => (
     <CategoryProgressController
-      {...generateProps({ budgetRatio: 0.6 })}
+      {...generateProps({ budgetProgress: 60 })}
     />
   ));
 
@@ -31,15 +31,15 @@ class CategoryProgressController extends Component {
     super(props, ...args);
 
     this.state = props;
-    this.budgetRatioValues = [0.2, 0.35, 0.52, 0.78, 0, 0.1];
+    this.budgetProgressValues = [20, 35, 52, 78, 0, 10];
   }
 
   updateAmountSpent() {
     // Rotate the array
-    this.budgetRatioValues.push(this.budgetRatioValues.shift());
+    this.budgetProgressValues.push(this.budgetProgressValues.shift());
 
     this.setState({
-      budgetRatio: this.budgetRatioValues[0],
+      budgetProgress: this.budgetProgressValues[0],
     });
   }
 

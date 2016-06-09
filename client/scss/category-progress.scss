@@ -19,7 +19,8 @@ $budget-height: 60px;
     top: 0;
     bottom: 0;
     background-color: $red;
-    max-width: 100%;
+    width: 1px;
+    transform-origin: left;
   }
 
   .month-progress {

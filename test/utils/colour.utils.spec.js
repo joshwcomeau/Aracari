@@ -49,45 +49,45 @@ describe('Colour Utils', () => {
 
   describe('getBudgetColour', () => {
     it('starts off as the lowest colour', () => {
-      const budgetRatio = 0;
-      const monthProgress = 0.5;
+      const budgetProgress = 0;
+      const monthProgress = 50;
 
       const expectedValue = [hueRange[0], satRange[0], litRange[0]];
-      const actualValue = getBudgetColour(budgetRatio, monthProgress);
+      const actualValue = getBudgetColour(budgetProgress, monthProgress);
 
       expect(actualValue).to.deep.equal(expectedValue);
     });
 
     it('is the midpoint colour when right on track', () => {
-      const budgetRatio = 0.5;
-      const monthProgress = 0.5;
+      const budgetProgress = 50;
+      const monthProgress = 50;
 
       const expectedValue = [
         getPositionInRange(hueRange, 0.5),
         getPositionInRange(satRange, 0.5),
         getPositionInRange(litRange, 0.5),
       ]
-      const actualValue = getBudgetColour(budgetRatio, monthProgress);
+      const actualValue = getBudgetColour(budgetProgress, monthProgress);
 
       expect(actualValue).to.deep.equal(expectedValue);
     });
 
     it('is the highest colour when double the budget', () => {
-      const budgetRatio = 1;
-      const monthProgress = 0.5;
+      const budgetProgress = 100;
+      const monthProgress = 50;
 
       const expectedValue = [hueRange[1], satRange[1], litRange[1]];
-      const actualValue = getBudgetColour(budgetRatio, monthProgress);
+      const actualValue = getBudgetColour(budgetProgress, monthProgress);
 
       expect(actualValue).to.deep.equal(expectedValue);
     });
 
     it('clamps the colour after 2x budget', () => {
-      const budgetRatio = 2;
-      const monthProgress = 0.5;
+      const budgetProgress = 200;
+      const monthProgress = 50;
 
       const expectedValue = [hueRange[1], satRange[1], litRange[1]];
-      const actualValue = getBudgetColour(budgetRatio, monthProgress);
+      const actualValue = getBudgetColour(budgetProgress, monthProgress);
 
       expect(actualValue).to.deep.equal(expectedValue);
     });
