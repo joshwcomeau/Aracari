@@ -1,46 +1,45 @@
 import React, { Component } from 'react';
 import { storiesOf } from '@kadira/storybook';
 
-import { BudgetCategory } from 'components/BudgetCategory';
+import { CategoryProgress } from 'components/CategoryProgress';
 import './story-helpers';
 
 function generateProps({
   name = 'Food',
   slug = 'food',
-  budget = 50000,
-  amountSpent = 20000,
-  monthProgress = 1,
+  budgetRatio = 0.2,
+  monthProgress = 0.5,
   actions = {},
 } = {}) {
   return {
-    name, slug, budget, amountSpent, monthProgress, actions,
+    name, slug, budgetRatio, monthProgress, actions,
   };
 }
 
-storiesOf('BudgetCategory', module)
+storiesOf('CategoryProgress', module)
   .add('default', () => (
-    <BudgetCategoryController {...generateProps()} />
+    <CategoryProgressController {...generateProps()} />
   ))
   .add('with added cost', () => (
-    <BudgetCategoryController
-      {...generateProps({ amountSpent: 25000 })}
+    <CategoryProgressController
+      {...generateProps({ budgetRatio: 0.6 })}
     />
   ));
 
-class BudgetCategoryController extends Component {
+class CategoryProgressController extends Component {
   constructor(props, ...args) {
     super(props, ...args);
 
     this.state = props;
-    this.amountSpentValues = [20000, 35000, 49000, 52500, 0, 12345];
+    this.budgetRatioValues = [0.2, 0.35, 0.52, 0.78, 0, 0.1];
   }
 
   updateAmountSpent() {
     // Rotate the array
-    this.amountSpentValues.push(this.amountSpentValues.shift());
+    this.budgetRatioValues.push(this.budgetRatioValues.shift());
 
     this.setState({
-      amountSpent: this.amountSpentValues[0],
+      budgetRatio: this.budgetRatioValues[0],
     });
   }
 
@@ -50,7 +49,7 @@ class BudgetCategoryController extends Component {
         <button onClick={() => this.updateAmountSpent()}>
           Update Amount Spent
         </button>
-        <BudgetCategory {...this.state} />
+        <CategoryProgress {...this.state} />
       </div>
     );
   }

@@ -1,14 +1,15 @@
 import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Motion, spring } from 'react-motion';
 
-import { getBudgetColour, formatHSLColourForCSS } from 'utils/colour.utils';
+import { getHSLBudgetColour } from 'utils/colour.utils';
 import { budgetRatioSelector } from 'selectors/budget.selectors';
 
-import 'scss/budget-category.scss';
+import 'scss/category-progress.scss';
 
 
-class BudgetCategory extends Component {
+class CategoryProgress extends Component {
   componentDidUpdate() {
     // If the label of the category happens to overlap with the month progress
     // indicator, we want to shorten the lines. This cannot be done in a
@@ -23,27 +24,46 @@ class BudgetCategory extends Component {
     }
   }
 
+  renderBudgetProgressWithMotion({ width }) {
+    const budgetColour = getHSLBudgetColour(width, this.props.monthProgress * 100);
+
+    return (
+      <div
+        className="budget-progress"
+        style={{
+          width: `${width}%`,
+          backgroundColor: budgetColour,
+        }}
+      />
+    );
+  }
+
   render() {
     const {
       // eslint-disable-next-line no-unused-vars
       name, budgetRatio, monthProgress, actions,
     } = this.props;
 
-    const budgetPercentage = `${budgetRatio * 100}%`;
-    const budgetColour = getBudgetColour(budgetRatio, monthProgress);
-    const budgetProgressStyle = {
-      width: budgetPercentage,
-      backgroundColor: formatHSLColourForCSS(budgetColour),
-    };
-
     const monthProgressStyle = { left: `${monthProgress * 100}%` };
 
+    const springSettings = {
+      stiffness: 75,
+      damping: 20,
+    }
+
     return (
-      <div className="budget-category" onClick={actions.showAddCost}>
+      <div className="category-progress" onClick={actions.showAddCost}>
         <div className="budget-name" ref={el => this.name = el}>
           {name}
         </div>
-        <div className="budget-progress" style={budgetProgressStyle} />
+
+        <Motion
+          defaultStyle={{ width: 0 }}
+          style={{ width: spring(budgetRatio * 100, springSettings) }}
+        >
+          {styles => this.renderBudgetProgressWithMotion(styles)}
+        </Motion>
+
         <div
           className="month-progress"
           style={monthProgressStyle}
@@ -54,7 +74,7 @@ class BudgetCategory extends Component {
   }
 }
 
-BudgetCategory.propTypes = {
+CategoryProgress.propTypes = {
   name: PropTypes.string.isRequired,
   budgetRatio: PropTypes.number.isRequired,
   monthProgress: PropTypes.number.isRequired,
@@ -81,6 +101,6 @@ function mapDispatchToProps(dispatch) {
 
 // Export the component _without_ the Redux bindings,
 // for unit testing and storybook prototyping.
-export { BudgetCategory };
+export { CategoryProgress };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BudgetCategory);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryProgress);

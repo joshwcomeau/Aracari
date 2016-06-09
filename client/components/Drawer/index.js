@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
-import { Motion, spring } from 'react-motion';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import 'scss/drawer.scss';
 
-const DrawerContents = ({ y, children, isOpen, onBackdropClick }) => (
+// eslint-disable-next-line react/prop-types
+const DrawerContents = ({ children, onBackdropClick }) => (
   <div className="drawer">
     <div
       className="backdrop"
@@ -23,7 +23,7 @@ const Drawer = ({ isOpen, ...props }) => {
       transitionEnterTimeout={450}
       transitionLeaveTimeout={600}
     >
-      { isOpen ? <DrawerContents {...props} /> : null }
+      {isOpen ? <DrawerContents {...props} /> : null}
     </ReactCSSTransitionGroup>
   );
 };

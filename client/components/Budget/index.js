@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import BudgetCategory from 'components/BudgetCategory';
+import CategoryProgress from 'components/CategoryProgress';
 import BudgetDate from 'components/BudgetDate';
 import AddBudgetItem from 'components/AddBudgetItem';
 import { progressThroughMonth } from 'utils/time.utils';
@@ -15,7 +15,7 @@ const Budget = ({ categorySlugs, addingNewItem }) => {
 
   const categoriesJsx = categorySlugs.map(
     slug => (
-      <BudgetCategory
+      <CategoryProgress
         slug={slug}
         key={slug}
         monthProgress={monthProgress}

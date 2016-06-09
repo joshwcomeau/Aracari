@@ -2,7 +2,7 @@
 import { configure } from '@kadira/storybook';
 
 function loadStories() {
-  require('../client/stories/budget-category.story');
+  require('../client/stories/category-progress.js');
 }
 
 configure(loadStories, module);

@@ -2,7 +2,7 @@
 
 $budget-height: 60px;
 
-.budget-category {
+.category-progress {
   position: relative;
   margin: 4px;
   background: #FFF;
@@ -19,7 +19,6 @@ $budget-height: 60px;
     top: 0;
     bottom: 0;
     background-color: $red;
-    transition: 1s;
     max-width: 100%;
   }
 

@@ -1,4 +1,5 @@
 import clamp from 'lodash/clamp';
+import compose from 'lodash/flowRight';
 
 // Finds the position between two numbers.
 // eg. when given 10, 20, and 0.5, it returns 15.
@@ -39,3 +40,7 @@ export function getBudgetColour(budgetRatio, monthProgress) {
 export function formatHSLColourForCSS([hue, saturation, lightness]) {
   return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
+
+export const getHSLBudgetColour = compose(
+  formatHSLColourForCSS, getBudgetColour
+);
