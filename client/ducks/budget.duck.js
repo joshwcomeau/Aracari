@@ -45,16 +45,18 @@ export const TOGGLE_NEW_ITEM_DRAWER = 'BUDGET/TOGGLE_NEW_ITEM_DRAWER';
 // REDUCERS //////////////
 // //////////////////////
 function budgetCategoryReducer(state, action) {
-  // eslint-disable-next-line no-unused-vars
-  const { type, category, ...newItem } = action;
+  const { type, category, ...data } = action;
 
   switch (type) {
     case ADD_BUDGET_ITEM: {
-      if (state.get('slug') !== action.category) {
+      if (state.get('slug') !== category) {
         return state;
       }
 
-      return state.update('items', items => items.push(fromJS({ ...newItem })));
+      // Ensure values are always numbers
+      data.value = Number(data.value);
+
+      return state.update('items', items => items.push(fromJS({ ...data })));
     }
 
     default:

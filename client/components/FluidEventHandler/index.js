@@ -46,12 +46,33 @@ FluidEventHandler.propTypes = {
   event: PropTypes.oneOf(['resize', 'scroll']),
   handler: PropTypes.func,
   typeName: PropTypes.string,
-  lifecycleMethods: PropTypes.arrayOf([
-    PropTypes.oneOf([
+  lifecycleMethods(props, propName, componentName) {
+    let methodsProvided = propName[props];
+
+    if (typeof methodsProvided === 'undefined') {
+      return;
+    } else if (typeof methodsProvided === 'string') {
+      let methodsProvided = [methodsProvided];
+    }
+
+    if (methodsProvided && !Array.isArray(methodsProvided)) {
+      return new Error(`Please supply an array to lifecycleMethods, in ${componentName}`);
+    }
+
+    const validLifecycleMethods = [
       'componentDidMount',
       'componentDidUpdate',
-    ]),
-  ]),
+    ];
+
+    // Ensure that all methods supplied are valid.
+    if (methodsProvided.find(method => (method !== validLifecycleMethods))) {
+      return new Error(`
+        Invalid lifecycle method provided to ${componentName}.
+        Acceptable options are ${validLifecycleMethods.join(', ')}.
+        You provided ${methodsProvided.join(', ')}.
+      `);
+    }
+  }
 };
 
 FluidEventHandler.defaultProps = {
