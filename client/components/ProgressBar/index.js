@@ -1,12 +1,20 @@
 import React, { PropTypes, Component } from 'react';
 import { Motion, spring } from 'react-motion';
+import throttle from 'lodash/throttle';
 
+import FluidEventHandler from 'components/FluidEventHandler';
 import 'scss/progress-bar.scss';
 
 
 class ProgressBar extends Component {
-  componentDidMount() {
-    this.containerWidth = this.containerElem.getBoundingClientRect().width;
+  constructor(props) {
+    super(props);
+
+    this.setContainerWidth = this.setContainerWidth.bind(this);
+
+    this.state = {
+      containerWidth: 0,
+    };
   }
 
   getBackgroundColour(width) {
@@ -24,32 +32,44 @@ class ProgressBar extends Component {
     // using hardware-accelerated CSS properties, we need to translate that
     // into pixels. If the container is 200px wide and we're 10% through the
     // budget, we need to return `20`.
-    return percentage * (this.containerWidth / 100);
+    return percentage * (this.state.containerWidth / 100);
+  }
+
+  setContainerWidth() {
+    this.setState({
+      containerWidth: this.containerElem.getBoundingClientRect().width,
+    });
   }
 
   render() {
     const { percentage, springSettings } = this.props;
 
     return (
-      <div
-        className="progress-bar-container"
-        ref={el => this.containerElem = el}
+      <FluidEventHandler
+        event="resize"
+        handler={this.setContainerWidth}
+        lifecycleMethods={['componentDidMount']}
       >
-        <Motion
-          defaultStyle={{ width: 0 }}
-          style={{ width: spring(percentage, springSettings) }}
+        <div
+          className="progress-bar-container"
+          ref={el => this.containerElem = el}
         >
-          {({ width }) => (
-            <div
-              className="progress-bar"
-              style={{
-                transform: `scaleX(${this.getNormalizedWidth(width)})`,
-                backgroundColor: this.getBackgroundColour(width),
-              }}
-            />
-          )}
-        </Motion>
-      </div>
+          <Motion
+            defaultStyle={{ width: 0 }}
+            style={{ width: spring(percentage, springSettings) }}
+          >
+            {({ width }) => (
+              <div
+                className="progress-bar"
+                style={{
+                  transform: `scaleX(${this.getNormalizedWidth(width)})`,
+                  backgroundColor: this.getBackgroundColour(width),
+                }}
+              />
+            )}
+          </Motion>
+        </div>
+      </FluidEventHandler>
     );
   }
 }

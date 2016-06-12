@@ -1,11 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Motion, spring } from 'react-motion';
+import throttle from 'lodash/throttle';
 
 import { getHSLBudgetColour } from 'utils/colour.utils';
 import { budgetProgressSelector } from 'selectors/budget.selectors';
 import ProgressBar from 'components/ProgressBar';
+import FluidEventHandler from 'components/FluidEventHandler';
 
 import 'scss/category-progress.scss';
 
@@ -24,6 +25,8 @@ class CategoryProgress extends Component {
     // So, we partially-apply our function that returns an HSL colour with the
     // month progress, and let the progress bar invoke it when it needs a colour.
     this.boundBudgetColourFn = getHSLBudgetColour.bind(null, this.props.monthProgress);
+
+    this.handleDateIndicatorLines = this.handleDateIndicatorLines.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,7 +37,7 @@ class CategoryProgress extends Component {
     }
   }
 
-  componentDidUpdate() {
+  handleDateIndicatorLines() {
     // If the label of the category happens to overlap with the month progress
     // indicator, we want to shorten the lines. This cannot be done in a
     // declarative way, as far as I know, so I figure it out with the refs.
@@ -55,22 +58,28 @@ class CategoryProgress extends Component {
     } = this.props;
 
     return (
-      <div className="category-progress" onClick={actions.showAddCost}>
-        <div className="budget-name" ref={el => this.nameElem = el}>
-          {name}
+      <FluidEventHandler
+        event="resize"
+        handler={this.handleDateIndicatorLines}
+        lifecycleMethods={['componentDidMount', 'componentDidUpdate']}
+      >
+        <div className="category-progress" onClick={actions.showAddCost}>
+          <div className="budget-name" ref={el => this.nameElem = el}>
+            {name}
+          </div>
+
+          <ProgressBar
+            percentage={budgetProgress}
+            backgroundColor={this.boundBudgetColourFn}
+          />
+
+          <div
+            className="month-progress"
+            style={{ left: monthProgress + '%' }}
+            ref={el => this.monthProgressElem = el}
+          />
         </div>
-
-        <ProgressBar
-          percentage={budgetProgress}
-          backgroundColor={this.boundBudgetColourFn}
-        />
-
-        <div
-          className="month-progress"
-          style={{ left: monthProgress + '%' }}
-          ref={el => this.monthProgressElem = el}
-        />
-      </div>
+      </FluidEventHandler>
     );
   }
 }
