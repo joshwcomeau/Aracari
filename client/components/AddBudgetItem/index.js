@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import { addBudgetItem, toggleNewItemDrawer } from 'ducks/budget.duck';
@@ -53,6 +52,7 @@ const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit, submitting }) =>
           <div className="flex-cell one-third">
             <TextField
               type="number"
+              step="0.01"
               floatingLabelText="Cost"
               {...value}
               errorText={value.touched ? value.error : null}
