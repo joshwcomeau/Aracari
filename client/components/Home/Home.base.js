@@ -4,6 +4,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Header from 'components/Header';
+import Snackbar from 'components/Snackbar';
 
 export default function HomeBase(DevTools = null) {
   const Home = (props) => {
@@ -20,6 +21,8 @@ export default function HomeBase(DevTools = null) {
           {children}
 
           {DevTools ? <DevTools /> : null}
+
+          <Snackbar />
         </div>
       </MuiThemeProvider>
     );

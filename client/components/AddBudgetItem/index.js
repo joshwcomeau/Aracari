@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
 
-import { addBudgetItem, toggleNewItemDrawer } from 'ducks/budget.duck';
+import { submitNewBudgetItem, toggleNewItemDrawer } from 'ducks/budget.duck';
 import Drawer from 'components/Drawer';
 import SelectFieldWrapper from 'components/SelectFieldWrapper';
 import TextField from 'material-ui/TextField';
@@ -14,7 +14,7 @@ import 'scss/add-budget-item.scss';
 const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
   const { category, value, details } = fields;
 
-  const onSubmit = handleSubmit(actions.addBudgetItem);
+  const onSubmit = handleSubmit(actions.submitNewBudgetItem);
 
   return (
     <Drawer
@@ -108,7 +108,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      addBudgetItem,
+      submitNewBudgetItem,
       toggleNewItemDrawer,
     }, dispatch),
   };

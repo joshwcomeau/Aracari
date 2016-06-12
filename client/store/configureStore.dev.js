@@ -1,7 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 
 import rootReducer from 'reducers';
+import submitNewBudgetItem from 'sagas/submit-new-budget-item.saga';
 import DevTools from 'components/DevTools';
 
 
@@ -13,9 +15,11 @@ export default function configureStore() {
   // emit an action on that socket with the action data, along with some
   // mixed-in extras (like the current user's auth data.)
 
-
-  const middlewares = [];
-  middlewares.push(thunkMiddleware);
+  const sagaMiddleware = createSagaMiddleware();
+  const middlewares = [
+    thunkMiddleware,
+    sagaMiddleware,
+  ];
 
   const store = createStore(
     rootReducer,
@@ -24,6 +28,8 @@ export default function configureStore() {
       DevTools.instrument()
     )
   );
+
+  sagaMiddleware.run(submitNewBudgetItem);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

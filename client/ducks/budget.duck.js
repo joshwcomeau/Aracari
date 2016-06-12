@@ -39,6 +39,7 @@ const initialState = fromJS({
 // ACTION TYPES //////////
 // //////////////////////
 export const ADD_CATEGORY = 'BUDGET/ADD_CATEGORY';
+export const SUBMIT_NEW_BUDGET_ITEM = 'BUDGET/SUBMIT_NEW_BUDGET_ITEM';
 export const ADD_BUDGET_ITEM = 'BUDGET/ADD_BUDGET_ITEM';
 export const TOGGLE_NEW_ITEM_DRAWER = 'BUDGET/TOGGLE_NEW_ITEM_DRAWER';
 
@@ -100,30 +101,17 @@ export default function budgetReducer(state = initialState, action = {}) {
 // ////////////////////////
 // ACTION CREATORS ///////
 // //////////////////////
-export const addBudgetItem = ({ category, details, value }) => (
-  // We want to first close the drawer, and then (after a delay) add the budget
-  // item. It's done this way so that the user can see the effect of their
-  // newly-added budget item.
-  dispatch => {
-    dispatch({ type: TOGGLE_NEW_ITEM_DRAWER });
+export const addBudgetItem = data => ({
+  type: ADD_BUDGET_ITEM,
+  ...data,
+});
 
-    window.setTimeout(() => {
-      // The form submits `value` in dollars.
-      // We need it as an integer in cents.
-      const valueInCents = Math.round(value * 100);
-
-      dispatch({
-        type: ADD_BUDGET_ITEM,
-        category,
-        details,
-        value: valueInCents,
-      });
-
-      // Also, reset the form so that it's re-initialized for the next addition
-      dispatch(reset('add-budget-item'));
-    }, 350);
-  }
-);
+export const submitNewBudgetItem = data => ({
+  // NOTE: This action does not directly affect the state. It is listened to
+  // by the saga of the same name, which dispatches other actions.
+  type: SUBMIT_NEW_BUDGET_ITEM,
+  data,
+});
 
 export const addCategory = ({ name, limit }) => ({
   type: ADD_CATEGORY,

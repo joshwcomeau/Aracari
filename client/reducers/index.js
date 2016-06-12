@@ -4,10 +4,12 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import budget from 'ducks/budget.duck';
+import snackbar from 'ducks/snackbar.duck';
 
 
 export default combineReducers({
   routing: routerReducer,
   form: formReducer,
   budget,
+  snackbar,
 });
