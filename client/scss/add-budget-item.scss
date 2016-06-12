@@ -5,7 +5,7 @@
     position: relative;
     margin: 2px;
     background: #EEE;
-    padding: 0 1rem;
+    padding: 0 $gutter-size;
     line-height: 50px;
     font-size: 16px;
     font-weight: 500;
@@ -13,10 +13,25 @@
     button {
       position: absolute;
       top: 0;
-      right: 1rem;
+      right: $gutter-size;
       bottom: 0;
       margin: auto;
       padding: 0;
+    }
+  }
+
+  .button-wrapper {
+    position: absolute;
+    left: $gutter-size;
+    right: $gutter-size;
+    bottom: $gutter-size;
+
+    .submit-button {
+      width: 100%;
+
+      i {
+        color: #FFF;
+      }
     }
   }
 }
