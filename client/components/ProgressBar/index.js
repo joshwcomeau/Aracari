@@ -43,7 +43,6 @@ class ProgressBar extends Component {
 
   render() {
     const { percentage, springSettings } = this.props;
-    console.log("Using spring settings", springSettings)
 
     return (
       <FluidEventHandler

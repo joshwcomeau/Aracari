@@ -3,4 +3,18 @@
 #budget {
   flex-grow: 1;
   background: $offwhite;
+
+  .add-category-button {
+    margin: 4px;
+    text-align: right;
+
+    button {
+      min-width: auto !important;
+      width: 40px !important;
+      padding-left: 4px !important;
+      height: 36px !important;
+      background: #FFF !important;
+      box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    }
+  }
 }

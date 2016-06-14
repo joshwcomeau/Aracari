@@ -5,6 +5,8 @@ import moment from 'moment';
 import CategoryProgress from 'components/CategoryProgress';
 import BudgetDate from 'components/BudgetDate';
 import AddBudgetItem from 'components/AddBudgetItem';
+import FlatButton from 'material-ui/FlatButton';
+
 import { progressThroughMonth } from 'utils/time.utils';
 import 'scss/budget.scss';
 
@@ -23,10 +25,23 @@ const Budget = ({ categorySlugs, addingNewItem }) => {
     )
   );
 
+  // TODO If we have no categories, show a special "Add your first category" bit.
+  // Otherwise, show a smaller "Add Category" button.
+  const AddCategoryButton = (
+    <div className="add-category-button">
+      <FlatButton
+        secondary
+        icon={<i className="material-icons">playlist_add</i>}
+      />
+    </div>
+  )
+
+
   return (
     <div id="budget">
       <BudgetDate monthProgress={monthProgress} dateString={dateString} />
       {categoriesJsx}
+      {AddCategoryButton}
 
       <AddBudgetItem />
     </div>
