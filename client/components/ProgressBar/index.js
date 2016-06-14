@@ -43,6 +43,7 @@ class ProgressBar extends Component {
 
   render() {
     const { percentage, springSettings } = this.props;
+    console.log("Using spring settings", springSettings)
 
     return (
       <FluidEventHandler
@@ -87,8 +88,10 @@ ProgressBar.propTypes = {
 };
 
 ProgressBar.defaultProps = {
-  stiffness: 75,
-  damping: 20,
+  springSettings: {
+    stiffness: 125,
+    damping: 50,
+  },
 };
 
 export default ProgressBar;

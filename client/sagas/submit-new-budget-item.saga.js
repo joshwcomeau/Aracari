@@ -27,9 +27,6 @@ export default function* submitNewBudgetItem() {
     // Close the New Item drawer
     yield put(toggleNewItemDrawer(false));
 
-    // Wait for the drawer to close
-    yield delay(350);
-
     yield [
       // Reset the form, for the next new budget addition.
       put(reset('add-budget-item')),
@@ -38,7 +35,10 @@ export default function* submitNewBudgetItem() {
       put(addBudgetItem(data)),
 
       // Show the snackbar notification
-      put(updateSnackbar('Your budget item has been added!')),
     ];
+
+    // Wait for the drawer to close, and show the snackbar
+    yield delay(650);
+    yield put(updateSnackbar('Your budget item has been added!'));
   }
 }
