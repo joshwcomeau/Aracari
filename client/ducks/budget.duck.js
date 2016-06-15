@@ -37,9 +37,10 @@ const initialState = fromJS({
 // ////////////////////////
 // ACTION TYPES //////////
 // //////////////////////
-export const ADD_CATEGORY = 'BUDGET/ADD_CATEGORY';
 export const SUBMIT_NEW_BUDGET_ITEM = 'BUDGET/SUBMIT_NEW_BUDGET_ITEM';
 export const ADD_BUDGET_ITEM = 'BUDGET/ADD_BUDGET_ITEM';
+export const SUBMIT_NEW_CATEGORY = 'BUDGET/SUBMIT_NEW_CATEGORY';
+export const ADD_CATEGORY = 'BUDGET/ADD_CATEGORY';
 export const TOGGLE_NEW_ITEM_DRAWER = 'BUDGET/TOGGLE_NEW_ITEM_DRAWER';
 
 
@@ -94,11 +95,6 @@ export default function budgetReducer(state = initialState, action = {}) {
 // ////////////////////////
 // ACTION CREATORS ///////
 // //////////////////////
-export const addBudgetItem = data => ({
-  type: ADD_BUDGET_ITEM,
-  ...data,
-});
-
 export const submitNewBudgetItem = data => ({
   // NOTE: This action does not directly affect the state. It is listened to
   // by the saga of the same name, which dispatches other actions.
@@ -106,8 +102,20 @@ export const submitNewBudgetItem = data => ({
   data,
 });
 
+export const addBudgetItem = data => ({
+  type: ADD_BUDGET_ITEM,
+  ...data,
+});
+
 export const addCategory = ({ name, limit }) => ({
   type: ADD_CATEGORY,
   name,
   limit,
+});
+
+export const submitNewCategory = data => ({
+  // NOTE: This action does not directly affect the state. It is listened to
+  // by the saga of the same name, which dispatches other actions.
+  type: SUBMIT_NEW_CATEGORY,
+  data,
 });

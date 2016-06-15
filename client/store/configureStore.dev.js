@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import rootReducer from 'reducers';
 import submitNewBudgetItem from 'sagas/submit-new-budget-item.saga';
+import submitNewCategory from 'sagas/submit-new-category.saga';
 import DevTools from 'components/DevTools';
 
 
@@ -30,6 +31,7 @@ export default function configureStore() {
   );
 
   sagaMiddleware.run(submitNewBudgetItem);
+  sagaMiddleware.run(submitNewCategory);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

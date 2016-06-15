@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
 
-import { submitNewCategory } from 'ducks/budget.duck';
+import { addCategory } from 'ducks/budget.duck';
 import { toggleDrawer } from 'ducks/drawer.duck';
 import Drawer from 'components/Drawer';
 import SelectFieldWrapper from 'components/SelectFieldWrapper';
@@ -15,7 +15,7 @@ import 'scss/add-category.scss';
 const AddCategory = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
   const { name, limit } = fields;
 
-  const onSubmit = handleSubmit(actions.submitNewCategory);
+  const onSubmit = handleSubmit(actions.addCategory);
 
   return (
     <Drawer
@@ -91,7 +91,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      submitNewCategory,
+      addCategory,
       toggleDrawer,
     }, dispatch),
   };

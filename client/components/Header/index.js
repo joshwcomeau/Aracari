@@ -44,7 +44,6 @@ Header.propTypes = {
 
 function mapStateToProps(state) {
   const drawerOpen = state.drawer;
-  console.log(state.drawer)
 
   return {
     isAddButtonShown: !drawerOpen,
