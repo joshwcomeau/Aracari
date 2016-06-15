@@ -11,7 +11,7 @@ import { progressThroughMonth } from 'utils/time.utils';
 import 'scss/budget.scss';
 
 
-const Budget = ({ categorySlugs, addingNewItem }) => {
+const Budget = ({ categorySlugs }) => {
   const monthProgress = progressThroughMonth();
   const dateString = moment().format('MMMM Do');
 
@@ -34,7 +34,7 @@ const Budget = ({ categorySlugs, addingNewItem }) => {
         icon={<i className="material-icons">playlist_add</i>}
       />
     </div>
-  )
+  );
 
 
   return (
@@ -50,12 +50,10 @@ const Budget = ({ categorySlugs, addingNewItem }) => {
 
 Budget.propTypes = {
   categorySlugs: PropTypes.array.isRequired,
-  addingNewItem: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
-    addingNewItem: state.budget.get('addingNewItem'),
     categorySlugs: state.budget.get('categories').map(category => (
       category.get('slug')
     )).toJS(),

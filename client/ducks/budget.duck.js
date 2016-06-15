@@ -31,7 +31,6 @@ const initialState = fromJS({
       ],
     },
   ],
-  addingNewItem: false,
 });
 
 
@@ -86,12 +85,6 @@ export default function budgetReducer(state = initialState, action = {}) {
       ));
     }
 
-    case TOGGLE_NEW_ITEM_DRAWER: {
-      const newValue = action.isOpen || !state.get('addingNewItem');
-
-      return state.set('addingNewItem', newValue);
-    }
-
     default:
       return state;
   }
@@ -117,9 +110,4 @@ export const addCategory = ({ name, limit }) => ({
   type: ADD_CATEGORY,
   name,
   limit,
-});
-
-export const toggleNewItemDrawer = ({ isOpen }) => ({
-  type: TOGGLE_NEW_ITEM_DRAWER,
-  isOpen,
 });

@@ -2,29 +2,29 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
 
-import { submitNewBudgetItem } from 'ducks/budget.duck';
+import { submitNewCategory } from 'ducks/budget.duck';
 import { toggleDrawer } from 'ducks/drawer.duck';
 import Drawer from 'components/Drawer';
 import SelectFieldWrapper from 'components/SelectFieldWrapper';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
-import 'scss/add-budget-item.scss';
+import 'scss/add-category.scss';
 
 
-const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
-  const { category, value, details } = fields;
+const AddCategory = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
+  const { name, limit } = fields;
 
-  const onSubmit = handleSubmit(actions.submitNewBudgetItem);
+  const onSubmit = handleSubmit(actions.submitNewCategory);
 
   return (
     <Drawer
       isOpen={isOpen}
       onBackdropClick={() => actions.toggleDrawer()}
-      className="add-budget-item"
+      className="add-category"
     >
       <header className="drawer-header">
-        Record a New Cost
+        Add a New Category
         <button onClick={() => actions.toggleDrawer()}>
           <i className="material-icons">close</i>
         </button>
@@ -34,42 +34,24 @@ const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit, submitting }) =>
         onSubmit={onSubmit}
       >
         <div className="flex-row with-gutter">
-          <div className="flex-cell two-thirds">
-            <SelectFieldWrapper
-              floatingLabelText="Category"
-              {...category}
-
-              errorText={category.touched ? category.error : null}
+          <div className="flex-cell">
+            <TextField
+              floatingLabelText="Name"
+              {...name}
+              errorText={name.touched ? name.error : null}
               style={{
                 width: '100%',
                 fontFamily: 'inherit',
               }}
-            >
-              <MenuItem value="food" primaryText="Food" />
-              <MenuItem value="entertainment" primaryText="Entertainment" />
-              <MenuItem value="medication" primaryText="Medication" />
-            </SelectFieldWrapper>
+            />
           </div>
-          <div className="flex-cell one-third">
+          <div className="flex-cell">
             <TextField
               type="number"
               step="0.01"
-              floatingLabelText="Cost"
-              {...value}
-              errorText={value.touched ? value.error : null}
-              style={{
-                width: '100%',
-                fontFamily: 'inherit',
-              }}
-            />
-          </div>
-        </div>
-        <div className="flex-row with-gutter">
-          <div className="flex-cell full pulled-up">
-            <TextField
-              floatingLabelText="Details"
-              {...details}
-              errorText={details.touched ? details.error : null}
+              floatingLabelText="Monthly Budget"
+              {...limit}
+              errorText={limit.touched ? limit.error : null}
               style={{
                 width: '100%',
                 fontFamily: 'inherit',
@@ -78,7 +60,7 @@ const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit, submitting }) =>
           </div>
         </div>
 
-        <footer className="drawer-footer">
+        <div className="drawer-footer">
           <RaisedButton
             className="submit-button"
             label="Save"
@@ -86,13 +68,13 @@ const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit, submitting }) =>
             secondary
             icon={<i className="material-icons">done</i>}
           />
-        </footer>
+        </div>
       </form>
     </Drawer>
   );
 };
 
-AddBudgetItem.propTypes = {
+AddCategory.propTypes = {
   fields: PropTypes.object,
   actions: PropTypes.object,
   isOpen: PropTypes.bool,
@@ -102,31 +84,30 @@ AddBudgetItem.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isOpen: state.drawer === 'add-budget-item',
+    isOpen: state.drawer === 'add-category',
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      submitNewBudgetItem,
+      submitNewCategory,
       toggleDrawer,
     }, dispatch),
   };
 }
 
 const formConfig = {
-  form: 'add-budget-item',
+  form: 'add-category',
   fields: [
-    'category',
-    'value',
-    'details',
+    'name',
+    'limit',
   ],
-  validate({ category, value }) {
+  validate({ name, limit }) {
     const errors = {};
 
-    if (!category) errors.category = 'Please select a category.';
-    if (!value) errors.value = 'Please enter the cost.';
+    if (!name) errors.name = 'Please enter a name.';
+    if (!limit) errors.limit = 'Please enter the your monthly budget.';
 
     return errors;
   },
@@ -136,4 +117,4 @@ export default reduxForm(
   formConfig,
   mapStateToProps,
   mapDispatchToProps
-)(AddBudgetItem);
+)(AddCategory);

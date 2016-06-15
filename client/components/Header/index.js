@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { toggleNewItemDrawer } from 'ducks/budget.duck';
+import { toggleDrawer } from 'ducks/drawer.duck';
 import '../../scss/header.scss';
 
 function renderHeaderButton({ name, shown, action }) {
@@ -24,12 +24,12 @@ const Header = ({ isAddButtonShown, isBackButtonShown, actions }) => {
       {renderHeaderButton({
         name: 'add',
         shown: isAddButtonShown,
-        action() { actions.toggleNewItemDrawer(true); },
+        action() { actions.toggleDrawer('add-budget-item'); },
       })}
       {renderHeaderButton({
         name: 'back',
         shown: isBackButtonShown,
-        action() { actions.toggleNewItemDrawer(false); },
+        action() { /* TODO */ },
       })}
     </header>
   );
@@ -39,22 +39,23 @@ Header.propTypes = {
   isAddButtonShown: PropTypes.bool,
   isBackButtonShown: PropTypes.bool,
   actions: PropTypes.object,
-}
+};
 
 
 function mapStateToProps(state) {
-  const addingItem = state.budget.get('addingNewItem');
+  const drawerOpen = state.drawer;
+  console.log(state.drawer)
 
   return {
-    isAddButtonShown: !addingItem,
-    isBackButtonShown: addingItem,
+    isAddButtonShown: !drawerOpen,
+    isBackButtonShown: false, // TODO
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      toggleNewItemDrawer,
+      toggleDrawer,
     }, dispatch),
   };
 }

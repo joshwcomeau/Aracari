@@ -2,7 +2,7 @@ import { take, put } from 'redux-saga/effects';
 
 import {
   SUBMIT_NEW_BUDGET_ITEM,
-  toggleNewItemDrawer,
+  toggleDrawer,
   addBudgetItem,
 } from 'ducks/budget.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
@@ -25,7 +25,7 @@ export default function* submitNewBudgetItem() {
     data.value = Math.round(data.value * 100);
 
     // Close the New Item drawer
-    yield put(toggleNewItemDrawer(false));
+    yield put(toggleDrawer());
 
     yield [
       // Reset the form, for the next new budget addition.
