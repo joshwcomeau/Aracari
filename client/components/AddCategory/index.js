@@ -1,15 +1,17 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import { addCategory } from 'ducks/budget.duck';
 import { toggleDrawer } from 'ducks/drawer.duck';
+import ButtonToggleGroup from 'components/ButtonToggleGroup';
 import Drawer from 'components/Drawer';
-import SelectFieldWrapper from 'components/SelectFieldWrapper';
 import TextField from 'material-ui/TextField';
-import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+
 import 'scss/add-category.scss';
+import categories from 'data/categories';
 
 
 const AddCategory = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
@@ -17,35 +19,51 @@ const AddCategory = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
 
   const onSubmit = handleSubmit(actions.addCategory);
 
+  const showCustomNameField = name.value === null;
+
+  const customNameField = (
+    <div className="custom-name">
+      <TextField
+        floatingLabelText="Category Name"
+        value={name.value}
+        onChange={name.onChange}
+        style={{
+          width: '100%',
+          fontFamily: 'inherit',
+        }}
+      />
+    </div>
+  );
+
   return (
     <Drawer
       isOpen={isOpen}
-      onBackdropClick={() => actions.toggleDrawer()}
+      title="Add a New Category"
+      onClose={() => actions.toggleDrawer()}
       className="add-category"
     >
-      <header className="drawer-header">
-        Add a New Category
-        <button onClick={() => actions.toggleDrawer()}>
-          <i className="material-icons">close</i>
-        </button>
-      </header>
-
       <form
         onSubmit={onSubmit}
       >
-        <div className="flex-row with-gutter">
-          <div className="flex-cell">
-            <TextField
-              floatingLabelText="Name"
-              {...name}
-              errorText={name.touched ? name.error : null}
-              style={{
-                width: '100%',
-                fontFamily: 'inherit',
-              }}
+        <div className="flex-row with-gutter with-top-gutter">
+          <div className="flex-cell full">
+            <ButtonToggleGroup
+              buttons={categories}
+              selected={name.value}
+              onClick={name.onChange}
             />
+            <ReactCSSTransitionGroup
+              transitionName="custom-name"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={700}
+            >
+              {showCustomNameField ? customNameField : null}
+            </ReactCSSTransitionGroup>
           </div>
-          <div className="flex-cell">
+        </div>
+
+        <div className="flex-row with-gutter">
+          <div className="flex-cell full">
             <TextField
               type="number"
               step="0.01"

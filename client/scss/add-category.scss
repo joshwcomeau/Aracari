@@ -1,4 +1,99 @@
 @import 'variables';
 
-.add-budget-item {
+.add-category {
+  .category-button {
+    width: 33.3%;
+    display: inline-block;
+    padding: 5px;
+
+    button {
+      position: relative;
+      width: 100%;
+      font-size: 12px !important;
+
+      div {
+        text-align: left;
+        padding-left: 34px;
+      }
+
+      i {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        top: 0;
+        bottom: 0;
+        left: 5px;
+        margin: auto;
+
+      }
+    }
+  }
+
+  .custom-name {
+  }
+
+  .custom-name-enter {
+    opacity: 0;
+    height: 0;
+  }
+  .custom-name-enter.custom-name-enter-active {
+    opacity: 1;
+    height: 72px;
+    transition: 500ms;
+  }
+  .custom-name-leave {
+    opacity: 1;
+    height: 72px;
+  }
+  .custom-name-leave.custom-name-leave-active {
+    opacity: 0;
+    height: 0;
+    transition: 700ms;
+  }
+}
+
+.drawer-enter {
+  .backdrop {
+    opacity: 0;
+  }
+
+  .content {
+    transform: translateY(300px);
+  }
+}
+
+.drawer-enter.drawer-enter-active {
+  .backdrop {
+    opacity: 1;
+    transition: opacity 350ms;
+  }
+
+  .content {
+    transform: translateY(0);
+    transition: transform 450ms cubic-bezier(.32,1.12,.86,.98);
+  }
+}
+
+.drawer-leave {
+  .backdrop {
+    opacity: 1;
+  }
+
+  .content {
+    transform: translateY(0);
+  }
+
+}
+
+.drawer-leave.drawer-leave-active {
+  .backdrop {
+    opacity: 0;
+    transition: opacity 600ms;
+  }
+
+  .content {
+    transform: translateY(300px);
+    transition: transform 250ms cubic-bezier(.46,.14,1,.59);
+  }
+
 }

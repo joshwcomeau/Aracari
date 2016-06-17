@@ -19,17 +19,11 @@ const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit, submitting }) =>
 
   return (
     <Drawer
+      title="Record a New Cost"
       isOpen={isOpen}
-      onBackdropClick={() => actions.toggleDrawer()}
+      onClose={() => actions.toggleDrawer()}
       className="add-budget-item"
     >
-      <header className="drawer-header">
-        Record a New Cost
-        <button onClick={() => actions.toggleDrawer()}>
-          <i className="material-icons">close</i>
-        </button>
-      </header>
-
       <form
         onSubmit={onSubmit}
       >

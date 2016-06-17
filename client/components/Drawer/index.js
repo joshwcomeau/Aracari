@@ -6,17 +6,24 @@ import 'scss/drawer.scss';
 
 
 // eslint-disable-next-line react/prop-types
-const DrawerContents = ({ children, className, onBackdropClick }) => {
+const DrawerContents = ({ children, title, className, onClose }) => {
   const classes = classNames(['drawer', className]);
 
   return (
     <div className={classes}>
       <div
         className="backdrop"
-        onClick={onBackdropClick}
+        onClick={onClose}
       />
       <div className="content">
+        <header className="drawer-header">
+          {title}
+          <button onClick={onClose}>
+            <i className="material-icons">close</i>
+          </button>
+        </header>
         {children}
+        <div className="drawer-footer-spacer" />
       </div>
     </div>
   );
@@ -36,7 +43,7 @@ const Drawer = ({ isOpen, ...props }) => (
 Drawer.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  onBackdropClick: PropTypes.func,
+  onClose: PropTypes.func,
   isOpen: PropTypes.bool,
   springSettings: PropTypes.shape({
     stiffness: PropTypes.number,
