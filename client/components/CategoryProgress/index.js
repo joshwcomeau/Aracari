@@ -93,12 +93,13 @@ CategoryProgress.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   // Find this category in the list
-  const category = state.budget
-    .get('categories')
-    .find(cat => cat.get('value') === ownProps.value);
+  const category = state.budget.categories.find(cat => {
+    console.log("Comparing", cat, ownProps)
+    return cat.value === ownProps.value;
+  });
 
   return {
-    label: category.get('label'),
+    label: category.label,
     budgetProgress: budgetProgressSelector(category),
   };
 }

@@ -1,10 +1,8 @@
 import chai from 'chai';
-import chaiImmutable from 'chai-immutable';
 import equalJSX from 'chai-equal-jsx';
 import sinonChai from 'sinon-chai';
 import { jsdom } from 'jsdom';
 
-chai.use(chaiImmutable);
 chai.use(equalJSX);
 chai.use(sinonChai);
 

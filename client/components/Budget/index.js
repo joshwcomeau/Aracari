@@ -59,9 +59,7 @@ Budget.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  categoryValues: state.budget.get('categories').map(category => (
-    category.get('value')
-  )).toJS(),
+  categoryValues: state.budget.categories.map(category => category.value),
 });
 
 const mapDispatchToProps = dispatch => ({

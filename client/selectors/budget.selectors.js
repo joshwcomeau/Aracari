@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect';
 
-const limitSelector = state => state.get('limit');
-const itemsSelector = state => state.get('items');
+const limitSelector = state => state.limit;
+const itemsSelector = state => state.items;
 
 export const spentSelector = createSelector(
   itemsSelector,
-  items => items.reduce((acc, item) => (acc + item.get('value')), 0)
+  items => items.reduce((acc, item) => (acc + item.value), 0)
 );
 
 export const availableSelector = createSelector(

@@ -1,9 +1,8 @@
-import { fromJS } from 'immutable';
 import slug from 'slug';
 
 import { capitalizeWords } from 'utils/misc.utils';
 
-const initialState = fromJS({
+const initialState = {
   categories: [
     {
       label: 'Food',
@@ -31,7 +30,7 @@ const initialState = fromJS({
       ],
     },
   ],
-});
+};
 
 
 // ////////////////////////
@@ -52,14 +51,18 @@ function budgetCategoryReducer(state, action) {
 
   switch (type) {
     case ADD_BUDGET_ITEM: {
-      if (state.get('value') !== category) {
+      if (state.value !== category) {
         return state;
       }
 
       // Ensure values are always numbers
       data.value = Number(data.value);
 
-      return state.update('items', items => items.push(fromJS({ ...data })));
+
+      return {
+        ...state,
+        items: [...state.items, { ...data }],
+      };
     }
 
     default:
@@ -70,20 +73,25 @@ function budgetCategoryReducer(state, action) {
 export default function budgetReducer(state = initialState, action = {}) {
   switch (action.type) {
     case ADD_CATEGORY: {
-      return state.update('categories', categories => (
-        categories.push(fromJS({
-          label: capitalizeWords(action.label),
-          value: slug(action.label).toLowerCase(),
-          limit: action.limit,
-          items: [],
-        }))
-      ));
+      return {
+        categories: [
+          ...state.categories,
+          {
+            label: capitalizeWords(action.label),
+            value: slug(action.label).toLowerCase(),
+            limit: action.limit,
+            items: [],
+          },
+        ],
+      };
     }
 
     case ADD_BUDGET_ITEM: {
-      return state.update('categories', categories => (
-        categories.map(category => budgetCategoryReducer(category, action))
-      ));
+      return {
+        categories: state.categories.map(category =>
+          budgetCategoryReducer(category, action)
+        ),
+      };
     }
 
     default:

@@ -12,7 +12,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import 'scss/add-budget-item.scss';
 
 
-const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
+const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit }) => {
   const { category, value, details } = fields;
 
   const onSubmit = handleSubmit(actions.submitNewBudgetItem);
@@ -97,6 +97,7 @@ AddBudgetItem.propTypes = {
 function mapStateToProps(state) {
   return {
     isOpen: state.drawer === 'add-budget-item',
+    categories: state.budget.categories,
   };
 }
 

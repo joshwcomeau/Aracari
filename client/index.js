@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
-import immutable from 'immutable';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import configureStore from 'store';
@@ -16,10 +15,6 @@ import 'scss/main.scss';
 // Needed for onTouchTap
 // Check this repo: https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
-
-if (process.env.NODE_ENV !== 'production') {
-  require('immutable-devtools')(immutable);
-}
 
 const store = configureStore();
 
