@@ -15,14 +15,14 @@ export default function* submitNewCategory() {
     // eslint-disable-next-line no-unused-vars
     const { type, data } = action;
 
-    // Figure out whether this is a custom category or a preset
-    const { presetLabel, customLabel, ...otherData } = data;
+    // We have some data cleansing to do:
+    // - Figure out whether the label is a preset or a custom label
+    // - turn the limit into a number in cents
+    const { presetLabel, customLabel, limit } = data;
     const scrubbedData = {
       label: presetLabel === 'custom' ? customLabel : presetLabel,
-      ...otherData,
+      limit: Math.round(limit * 100),
     };
-
-    console.log(data, scrubbedData);
 
     // Capitalize the first letter of every word,
 

@@ -12,10 +12,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import 'scss/add-budget-item.scss';
 
 
-const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit }) => {
+const AddBudgetItem = ({ fields, categories, isOpen, actions, handleSubmit }) => {
   const { category, value, details } = fields;
 
   const onSubmit = handleSubmit(actions.submitNewBudgetItem);
+
+  const menuItems = categories.map(cat => (
+    <MenuItem key={cat.value} value={cat.value} primaryText={cat.label} />
+  ));
 
   return (
     <Drawer
@@ -39,9 +43,7 @@ const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit }) => {
                 fontFamily: 'inherit',
               }}
             >
-              <MenuItem value="food" primaryText="Food" />
-              <MenuItem value="entertainment" primaryText="Entertainment" />
-              <MenuItem value="medication" primaryText="Medication" />
+              {menuItems}
             </SelectFieldWrapper>
           </div>
           <div className="flex-cell one-third">
