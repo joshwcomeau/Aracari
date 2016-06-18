@@ -54,7 +54,7 @@ class CategoryProgress extends Component {
   render() {
     const {
       // eslint-disable-next-line no-unused-vars
-      name, budgetProgress, monthProgress, actions,
+      label, budgetProgress, monthProgress, actions,
     } = this.props;
 
     return (
@@ -64,8 +64,8 @@ class CategoryProgress extends Component {
         lifecycleMethods={['componentDidMount', 'componentDidUpdate']}
       >
         <div className="category-progress" onClick={actions.showAddCost}>
-          <div className="budget-name" ref={el => this.nameElem = el}>
-            {name}
+          <div className="budget-label" ref={el => this.nameElem = el}>
+            {label}
           </div>
 
           <ProgressBar
@@ -85,7 +85,7 @@ class CategoryProgress extends Component {
 }
 
 CategoryProgress.propTypes = {
-  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   budgetProgress: PropTypes.number.isRequired,
   monthProgress: PropTypes.number.isRequired,
   actions: PropTypes.object,
@@ -95,10 +95,10 @@ function mapStateToProps(state, ownProps) {
   // Find this category in the list
   const category = state.budget
     .get('categories')
-    .find(cat => cat.get('slug') === ownProps.slug);
+    .find(cat => cat.get('value') === ownProps.value);
 
   return {
-    name: category.get('name'),
+    label: category.get('label'),
     budgetProgress: budgetProgressSelector(category),
   };
 }

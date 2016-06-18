@@ -5,14 +5,14 @@ import { CategoryProgress } from 'components/CategoryProgress';
 import './story-helpers';
 
 function generateProps({
-  name = 'Food',
-  slug = 'food',
+  label = 'Food',
+  value = 'food',
   budgetProgress = 20,
   monthProgress = 45,
   actions = {},
 } = {}) {
   return {
-    name, slug, budgetProgress, monthProgress, actions,
+    label, value, budgetProgress, monthProgress, actions,
   };
 }
 

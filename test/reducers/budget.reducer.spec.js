@@ -11,12 +11,12 @@ import reducer, {
 } from '../../client/ducks/budget.duck';
 
 function generateCategory({
-  name = 'Food',
-  slug = 'food',
+  label = 'Food',
+  value = 'food',
   limit = 50000,
   items = [],
 } = {}) {
-  return fromJS({ name, slug, limit, items });
+  return fromJS({ label, value, limit, items });
 }
 
 
@@ -27,14 +27,14 @@ describe('Budget reducer', () => {
 
       const state = reducer(initialState);
       const action = addCategory({
-        name: 'Food',
+        label: 'Food',
         limit: 50000,
       });
 
       const expectedState = fromJS({
         categories: [{
-          name: 'Food',
-          slug: 'food',
+          label: 'Food',
+          value: 'food',
           limit: 50000,
           items: [],
         }],
@@ -49,19 +49,19 @@ describe('Budget reducer', () => {
 
       const state = reducer(initialState);
       const action = addCategory({
-        name: 'Entertainment',
+        label: 'Entertainment',
         limit: 10000,
       });
 
       const expectedState = fromJS({
         categories: [{
-          name: 'Food',
-          slug: 'food',
+          label: 'Food',
+          value: 'food',
           limit: 50000,
           items: [],
         }, {
-          name: 'Entertainment',
-          slug: 'entertainment',
+          label: 'Entertainment',
+          value: 'entertainment',
           limit: 10000,
           items: [],
         }],
@@ -77,8 +77,8 @@ describe('Budget reducer', () => {
       const initialState = fromJS({ categories: [
         generateCategory(),
         generateCategory({
-          name: 'Entertainment',
-          slug: 'entertainment',
+          label: 'Entertainment',
+          value: 'entertainment',
         })
       ] });
 
@@ -92,16 +92,16 @@ describe('Budget reducer', () => {
       const expectedState = fromJS({
         categories: [
           {
-            name: 'Food',
-            slug: 'food',
+            label: 'Food',
+            value: 'food',
             limit: 50000,
             items: [
               { details: 'groceries', value: 25000 },
             ],
           },
           {
-            name: 'Entertainment',
-            slug: 'entertainment',
+            label: 'Entertainment',
+            value: 'entertainment',
             limit: 50000,
             items: [],
           },

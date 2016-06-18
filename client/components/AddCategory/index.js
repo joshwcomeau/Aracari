@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import { addCategory } from 'ducks/budget.duck';
+import { submitNewCategory } from 'ducks/budget.duck';
 import { toggleDrawer } from 'ducks/drawer.duck';
 import ButtonToggleGroup from 'components/ButtonToggleGroup';
 import Drawer from 'components/Drawer';
@@ -15,18 +15,18 @@ import categories from 'data/categories';
 
 
 const AddCategory = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
-  const { name, limit } = fields;
+  const { label, limit } = fields;
 
-  const onSubmit = handleSubmit(actions.addCategory);
+  const onSubmit = handleSubmit(actions.submitNewCategory);
 
-  const showCustomNameField = name.value === null;
+  const showCustomLabelField = label.value === null;
 
-  const customNameField = (
-    <div className="custom-name">
+  const customLabelField = (
+    <div className="custom-label">
       <TextField
         floatingLabelText="Category Name"
-        value={name.value}
-        onChange={name.onChange}
+        value={label.value}
+        onChange={label.onChange}
         style={{
           width: '100%',
           fontFamily: 'inherit',
@@ -49,15 +49,15 @@ const AddCategory = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
           <div className="flex-cell full">
             <ButtonToggleGroup
               buttons={categories}
-              selected={name.value}
-              onClick={name.onChange}
+              selected={label.value}
+              onClick={label.onChange}
             />
             <ReactCSSTransitionGroup
-              transitionName="custom-name"
+              transitionName="custom-label"
               transitionEnterTimeout={500}
               transitionLeaveTimeout={700}
             >
-              {showCustomNameField ? customNameField : null}
+              {showCustomLabelField ? customLabelField : null}
             </ReactCSSTransitionGroup>
           </div>
         </div>
@@ -109,7 +109,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      addCategory,
+      submitNewCategory,
       toggleDrawer,
     }, dispatch),
   };
@@ -118,13 +118,14 @@ function mapDispatchToProps(dispatch) {
 const formConfig = {
   form: 'add-category',
   fields: [
-    'name',
+    'presetLabel',
+    'customLabel',
     'limit',
   ],
-  validate({ name, limit }) {
+  validate({ label, limit }) {
     const errors = {};
 
-    if (!name) errors.name = 'Please enter a name.';
+    if (!label) errors.label = 'Please enter a label.';
     if (!limit) errors.limit = 'Please enter the your monthly budget.';
 
     return errors;

@@ -15,6 +15,10 @@ export default function* submitNewCategory() {
     // eslint-disable-next-line no-unused-vars
     const { type, data } = action;
 
+    // Capitalize the first letter of every word,
+
+    console.log("DATA", data)
+
     // Close the New Item drawer
     yield put(toggleDrawer());
 

@@ -1,13 +1,13 @@
 import { fromJS } from 'immutable';
 import slug from 'slug';
 
-import { reset } from 'redux-form';
+import { capitalizeWords } from 'utils/misc.utils';
 
 const initialState = fromJS({
   categories: [
     {
-      name: 'Food',
-      slug: 'food',
+      label: 'Food',
+      value: 'food',
       limit: 50000,
       items: [
         { details: 'Hamburger', value: 1000 },
@@ -15,16 +15,16 @@ const initialState = fromJS({
         { details: 'Groceries', value: 9000 },
       ],
     }, {
-      name: 'Entertainment',
-      slug: 'entertainment',
+      label: 'Entertainment',
+      value: 'entertainment',
       limit: 20000,
       items: [
         { details: 'Movies', value: 3000 },
         { details: 'Video Game', value: 14000 },
       ],
     }, {
-      name: 'Medication',
-      slug: 'medication',
+      label: 'Medication',
+      value: 'medication',
       limit: 15000,
       items: [
         { details: 'Pills', value: 1000 },
@@ -52,7 +52,7 @@ function budgetCategoryReducer(state, action) {
 
   switch (type) {
     case ADD_BUDGET_ITEM: {
-      if (state.get('slug') !== category) {
+      if (state.get('value') !== category) {
         return state;
       }
 
@@ -72,8 +72,8 @@ export default function budgetReducer(state = initialState, action = {}) {
     case ADD_CATEGORY: {
       return state.update('categories', categories => (
         categories.push(fromJS({
-          name: action.name,
-          slug: slug(action.name).toLowerCase(),
+          label: capitalizeWords(action.label),
+          value: slug(action.label).toLowerCase(),
           limit: action.limit,
           items: [],
         }))
@@ -97,7 +97,7 @@ export default function budgetReducer(state = initialState, action = {}) {
 // //////////////////////
 export const submitNewBudgetItem = data => ({
   // NOTE: This action does not directly affect the state. It is listened to
-  // by the saga of the same name, which dispatches other actions.
+  // by the saga of the same label, which dispatches other actions.
   type: SUBMIT_NEW_BUDGET_ITEM,
   data,
 });
@@ -107,15 +107,14 @@ export const addBudgetItem = data => ({
   ...data,
 });
 
-export const addCategory = ({ name, limit }) => ({
-  type: ADD_CATEGORY,
-  name,
-  limit,
-});
-
 export const submitNewCategory = data => ({
   // NOTE: This action does not directly affect the state. It is listened to
   // by the saga of the same name, which dispatches other actions.
   type: SUBMIT_NEW_CATEGORY,
   data,
+});
+
+export const addCategory = data => ({
+  type: ADD_CATEGORY,
+  ...data,
 });
