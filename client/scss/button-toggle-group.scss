@@ -11,6 +11,13 @@
       width: 100%;
       font-size: 12px !important;
       color: $dark-gray !important;
+      text-align: left !important;
+      padding-left: 34px !important;
+
+      &:disabled {
+        background-color: rgba(0,0,0,0.05) !important;
+        opacity: 0.5;
+      }
 
       &.selected {
         background-color: $blue !important;
@@ -19,8 +26,7 @@
       }
 
       div {
-        text-align: left;
-        padding-left: 34px;
+
       }
 
       i {

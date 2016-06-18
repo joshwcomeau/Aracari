@@ -11,6 +11,7 @@ class ButtonToggleGroup extends Component {
         <FlatButton
           rippleColor="rgb(255, 255, 255)"
           hoverColor="rgb(255, 255, 255)"
+          disabled={button.disabled}
           className={this.props.selected === button.value ? 'selected' : null}
           onClick={() => this.props.onClick(button.value)}
         >

@@ -14,19 +14,21 @@ import 'scss/add-category.scss';
 import categories from 'data/categories';
 
 
-const AddCategory = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
-  const { label, limit } = fields;
+const AddCategory = ({
+  fields, isOpen, currentCategories, actions, handleSubmit,
+}) => {
+  const { presetLabel, customLabel, limit } = fields;
 
   const onSubmit = handleSubmit(actions.submitNewCategory);
 
-  const showCustomLabelField = label.value === null;
+  const showCustomLabelField = presetLabel.value === 'custom';
 
   const customLabelField = (
     <div className="custom-label">
       <TextField
         floatingLabelText="Category Name"
-        value={label.value}
-        onChange={label.onChange}
+        value={customLabel.value}
+        onChange={customLabel.onChange}
         style={{
           width: '100%',
           fontFamily: 'inherit',
@@ -34,6 +36,16 @@ const AddCategory = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
       />
     </div>
   );
+
+  // We want to disable any categories the user has already added.
+  const categoriesWithDisabled = categories.map(category => {
+    if (currentCategories.indexOf(category.value) !== -1) {
+      category.disabled = true;
+    }
+    return category;
+  });
+
+  console.log(categoriesWithDisabled);
 
   return (
     <Drawer
@@ -48,9 +60,9 @@ const AddCategory = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
         <div className="flex-row with-gutter with-top-gutter">
           <div className="flex-cell full">
             <ButtonToggleGroup
-              buttons={categories}
-              selected={label.value}
-              onClick={label.onChange}
+              buttons={categoriesWithDisabled}
+              selected={presetLabel.value}
+              onClick={presetLabel.onChange}
             />
             <ReactCSSTransitionGroup
               transitionName="custom-label"
@@ -96,6 +108,7 @@ AddCategory.propTypes = {
   fields: PropTypes.object,
   actions: PropTypes.object,
   isOpen: PropTypes.bool,
+  currentCategories: PropTypes.arrayOf(PropTypes.string),
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
 };
@@ -103,6 +116,9 @@ AddCategory.propTypes = {
 function mapStateToProps(state) {
   return {
     isOpen: state.drawer === 'add-category',
+    currentCategories: state.budget.get('categories').map(cat =>
+      cat.get('value')
+    ),
   };
 }
 
@@ -122,11 +138,18 @@ const formConfig = {
     'customLabel',
     'limit',
   ],
-  validate({ label, limit }) {
+  validate({ presetLabel, customLabel, limit }) {
     const errors = {};
 
-    if (!label) errors.label = 'Please enter a label.';
-    if (!limit) errors.limit = 'Please enter the your monthly budget.';
+    if (!presetLabel) {
+      errors.presetLabel = 'Please select a label.';
+    }
+    if (presetLabel === 'custom' && !customLabel) {
+      errors.customLabel = 'Please choose a name for your custom label.';
+    }
+    if (!limit) {
+      errors.limit = 'Please enter the your monthly budget.';
+    }
 
     return errors;
   },

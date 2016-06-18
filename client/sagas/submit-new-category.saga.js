@@ -15,6 +15,15 @@ export default function* submitNewCategory() {
     // eslint-disable-next-line no-unused-vars
     const { type, data } = action;
 
+    // Figure out whether this is a custom category or a preset
+    const { presetLabel, customLabel, ...otherData } = data;
+    const scrubbedData = {
+      label: presetLabel === 'custom' ? customLabel : presetLabel,
+      ...otherData,
+    };
+
+    console.log(data, scrubbedData);
+
     // Capitalize the first letter of every word,
 
     // Close the New Item drawer
@@ -25,7 +34,7 @@ export default function* submitNewCategory() {
       put(reset('add-category')),
 
       // Add the item to the store
-      put(addCategory(data)),
+      put(addCategory(scrubbedData)),
     ];
 
     // Wait for the drawer to close, and show the snackbar
