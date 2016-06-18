@@ -1,61 +1,60 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import ReactTransitionGroup from 'react-addons-transition-group';
+import dynamics from 'dynamics.js';
 
 import 'scss/drawer.scss';
 
 
 // eslint-disable-next-line react/prop-types
 class Drawer extends Component {
+  // eslint-disable-next-line react/sort-comp
   componentWillEnter(callback) {
-    // On enter, we need to figure out the drawer's height, translate it down
-    // by that amount, and then animate it back up.
     const currentHeight = this.getDrawerHeight();
     this.contentElem.style.transform = `translateY(${currentHeight}px)`;
+    this.backdropElem.style.opacity = 0;
 
-    // Move it up 10px at a time until it's in the right place
-    this.slideDrawer({
-      start: currentHeight,
-      end: 0,
-      direction: 'up',
-      callback,
+    dynamics.animate(this.contentElem, {
+      translateY: 0,
+    }, {
+      type: dynamics.spring,
+      duration: 1200,
+      frequency: 1,
+      friction: 377,
+      anticipationSize: 100,
+      complete: callback,
+    });
+
+    dynamics.animate(this.backdropElem, {
+      opacity: 1,
+    }, {
+      type: dynamics.easeInOut,
+      duration: 800,
+      friction: 250,
     });
   }
 
   componentWillLeave(callback) {
     const currentHeight = this.getDrawerHeight();
 
-    this.slideDrawer({
-      start: 0,
-      end: currentHeight,
-      direction: 'down',
-      callback,
+    dynamics.animate(this.contentElem, {
+      translateY: currentHeight,
+    }, {
+      type: dynamics.spring,
+      duration: 700,
+      frequency: 1,
+      friction: 27,
+      complete: callback,
     });
-  }
 
-  slideDrawer({ start, end, direction = 'up', callback }) {
-    window.requestAnimationFrame(() => {
-      const finished = direction === 'up' ? start <= end : start >= end;
-
-      if (finished) { return callback(); }
-
-      const newOffset = direction === 'up' ? start - 10 : start + 10;
-      this.contentElem.style.transform = `translateY(${newOffset}px)`;
-
-      return this.slideDrawer({
-        start: newOffset,
-        end,
-        direction,
-        callback,
-      });
+    dynamics.animate(this.backdropElem, {
+      opacity: 0,
+    }, {
+      type: dynamics.easeInOut,
+      duration: 800,
+      friction: 250,
     });
-  }
 
-  componentDidMount() {
-    this.drawerHeight = this.getDrawerHeight();
-  }
-  componentDidUpdate() {
-    this.drawerHeight = this.getDrawerHeight();
   }
 
   getDrawerHeight() {
@@ -70,9 +69,14 @@ class Drawer extends Component {
       <div className={classes}>
         <div
           className="backdrop"
+          ref={el => { this.backdropElem = el; }}
           onClick={this.props.onClose}
         />
-        <div className="content" ref={el => { this.contentElem = el; }}>
+
+        <div
+          className="content"
+          ref={el => { this.contentElem = el; }}
+        >
           <header className="drawer-header">
             {title}
             <button onClick={onClose}>
@@ -107,5 +111,9 @@ const DrawerWrapper = props => (
     {props.isOpen ? <Drawer {...props} /> : null}
   </ReactTransitionGroup>
 );
+
+DrawerWrapper.propTypes = {
+  isOpen: PropTypes.bool,
+};
 
 export default DrawerWrapper;

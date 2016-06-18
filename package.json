@@ -21,6 +21,7 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "classnames": "^2.2.1",
+    "dynamics.js": "^1.1.0",
     "history": "~1.17.0",
     "immutable": "^3.7.6",
     "isomorphic-fetch": "^2.2.0",
