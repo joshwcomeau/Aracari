@@ -1,36 +1,27 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { toggleDrawer } from 'ducks/drawer.duck';
+import HeaderButton from 'components/HeaderButton';
 import '../../scss/header.scss';
 
-function renderHeaderButton({ name, shown, action }) {
-  const buttonClasses = classNames(name, { shown });
-
-  return (
-    <button className={buttonClasses} onClick={action}>
-      <i className="material-icons">{name}</i>
-    </button>
-  );
-}
 
 const Header = ({ isAddButtonShown, isBackButtonShown, actions }) => {
   return (
     <header id="header">
       Aracari
 
-      {renderHeaderButton({
-        name: 'add',
-        shown: isAddButtonShown,
-        action() { actions.toggleDrawer('add-budget-item'); },
-      })}
-      {renderHeaderButton({
-        name: 'back',
-        shown: isBackButtonShown,
-        action() { /* TODO */ },
-      })}
+      <HeaderButton
+        name="add"
+        shown={isAddButtonShown}
+        action={() => { actions.toggleDrawer('add-budget-item'); }}
+      />
+      <HeaderButton
+        name="back"
+        shown={isBackButtonShown}
+        action={() => { /* TODO */ }}
+      />
     </header>
   );
 };

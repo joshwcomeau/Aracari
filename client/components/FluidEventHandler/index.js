@@ -52,11 +52,11 @@ FluidEventHandler.propTypes = {
     if (typeof methodsProvided === 'undefined') {
       return;
     } else if (typeof methodsProvided === 'string') {
-      let methodsProvided = [methodsProvided];
+      methodsProvided = [methodsProvided];
     }
 
     if (methodsProvided && !Array.isArray(methodsProvided)) {
-      return new Error(`Please supply an array to lifecycleMethods, in ${componentName}`);
+      throw new Error(`Please supply an array to lifecycleMethods, in ${componentName}`);
     }
 
     const validLifecycleMethods = [
@@ -66,13 +66,13 @@ FluidEventHandler.propTypes = {
 
     // Ensure that all methods supplied are valid.
     if (methodsProvided.find(method => (method !== validLifecycleMethods))) {
-      return new Error(`
+      throw new Error(`
         Invalid lifecycle method provided to ${componentName}.
         Acceptable options are ${validLifecycleMethods.join(', ')}.
         You provided ${methodsProvided.join(', ')}.
       `);
     }
-  }
+  },
 };
 
 FluidEventHandler.defaultProps = {

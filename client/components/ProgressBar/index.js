@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import { Motion, spring } from 'react-motion';
-import throttle from 'lodash/throttle';
 
 import FluidEventHandler from 'components/FluidEventHandler';
 import 'scss/progress-bar.scss';

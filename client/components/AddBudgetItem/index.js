@@ -90,6 +90,7 @@ const AddBudgetItem = ({ fields, categories, isOpen, actions, handleSubmit }) =>
 
 AddBudgetItem.propTypes = {
   fields: PropTypes.object,
+  categories: PropTypes.array,
   actions: PropTypes.object,
   isOpen: PropTypes.bool,
   handleSubmit: PropTypes.func,

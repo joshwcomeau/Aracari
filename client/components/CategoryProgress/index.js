@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import throttle from 'lodash/throttle';
 
 import { getHSLBudgetColour } from 'utils/colour.utils';
 import { budgetProgressSelector } from 'selectors/budget.selectors';

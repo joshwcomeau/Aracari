@@ -8,7 +8,7 @@ import Snackbar from 'components/Snackbar';
 
 export default function HomeBase(DevTools = null) {
   const Home = (props) => {
-    const { children, routes } = props;
+    const { children } = props;
 
     let classes = classNames({
       'wrapped-for-devtools': process.env.NODE_ENV !== 'production',
