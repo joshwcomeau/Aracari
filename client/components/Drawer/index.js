@@ -14,34 +14,40 @@ class Drawer extends Component {
     this.contentElem.style.transform = `translateY(${currentHeight}px)`;
     this.backdropElem.style.opacity = 0;
 
+    // I want the duration to be dependent on the size of the element.
+    // Let's assume 3x the size for now?
+    const drawerAnimateDuration = currentHeight * 3;
+
     dynamics.animate(this.contentElem, {
       translateY: 0,
     }, {
       type: dynamics.spring,
-      duration: 1200,
+      duration: drawerAnimateDuration,
       frequency: 1,
       friction: 377,
-      anticipationSize: 100,
+      anticipationSize: 10,
       complete: callback,
     });
 
     dynamics.animate(this.backdropElem, {
       opacity: 1,
     }, {
-      type: dynamics.easeInOut,
-      duration: 800,
-      friction: 250,
+      type: dynamics.easeOut,
+      duration: drawerAnimateDuration * 0.75,
+      friction: 100,
     });
   }
 
   componentWillLeave(callback) {
     const currentHeight = this.getDrawerHeight();
 
+    const drawerAnimateDuration = currentHeight * 1.5;
+
     dynamics.animate(this.contentElem, {
       translateY: currentHeight,
     }, {
       type: dynamics.spring,
-      duration: 700,
+      duration: drawerAnimateDuration,
       frequency: 1,
       friction: 27,
       complete: callback,
@@ -51,10 +57,9 @@ class Drawer extends Component {
       opacity: 0,
     }, {
       type: dynamics.easeInOut,
-      duration: 800,
-      friction: 250,
+      duration: drawerAnimateDuration,
+      friction: 500,
     });
-
   }
 
   getDrawerHeight() {
