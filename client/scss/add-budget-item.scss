@@ -1,4 +1,10 @@
 @import 'variables';
 
 .add-budget-item {
+  // Stupid material design and its bugs
+  div[name=category] > div:first-child > div:nth-child(2):before {
+    content: '.';
+    color: transparent;
+    margin-left: -4px;
+  }
 }
