@@ -17,8 +17,6 @@ export default function* submitNewCategory() {
 
     // Capitalize the first letter of every word,
 
-    console.log("DATA", data)
-
     // Close the New Item drawer
     yield put(toggleDrawer());
 

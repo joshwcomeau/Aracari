@@ -63,5 +63,9 @@ $budget-height: 60px;
     z-index: 2;
     font-size: 13px;
     font-weight: bold;
+    // This padding is important:
+    // The "now" date line will be cut off by this label, but if the label
+    // doesn't have any padding, that line will run right beside it, looks bad.
+    padding: 0 5px;
   }
 }
