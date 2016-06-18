@@ -14,42 +14,37 @@ class Drawer extends Component {
     this.contentElem.style.transform = `translateY(${currentHeight}px)`;
     this.backdropElem.style.opacity = 0;
 
-    // I want the duration to be dependent on the size of the element.
-    // Let's assume 3x the size for now?
-    const drawerAnimateDuration = currentHeight * 3;
-
     dynamics.animate(this.contentElem, {
       translateY: 0,
     }, {
       type: dynamics.spring,
-      duration: drawerAnimateDuration,
-      frequency: 1,
-      friction: 377,
-      anticipationSize: 10,
-      complete: callback,
+      duration: 2000,
+      frequency: 336,
+      friction: 490,
+      anticipationSize: 50,
     });
 
     dynamics.animate(this.backdropElem, {
       opacity: 1,
     }, {
       type: dynamics.easeOut,
-      duration: drawerAnimateDuration * 0.75,
+      duration: 700,
       friction: 100,
     });
+
+    callback();
   }
 
   componentWillLeave(callback) {
     const currentHeight = this.getDrawerHeight();
 
-    const drawerAnimateDuration = currentHeight * 1.5;
-
     dynamics.animate(this.contentElem, {
       translateY: currentHeight,
     }, {
       type: dynamics.spring,
-      duration: drawerAnimateDuration,
-      frequency: 1,
-      friction: 27,
+      duration: 500,
+      frequency: 11,
+      friction: 35,
       complete: callback,
     });
 
@@ -57,7 +52,7 @@ class Drawer extends Component {
       opacity: 0,
     }, {
       type: dynamics.easeInOut,
-      duration: drawerAnimateDuration,
+      duration: 500,
       friction: 500,
     });
   }
@@ -82,14 +77,15 @@ class Drawer extends Component {
           className="content"
           ref={el => { this.contentElem = el; }}
         >
-          <header className="drawer-header">
+          <header className="header">
             {title}
             <button onClick={onClose}>
               <i className="material-icons">close</i>
             </button>
           </header>
           {children}
-          <div className="drawer-footer-spacer" />
+          <div className="footer-spacer" />
+          <div className="bleed" />
         </div>
       </div>
     );

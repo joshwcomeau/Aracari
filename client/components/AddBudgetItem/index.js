@@ -72,7 +72,7 @@ const AddBudgetItem = ({ fields, isOpen, actions, handleSubmit, submitting }) =>
           </div>
         </div>
 
-        <footer className="drawer-footer">
+        <footer className="footer">
           <RaisedButton
             className="submit-button"
             label="Save"

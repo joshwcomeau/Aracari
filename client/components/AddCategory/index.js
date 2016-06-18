@@ -78,7 +78,7 @@ const AddCategory = ({ fields, isOpen, actions, handleSubmit, submitting }) => {
           </div>
         </div>
 
-        <div className="drawer-footer">
+        <div className="footer">
           <RaisedButton
             className="submit-button"
             label="Save"
