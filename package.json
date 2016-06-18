@@ -30,6 +30,7 @@
     "nconf": "^0.8.4",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
+    "react-addons-transition-group": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-flip-move": "^2.3.0",
     "react-motion": "^0.4.4",
