@@ -120,6 +120,7 @@ const formConfig = {
     'value',
     'details',
   ],
+  touchOnBlur: false,
   validate({ category, value }) {
     const errors = {};
 

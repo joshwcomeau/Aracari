@@ -1,43 +1,44 @@
 @import 'variables';
 
 #header {
-  position: relative;
-  background-color: $blue;
-  border-bottom: 2px solid $offwhite;
-  color: #FFF;
-  text-align: center;
-  font-weight: bold;
-  font-size: 20px;
-  height: $header-height;
-  line-height: $header-height;
-  overflow: hidden;
+  z-index: 2 !important;
 
-  button {
+  h1 {
     position: absolute;
-    top: $header-height;
-    bottom: 0;
-    background: transparent;
-    border: 0;
-    cursor: pointer;
+    top: 0;
+    left: 50px;
+    right: 50px;
+
+    height: 64px;
+    line-height: 64px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
     color: $white;
-    outline: none;
-    transition: 500ms;
+  }
+  & > div {
+    margin-top: 0 !important;
+    margin-right: -24px !important;
+  }
+  button {
+    padding: 16px !important;
+    width: 64px !important;
+    height: 64px !important;
+    line-height: 32px !important;
 
-    i { font-size: 32px; }
-
-    &.shown {
-      top: 0;
-      transition: 350ms;
+    .material-icons {
+      font-size: 32px !important;
     }
   }
-
-  .add {
-    right: 12px;
-  }
-
-  .back {
-    left: 12px;
-
-
-  }
+  // button {
+  //   position: absolute !important;
+  //   top: 0;
+  //   bottom: 0;
+  //   width: $header-height !important;
+  //   min-width: $header-height !important;
+  //   height: $header-height !important;
+  //   line-height: $header-height !important;
+  //
+  //   i { font-size: 32px !important; }
+  // }
 }

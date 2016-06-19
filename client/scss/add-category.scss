@@ -35,12 +35,12 @@
   .custom-label {
     position: absolute;
     left: 33.3%;
-    bottom: -2px;
+    top: 80px;
     width: 66%;
     padding: 0 5px;
     animation: fadeIn 500ms;
 
-    div {
+    div:first-of-type {
       font-size: 14px !important;
     }
   }

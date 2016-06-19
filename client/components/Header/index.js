@@ -3,44 +3,41 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { toggleDrawer } from 'ducks/drawer.duck';
-import HeaderButton from 'components/HeaderButton';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+
 import '../../scss/header.scss';
 
 
-const Header = ({ isAddButtonShown, isBackButtonShown, actions }) => {
+const Header = ({ actions }) => {
   return (
-    <header id="header">
-      Aracari
-
-      <HeaderButton
-        name="add"
-        shown={isAddButtonShown}
-        action={() => { actions.toggleDrawer('add-budget-item'); }}
-      />
-      <HeaderButton
-        name="back"
-        shown={isBackButtonShown}
-        action={() => { /* TODO */ }}
-      />
-    </header>
+    <AppBar
+      id="header"
+      style={{ fontFamily: 'inherit' }}
+      zDepth={0}
+      iconElementRight={
+        <IconButton onTouchTap={() => actions.toggleDrawer('add-budget-item')}>
+          <i
+            className="material-icons"
+            style={{ fontSize: '32px', lineHeight: '32px' }}
+          >
+            add
+          </i>
+        </IconButton>
+      }
+      iconStyleRight={{
+        fontSize: '30px',
+      }}
+      showMenuIconButton={false}
+    >
+      <h1>Aracari</h1>
+    </AppBar>
   );
 };
 
 Header.propTypes = {
-  isAddButtonShown: PropTypes.bool,
-  isBackButtonShown: PropTypes.bool,
   actions: PropTypes.object,
 };
-
-
-function mapStateToProps(state) {
-  const drawerOpen = state.drawer;
-
-  return {
-    isAddButtonShown: !drawerOpen,
-    isBackButtonShown: false, // TODO
-  };
-}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -50,4 +47,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(Header);

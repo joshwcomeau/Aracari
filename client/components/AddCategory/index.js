@@ -20,6 +20,8 @@ const AddCategory = ({
 }) => {
   const { presetLabel, customLabel, limit } = fields;
 
+  console.log("TOuched?", limit.touched)
+
   const onSubmit = handleSubmit(actions.submitNewCategory);
 
   const showCustomLabelField = presetLabel.value === 'custom';
@@ -28,6 +30,7 @@ const AddCategory = ({
     <div className="custom-label">
       <TextField
         hintText="Category Name"
+        errorText={customLabel.touched ? customLabel.error : null}
         value={customLabel.value}
         onChange={customLabel.onChange}
         style={{
@@ -37,6 +40,10 @@ const AddCategory = ({
       />
     </div>
   );
+
+  const presetLabelError = (
+    <div className="error-text">{presetLabel.error}</div>
+  )
 
   // We want to disable any categories the user has already added.
   const categoriesWithDisabled = categories.map(category => {
@@ -66,6 +73,8 @@ const AddCategory = ({
             >
               {showCustomLabelField ? customLabelField : null}
             </ButtonToggleGroup>
+
+            {presetLabel.touched && presetLabel.error ? presetLabelError : null}
           </div>
         </div>
 
@@ -132,6 +141,7 @@ const formConfig = {
     'customLabel',
     'limit',
   ],
+  touchOnBlur: false,
   validate({ presetLabel, customLabel, limit }) {
     const errors = {};
 
@@ -144,6 +154,8 @@ const formConfig = {
     if (!limit) {
       errors.limit = 'Please enter the your monthly budget.';
     }
+
+    console.log("ERRORS", errors);
 
     return errors;
   },
