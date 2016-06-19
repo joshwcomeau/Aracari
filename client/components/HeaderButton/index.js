@@ -5,7 +5,7 @@ const HeaderButton = ({ name, shown, action }) => {
   const buttonClasses = classNames(name, { shown });
 
   return (
-    <button className={buttonClasses} onClick={action}>
+    <button className={buttonClasses} onTouchTap={action}>
       <i className="material-icons">{name}</i>
     </button>
   );

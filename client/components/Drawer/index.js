@@ -1,18 +1,48 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import ReactTransitionGroup from 'react-addons-transition-group';
 import dynamics from 'dynamics.js';
 
 import 'scss/drawer.scss';
 
-
-// eslint-disable-next-line react/prop-types
 class Drawer extends Component {
-  // eslint-disable-next-line react/sort-comp
-  componentWillEnter(callback) {
+  constructor(props) {
+    super(props);
+
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
+
+    this.state = {
+      isOpen: typeof props.isOpen !== 'undefined' ? props.isOpen : false,
+      isTransitioning: false,
+    };
+  }
+
+  componentDidMount() {
     const currentHeight = this.getDrawerHeight();
     this.contentElem.style.transform = `translateY(${currentHeight}px)`;
-    this.backdropElem.style.opacity = 0;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isOpen && !this.state.isOpen) {
+      this.open();
+    }
+
+    if (nextProps.isOpen !== this.state.isOpen) {
+      this.setState({
+        isOpen: nextProps.isOpen,
+      });
+    }
+  }
+
+  getDrawerHeight() {
+    return this.contentElem && this.contentElem.offsetHeight;
+  }
+
+  open() {
+    this.setState({
+      isTransitioning: true,
+      isOpen: true,
+    });
 
     dynamics.animate(this.contentElem, {
       translateY: 0,
@@ -21,21 +51,18 @@ class Drawer extends Component {
       duration: 2000,
       frequency: 336,
       friction: 490,
-      anticipationSize: 50,
+      complete: () => this.setState({ isTransitioning: false }),
     });
-
-    dynamics.animate(this.backdropElem, {
-      opacity: 1,
-    }, {
-      type: dynamics.easeOut,
-      duration: 700,
-      friction: 100,
-    });
-
-    callback();
   }
 
-  componentWillLeave(callback) {
+  close() {
+    // if (this.state.isTransitioning) { return; }
+
+    this.setState({
+      isTransitioning: true,
+      isOpen: false,
+    });
+
     const currentHeight = this.getDrawerHeight();
 
     dynamics.animate(this.contentElem, {
@@ -45,53 +72,61 @@ class Drawer extends Component {
       duration: 500,
       frequency: 11,
       friction: 35,
-      complete: callback,
-    });
-
-    dynamics.animate(this.backdropElem, {
-      opacity: 0,
-    }, {
-      type: dynamics.easeInOut,
-      duration: 500,
-      friction: 500,
+      complete: () => {
+        this.setState({ isTransitioning: false });
+        this.props.onClose();
+      },
     });
   }
 
-  getDrawerHeight() {
-    return this.contentElem && this.contentElem.offsetHeight;
+  renderContent() {
+    const { title, children } = this.props;
+
+    return (
+      <div
+        className="content"
+        ref={el => { this.contentElem = el; }}
+      >
+        <header className="header">
+          {title}
+          <button onTouchTap={this.close}>
+            <i className="material-icons">close</i>
+          </button>
+        </header>
+        {children}
+        <div className="footer-spacer" />
+        <div className="bleed" />
+      </div>
+    );
+  }
+
+  renderBackdrop() {
+    const classes = classNames('backdrop', {
+      'is-open': this.state.isOpen,
+      'is-closed': !this.state.isOpen,
+      'is-transitioning': this.state.isTransitioning,
+    });
+
+    return (
+      <div
+        className={classes}
+        ref={el => { this.backdropElem = el; }}
+        onTouchTap={this.close}
+      />
+    );
   }
 
   render() {
-    const { title, children, className, onClose } = this.props;
-    const classes = classNames(['drawer', className]);
+    const classes = classNames(['drawer', this.props.className]);
 
     return (
       <div className={classes}>
-        <div
-          className="backdrop"
-          ref={el => { this.backdropElem = el; }}
-          onClick={this.props.onClose}
-        />
-
-        <div
-          className="content"
-          ref={el => { this.contentElem = el; }}
-        >
-          <header className="header">
-            {title}
-            <button onClick={onClose}>
-              <i className="material-icons">close</i>
-            </button>
-          </header>
-          {children}
-          <div className="footer-spacer" />
-          <div className="bleed" />
-        </div>
+        {this.renderBackdrop()}
+        {this.renderContent()}
       </div>
     );
   }
 }
-
 
 Drawer.propTypes = {
   children: PropTypes.node,
@@ -105,16 +140,4 @@ Drawer.propTypes = {
   }),
 };
 
-Drawer.defaultProps = {};
-
-const DrawerWrapper = props => (
-  <ReactTransitionGroup>
-    {props.isOpen ? <Drawer {...props} /> : null}
-  </ReactTransitionGroup>
-);
-
-DrawerWrapper.propTypes = {
-  isOpen: PropTypes.bool,
-};
-
-export default DrawerWrapper;
+export default Drawer;

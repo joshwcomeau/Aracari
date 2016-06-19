@@ -1,0 +1,40 @@
+@keyframes fadeIn {
+  from { opacity: 0.01 }
+  to { opacity: 1 }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1 }
+  to { opacity: 0.01 }
+}
+
+
+@keyframes teleportAndFadeIn {
+  0% {
+    top: 100%;
+    opacity: 0.01;
+  }
+  1% {
+    top: 0;
+    opacity: 0.01;
+  }
+  100% {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes teleportAndFadeOut {
+  0% {
+    top: 0;
+    opacity: 1;
+  }
+  99% {
+    top: 0;
+    opacity: 0.01;
+  }
+  100% {
+    top: 100%;
+    opacity: 0.01;
+  }
+}

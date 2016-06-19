@@ -2,31 +2,39 @@
 
 .drawer {
   position: absolute;
-  z-index: 2;
-  top: $header-height;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
+  z-index: 10;
 
   .backdrop {
-    position: absolute;
+    position: fixed;
     z-index: 1;
-    top: 0;
+    top: 100%;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.5);
+    will-change: opacity;
+
+    &.is-open {
+      top: 0;
+      animation: fadeIn 400ms forwards;
+    }
+    &.is-closed {
+      top: 100%;
+      animation: fadeOut 400ms forwards;
+    }
+    &.is-transitioning {
+      top: 0 !important;
+    }
   }
 
   .content {
-    position: absolute;
+    position: fixed;
     z-index: 2;
     left: 0;
     right: 0;
     bottom: 0;
     background: $white;
-    will-change: true;
+    will-change: transform;
   }
 
   .header {

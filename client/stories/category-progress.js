@@ -46,7 +46,7 @@ class CategoryProgressController extends Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.updateAmountSpent()}>
+        <button onTouchTap={() => this.updateAmountSpent()}>
           Update Amount Spent
         </button>
         <CategoryProgress {...this.state} />

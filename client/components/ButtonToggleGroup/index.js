@@ -13,7 +13,7 @@ class ButtonToggleGroup extends Component {
           hoverColor="rgb(255, 255, 255)"
           disabled={button.disabled}
           className={this.props.selected === button.value ? 'selected' : null}
-          onClick={() => this.props.onClick(button.value)}
+          onTouchTap={() => this.props.onTouchTap(button.value)}
         >
           <i className="material-icons">{button.icon}</i>
           {button.label}
@@ -26,12 +26,14 @@ class ButtonToggleGroup extends Component {
     return (
       <div className="button-toggle-group">
         {this.renderButtons()}
+        {this.props.children}
       </div>
     );
   }
 }
 
 ButtonToggleGroup.propTypes = {
+  children: PropTypes.node,
   buttons: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -40,7 +42,7 @@ ButtonToggleGroup.propTypes = {
     })
   ),
   selected: PropTypes.string,
-  onClick: PropTypes.func,
+  onTouchTap: PropTypes.func,
 };
 
 export default ButtonToggleGroup;

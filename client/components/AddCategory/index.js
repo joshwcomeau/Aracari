@@ -5,6 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import { submitNewCategory } from 'ducks/budget.duck';
 import { toggleDrawer } from 'ducks/drawer.duck';
+import { scrollIntoView } from 'utils/animation.utils';
 import ButtonToggleGroup from 'components/ButtonToggleGroup';
 import Drawer from 'components/Drawer';
 import TextField from 'material-ui/TextField';
@@ -61,15 +62,10 @@ const AddCategory = ({
             <ButtonToggleGroup
               buttons={categoriesWithDisabled}
               selected={presetLabel.value}
-              onClick={presetLabel.onChange}
-            />
-            <ReactCSSTransitionGroup
-              transitionName="custom-label"
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={700}
+              onTouchTap={presetLabel.onChange}
             >
               {showCustomLabelField ? customLabelField : null}
-            </ReactCSSTransitionGroup>
+            </ButtonToggleGroup>
           </div>
         </div>
 
@@ -81,6 +77,7 @@ const AddCategory = ({
               floatingLabelText="Monthly Budget"
               {...limit}
               errorText={limit.touched ? limit.error : null}
+              onFocus={scrollIntoView}
               style={{
                 width: '100%',
                 fontFamily: 'inherit',

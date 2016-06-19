@@ -62,7 +62,7 @@ class CategoryProgress extends Component {
         handler={this.handleDateIndicatorLines}
         lifecycleMethods={['componentDidMount', 'componentDidUpdate']}
       >
-        <div className="category-progress" onClick={actions.showAddCost}>
+        <div className="category-progress" onTouchTap={actions.showAddCost}>
           <div className="budget-label" ref={el => this.nameElem = el}>
             {label}
           </div>

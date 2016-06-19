@@ -18,34 +18,29 @@ const Budget = ({ categoryValues, actions }) => {
   const monthProgress = progressThroughMonth();
   const dateString = moment().format('MMMM Do');
 
-  const categoriesJsx = categoryValues.map(
-    value => (
-      <CategoryProgress
-        value={value}
-        key={value}
-        monthProgress={monthProgress}
-      />
-    )
-  );
+  const categoriesJsx = categoryValues.map(value => (
+    <CategoryProgress
+      value={value}
+      key={value}
+      monthProgress={monthProgress}
+    />
+  ));
 
   // TODO If we have no categories, show a special "Add your first category" bit.
   // Otherwise, show a smaller "Add Category" button.
-  const AddCategoryButton = (
-    <div className="add-category-button">
-      <FlatButton
-        secondary
-        onClick={() => actions.toggleDrawer('add-category')}
-        icon={<i className="material-icons">playlist_add</i>}
-      />
-    </div>
-  );
-
 
   return (
     <div id="budget">
       <BudgetDate monthProgress={monthProgress} dateString={dateString} />
       {categoriesJsx}
-      {AddCategoryButton}
+      <div className="add-category-button">
+        <FlatButton
+          secondary
+          onTouchTap={() => actions.toggleDrawer('add-category')}
+          onClick={() => actions.toggleDrawer('add-category')}
+          icon={<i className="material-icons">playlist_add</i>}
+        />
+      </div>
 
       <AddBudgetItem />
       <AddCategory />
