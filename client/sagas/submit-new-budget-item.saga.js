@@ -1,8 +1,10 @@
-import { take, put } from 'redux-saga/effects';
+import { take, put, select } from 'redux-saga/effects';
 
 import { SUBMIT_NEW_BUDGET_ITEM, addBudgetItem } from 'ducks/budget.duck';
 import { toggleDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
+import { availableSelector } from 'selectors/budget.selectors';
+import { formatCurrency } from 'utils/currency.utils';
 import { reset } from 'redux-form';
 import { delay } from 'utils/misc.utils';
 
@@ -22,18 +24,42 @@ export default function* submitNewBudgetItem() {
     // Close the New Item drawer
     yield put(toggleDrawer());
 
+    yield delay(750);
+
     yield [
       // Reset the form, for the next new budget addition.
       put(reset('add-budget-item')),
 
       // Add the item to the store
       put(addBudgetItem(data)),
-
-      // Show the snackbar notification
     ];
 
-    // Wait for the drawer to close, and show the snackbar
-    yield delay(650);
-    yield put(updateSnackbar('Your budget item has been added!'));
+    // After a short pause, show the user what remains of their budget.
+    // eslint-disable-next-line no-use-before-define
+    yield showUserRemainingBalance(data.category);
   }
+}
+
+function* showUserRemainingBalance(category) {
+  const categories = yield select(state => state.budget.categories);
+  const relevantCategory = categories.find(cat =>
+    cat.value === category
+  );
+
+  const { label } = relevantCategory;
+  const available = availableSelector(relevantCategory);
+  const formattedAvailable = formatCurrency(Math.abs(available));
+
+  let snackbarMessage;
+  if (available >= 0) {
+    snackbarMessage = `
+      You have ${formattedAvailable} left to spend on ${label} this month.
+    `;
+  } else {
+    snackbarMessage = `
+      Uh oh! You're ${formattedAvailable} over-budget this month on ${label}.
+    `;
+  }
+  yield delay(650);
+  yield put(updateSnackbar(snackbarMessage));
 }
