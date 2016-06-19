@@ -75,6 +75,10 @@ $drawer-header-height: 50px;
     .submit-button {
       width: 100%;
 
+      button > div > div {
+        background-color: transparent !important;
+      }
+
       i {
         color: #FFF;
       }

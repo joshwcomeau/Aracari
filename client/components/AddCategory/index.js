@@ -20,8 +20,6 @@ const AddCategory = ({
 }) => {
   const { presetLabel, customLabel, limit } = fields;
 
-  console.log("TOuched?", limit.touched)
-
   const onSubmit = handleSubmit(actions.submitNewCategory);
 
   const showCustomLabelField = presetLabel.value === 'custom';
@@ -40,10 +38,6 @@ const AddCategory = ({
       />
     </div>
   );
-
-  const presetLabelError = (
-    <div className="error-text">{presetLabel.error}</div>
-  )
 
   // We want to disable any categories the user has already added.
   const categoriesWithDisabled = categories.map(category => {
@@ -74,7 +68,11 @@ const AddCategory = ({
               {showCustomLabelField ? customLabelField : null}
             </ButtonToggleGroup>
 
-            {presetLabel.touched && presetLabel.error ? presetLabelError : null}
+            {
+              presetLabel.touched && presetLabel.error
+                ? <div className="error-text">{presetLabel.error}</div>
+                : null
+            }
           </div>
         </div>
 
@@ -154,8 +152,6 @@ const formConfig = {
     if (!limit) {
       errors.limit = 'Please enter the your monthly budget.';
     }
-
-    console.log("ERRORS", errors);
 
     return errors;
   },
