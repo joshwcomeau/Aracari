@@ -43,9 +43,9 @@ class Drawer extends Component {
       translateY: 0,
     }, {
       type: dynamics.spring,
-      duration: 2000,
-      frequency: 336,
-      friction: 490,
+      duration: 1200,
+      frequency: 135,
+      friction: 233,
     });
   }
 

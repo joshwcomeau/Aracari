@@ -8,6 +8,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import configureStore from 'store';
 import Budget from 'components/Budget';
 import Home from 'components/Home';
+import { disableLandscapeMode } from 'utils/misc.utils';
 
 import 'scss/main.scss';
 
@@ -15,6 +16,10 @@ import 'scss/main.scss';
 // Needed for onTouchTap
 // Check this repo: https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
+
+// Force portrait-mode on mobile.
+// Only works if the app is installed or in full-screen.
+disableLandscapeMode();
 
 const store = configureStore();
 
