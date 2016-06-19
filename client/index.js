@@ -6,7 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import configureStore from 'store';
-import Budget from 'components/Budget';
+import BudgetOverview from 'components/BudgetOverview';
 import Home from 'components/Home';
 import { disableLandscapeMode } from 'utils/misc.utils';
 
@@ -30,7 +30,8 @@ render((
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={Home}>
-        <IndexRoute component={Budget} />
+        <IndexRoute component={BudgetOverview} />
+        <Route path="/category/:category" component={BudgetOverview} />
       </Route>
     </Router>
   </Provider>

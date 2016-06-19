@@ -18,7 +18,7 @@ const AddBudgetItem = ({ fields, categories, isOpen, actions, handleSubmit }) =>
   const onSubmit = handleSubmit(actions.submitNewBudgetItem);
 
   const menuItems = categories.map(cat => (
-    <MenuItem key={cat.value} value={cat.value} primaryText={cat.label} />
+    <MenuItem key={cat.slug} value={cat.slug} primaryText={cat.label} />
   ));
 
   return (

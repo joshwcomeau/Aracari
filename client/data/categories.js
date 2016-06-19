@@ -1,31 +1,31 @@
 export default [
   {
     label: 'Food',
-    value: 'food',
+    slug: 'food',
     icon: 'local_pizza',
   }, {
     label: 'Entertainment',
-    value: 'entertainment',
+    slug: 'entertainment',
     icon: 'local_play',
   }, {
     label: 'Transportation',
-    value: 'transportation',
+    slug: 'transportation',
     icon: 'directions_bus',
   }, {
     label: 'Hobbies',
-    value: 'hobbies',
+    slug: 'hobbies',
     icon: 'golf_course',
   }, {
     label: 'Clothing',
-    value: 'clothing',
+    slug: 'clothing',
     icon: 'local_offer',
   }, {
     label: 'Personal care',
-    value: 'personal care',
+    slug: 'personal care',
     icon: 'local_hospital',
   }, {
     label: 'Custom',
-    value: 'custom',
+    slug: 'custom',
     icon: 'build',
   },
 ];

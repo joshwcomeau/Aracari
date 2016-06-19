@@ -4,7 +4,7 @@ const initialState = {
   categories: [
     {
       label: 'Food',
-      value: 'food',
+      slug: 'food',
       limit: 50000,
       items: [
         { details: 'Hamburger', value: 1000 },
@@ -13,7 +13,7 @@ const initialState = {
       ],
     }, {
       label: 'Entertainment',
-      value: 'entertainment',
+      slug: 'entertainment',
       limit: 20000,
       items: [
         { details: 'Movies', value: 3000 },
@@ -21,7 +21,7 @@ const initialState = {
       ],
     }, {
       label: 'Medication',
-      value: 'medication',
+      slug: 'medication',
       limit: 15000,
       items: [
         { details: 'Pills', value: 1000 },
@@ -49,13 +49,12 @@ function budgetCategoryReducer(state, action) {
 
   switch (type) {
     case ADD_BUDGET_ITEM: {
-      if (state.value !== category) {
+      if (state.slug !== category) {
         return state;
       }
 
       // Ensure values are always numbers
       data.value = Number(data.value);
-
 
       return {
         ...state,
@@ -76,7 +75,7 @@ export default function budgetReducer(state = initialState, action = {}) {
           ...state.categories,
           {
             label: capitalizeWords(action.label),
-            value: slug(action.label).toLowerCase(),
+            slug: slug(action.label).toLowerCase(),
             limit: action.limit,
             items: [],
           },

@@ -93,7 +93,7 @@ CategoryProgress.propTypes = {
 function mapStateToProps(state, ownProps) {
   // Find this category in the list
   const category = state.budget.categories.find(cat => {
-    return cat.value === ownProps.value;
+    return cat.slug === ownProps.category;
   });
 
   return {

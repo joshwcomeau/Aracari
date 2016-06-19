@@ -14,14 +14,14 @@ import { progressThroughMonth } from 'utils/time.utils';
 import 'scss/budget.scss';
 
 
-const Budget = ({ categoryValues, actions }) => {
+const Budget = ({ categorySlugs, actions }) => {
   const monthProgress = progressThroughMonth();
   const dateString = moment().format('MMMM Do');
 
-  const categoriesJsx = categoryValues.map(value => (
+  const categoriesJsx = categorySlugs.map(slug => (
     <CategoryProgress
-      value={value}
-      key={value}
+      category={slug}
+      key={slug}
       monthProgress={monthProgress}
     />
   ));
@@ -48,12 +48,12 @@ const Budget = ({ categoryValues, actions }) => {
 };
 
 Budget.propTypes = {
-  categoryValues: PropTypes.array.isRequired,
+  categorySlugs: PropTypes.array.isRequired,
   actions: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  categoryValues: state.budget.categories.map(category => category.value),
+  categorySlugs: state.budget.categories.map(category => category.slug),
 });
 
 const mapDispatchToProps = dispatch => ({

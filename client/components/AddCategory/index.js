@@ -16,7 +16,7 @@ import categories from 'data/categories';
 
 
 const AddCategory = ({
-  fields, isOpen, currentCategoryValues, actions, handleSubmit,
+  fields, isOpen, currentCategorySlugs, actions, handleSubmit,
 }) => {
   const { presetLabel, customLabel, limit } = fields;
 
@@ -41,10 +41,14 @@ const AddCategory = ({
 
   // We want to disable any categories the user has already added.
   const categoriesWithDisabled = categories.map(category => {
-    if (currentCategoryValues.indexOf(category.value) !== -1) {
+    if (currentCategorySlugs.indexOf(category.slug) !== -1) {
       // eslint-disable-next-line no-param-reassign
       category.disabled = true;
     }
+
+    // eslint-disable-next-line no-param-reassign
+    category.value = category.slug;
+
     return category;
   });
 
@@ -111,7 +115,7 @@ AddCategory.propTypes = {
   fields: PropTypes.object,
   actions: PropTypes.object,
   isOpen: PropTypes.bool,
-  currentCategoryValues: PropTypes.arrayOf(PropTypes.string),
+  currentCategorySlugs: PropTypes.arrayOf(PropTypes.string),
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
 };
@@ -119,7 +123,7 @@ AddCategory.propTypes = {
 function mapStateToProps(state) {
   return {
     isOpen: state.drawer === 'add-category',
-    currentCategoryValues: state.budget.categories.map(cat => cat.value),
+    currentCategorySlugs: state.budget.categories.map(cat => cat.slug),
   };
 }
 

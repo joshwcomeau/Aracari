@@ -43,7 +43,7 @@ export default function* submitNewBudgetItem() {
 function* showUserRemainingBalance(category) {
   const categories = yield select(state => state.budget.categories);
   const relevantCategory = categories.find(cat =>
-    cat.value === category
+    cat.slug === category
   );
 
   const { label } = relevantCategory;
