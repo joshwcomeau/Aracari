@@ -1,7 +1,7 @@
 import throttle from 'lodash/throttle';
 
 
-export function fluidEventWrapper(fn) {
+export const fluidEventWrapper = fn => {
   let hasCompletedThisFrame = false;
 
   return () => {
@@ -17,4 +17,16 @@ export function fluidEventWrapper(fn) {
       }
     }
   };
-}
+};
+
+export const scrollIntoView = el => {
+  if (el.scrollIntoViewIfNeeded) {
+    // Proprietary Safari/Chrome property
+    el.scrollIntoViewIfNeeded();
+  } else if (el.scrollIntoView) {
+    el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+    });
+  }
+};
