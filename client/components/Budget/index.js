@@ -37,7 +37,6 @@ const Budget = ({ categoryValues, actions }) => {
         <FlatButton
           secondary
           onTouchTap={() => actions.toggleDrawer('add-category')}
-          onClick={() => actions.toggleDrawer('add-category')}
           icon={<i className="material-icons">playlist_add</i>}
         />
       </div>

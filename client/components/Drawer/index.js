@@ -23,14 +23,10 @@ class Drawer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isOpen && !this.state.isOpen) {
+    if (!this.state.isOpen && nextProps.isOpen) {
       this.open();
-    }
-
-    if (nextProps.isOpen !== this.state.isOpen) {
-      this.setState({
-        isOpen: nextProps.isOpen,
-      });
+    } else if (this.state.isOpen && !nextProps.isOpen) {
+      this.close();
     }
   }
 
@@ -40,7 +36,6 @@ class Drawer extends Component {
 
   open() {
     this.setState({
-      isTransitioning: true,
       isOpen: true,
     });
 
@@ -51,35 +46,37 @@ class Drawer extends Component {
       duration: 2000,
       frequency: 336,
       friction: 490,
-      complete: () => this.setState({ isTransitioning: false }),
     });
   }
 
   close() {
-    // if (this.state.isTransitioning) { return; }
-
     // We want to 'blur' the active element so that the iOS keyboard closes.
     document.activeElement.blur();
 
-    this.setState({
-      isTransitioning: true,
-      isOpen: false,
-    });
+    // Because that blur can change the height of the drawer (by showing an
+    // error message if the field selected is invalid), we need to wait for
+    // that action to run before recalculating the height.
+    window.setTimeout(() => {
+      this.setState({
+        isTransitioning: true,
+        isOpen: false,
+      });
 
-    const currentHeight = this.getDrawerHeight();
+      const currentHeight = this.getDrawerHeight();
 
-    dynamics.animate(this.contentElem, {
-      translateY: currentHeight,
-    }, {
-      type: dynamics.spring,
-      duration: 500,
-      frequency: 11,
-      friction: 35,
-      complete: () => {
-        this.setState({ isTransitioning: false });
-        this.props.onClose();
-      },
-    });
+      dynamics.animate(this.contentElem, {
+        translateY: currentHeight + 20,
+      }, {
+        type: dynamics.spring,
+        duration: 500,
+        frequency: 11,
+        friction: 35,
+        complete: () => {
+          this.setState({ isTransitioning: false });
+          this.props.onClose();
+        },
+      });
+    }, 1);
   }
 
   renderContent() {
