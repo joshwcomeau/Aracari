@@ -1,6 +1,4 @@
-import slug from 'slug';
-
-import { capitalizeWords } from 'utils/misc.utils';
+import { slug, capitalizeWords } from 'utils/misc.utils';
 
 const initialState = {
   categories: [

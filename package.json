@@ -10,6 +10,7 @@
   "scripts": {
     "start": "NODE_ENV=development nodemon server/index.js",
     "start:production": "npm run build && NODE_ENV=production nodemon server/index.js",
+    "webpack:json": "webpack --config webpack.prod.js --json > stats.json",
     "test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/client mocha --compilers js:babel-core/register --require ./test/test_helper.js --require ignore-styles --recursive",
     "lint": "eslint -c .eslintrc client/** --ext .js --ext .jsx",
     "deploy": "NODE_ENV=production fly production",
