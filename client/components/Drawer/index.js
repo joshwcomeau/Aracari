@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import dynamics from 'dynamics.js';
 
+import FlatButton from 'material-ui/FlatButton';
+
 import 'scss/drawer.scss';
 
 class Drawer extends Component {
@@ -89,9 +91,9 @@ class Drawer extends Component {
       >
         <header className="header">
           <h2>{title}</h2>
-          <button onTouchTap={this.close}>
+          <FlatButton onTouchEnd={this.close}>
             <i className="material-icons">close</i>
-          </button>
+          </FlatButton>
         </header>
         {children}
         <div className="footer-spacer" />

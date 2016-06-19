@@ -1,5 +1,7 @@
 @import 'variables';
 
+$drawer-header-height: 50px;
+
 .drawer {
   position: absolute;
   z-index: 10;
@@ -39,7 +41,7 @@
 
   .header {
     position: relative;
-    height: 50px;
+    height: $drawer-header-height;
     margin: 2px;
     background: #EEE;
     border-bottom: 1px solid #E2E2E2;
@@ -52,16 +54,16 @@
     }
 
     button {
-      position: absolute;
+      // Sadly, this is a MaterialUI button, which means contorting it to my
+      // needs is super hacky x_x
+      position: absolute !important;
+      height: $drawer-header-height !important;
+      line-height: $drawer-header-height + 10px !important;
+      min-width: $drawer-header-height !important;
       top: 0;
       right: 0;
       bottom: 0;
-      margin: auto;
-      padding: 0 $gutter-size;
-      border: 0;
       background: transparent;
-      cursor: pointer;
-      outline: none;
     }
   }
 
