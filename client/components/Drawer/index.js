@@ -58,6 +58,9 @@ class Drawer extends Component {
   close() {
     // if (this.state.isTransitioning) { return; }
 
+    // We want to 'blur' the active element so that the iOS keyboard closes.
+    document.activeElement.blur();
+
     this.setState({
       isTransitioning: true,
       isOpen: false,
