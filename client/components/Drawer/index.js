@@ -91,7 +91,7 @@ class Drawer extends Component {
         ref={el => { this.contentElem = el; }}
       >
         <header className="header">
-          {title}
+          <h2>{title}</h2>
           <button onTouchTap={this.close}>
             <i className="material-icons">close</i>
           </button>

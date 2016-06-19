@@ -1,6 +1,10 @@
 @import 'variables';
 
 .add-category {
+  .button-toggle-group {
+    position: relative;
+  }
+
   .category-button {
     width: 33.3%;
     display: inline-block;
@@ -29,26 +33,15 @@
   }
 
   .custom-label {
-    display: inline-block;
+    position: absolute;
+    left: 33.3%;
+    bottom: -2px;
     width: 66%;
-  }
+    padding: 0 5px;
+    animation: fadeIn 500ms;
 
-  .custom-label-enter {
-    opacity: 0;
-    height: 0;
-  }
-  .custom-label-enter.custom-label-enter-active {
-    opacity: 1;
-    height: 72px;
-    transition: 500ms;
-  }
-  .custom-label-leave {
-    opacity: 1;
-    height: 72px;
-  }
-  .custom-label-leave.custom-label-leave-active {
-    opacity: 0;
-    height: 0;
-    transition: 700ms;
+    div {
+      font-size: 14px !important;
+    }
   }
 }

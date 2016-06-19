@@ -27,7 +27,7 @@ const AddCategory = ({
   const customLabelField = (
     <div className="custom-label">
       <TextField
-        floatingLabelText="Category Name"
+        hintText="Category Name"
         value={customLabel.value}
         onChange={customLabel.onChange}
         style={{
