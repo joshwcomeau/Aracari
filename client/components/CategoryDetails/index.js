@@ -1,13 +1,14 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import 'scss/category-details.scss';
+import { costPointsSelector } from 'selectors/budget.selectors';
+import categories from 'data/categories';
 import Avatar from 'material-ui/Avatar';
 import {
   Card, CardActions, CardHeader, CardMedia, CardTitle, CardText,
 } from 'material-ui/Card';
-import categories from 'data/categories';
+import 'scss/category-details.scss';
 
 
 const CategoryDetails = ({ routeParams, items }) => {
@@ -17,10 +18,10 @@ const CategoryDetails = ({ routeParams, items }) => {
     <div id="category-details">
       <Card>
         <CardHeader
-          title={routeParams.category}
+          title={categoryData.label}
           subtitle="Monthly Expenses"
-          actAsExpander={true}
-          showExpandableButton={true}
+          actAsExpander
+          showExpandableButton
           avatar={
             <Avatar
               icon={<i className="material-icons">{categoryData.icon}</i>}
@@ -49,7 +50,9 @@ function mapStateToProps(state, ownProps) {
   const slug = ownProps.routeParams.category;
   const category = state.budget.categories.find(cat => cat.slug === slug);
 
-  return category;
+  return {
+    items: costPointsSelector(category),
+  };
 }
 
 function mapDispatchToProps(dispatch) {

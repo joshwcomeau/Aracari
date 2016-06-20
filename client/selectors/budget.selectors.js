@@ -19,3 +19,20 @@ export const budgetProgressSelector = createSelector(
   spentSelector,
   (limit, spent) => (spent / limit) * 100
 );
+
+// The idea here is, for the line graph, we want to have a cumulative data
+// set. For example:
+// {                                  {
+//   hamburger: 10,       -->             p1: 10
+//   pizza: 15,                           p2: 25 (10 + 15)
+//   poutine: 5                           p3: 30 (25 + 5)
+// }                                  }
+export const costPointsSelector = createSelector(
+  itemsSelector,
+  items => items.reduce((acc, item) => {
+    const previousItem = acc[acc.length - 1];
+    const cumulativeTotal = (previousItem ? previousItem.value : 0) + item.value;
+
+    return [...acc, { ...item, value: cumulativeTotal }];
+  }, [])
+);
