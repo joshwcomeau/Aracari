@@ -10,8 +10,8 @@ html, body, #render-target {
   overflow: hidden;
 }
 
-body, input, textarea, select, button {
-  font-family: 'Raleway';
+body, input, textarea, select, button, p, span, div, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway' !important;
 }
 
 #home {

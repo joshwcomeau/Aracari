@@ -7,6 +7,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import configureStore from 'store';
 import BudgetOverview from 'components/BudgetOverview';
+import CategoryDetails from 'components/CategoryDetails';
 import Home from 'components/Home';
 import { disableLandscapeMode } from 'utils/misc.utils';
 
@@ -31,7 +32,7 @@ render((
     <Router history={history}>
       <Route path="/" component={Home}>
         <IndexRoute component={BudgetOverview} />
-        <Route path="/category/:category" component={BudgetOverview} />
+        <Route path="/category/:category" component={CategoryDetails} />
       </Route>
     </Router>
   </Provider>

@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import { submitNewCategory } from 'ducks/budget.duck';
 import { toggleDrawer } from 'ducks/drawer.duck';
