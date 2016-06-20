@@ -12,7 +12,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import 'scss/add-category.scss';
-import categories from 'data/categories';
+import { categoryArray } from 'data/categories';
 
 
 const AddCategory = ({
@@ -40,7 +40,7 @@ const AddCategory = ({
   );
 
   // We want to disable any categories the user has already added.
-  const categoriesWithDisabled = categories.map(category => {
+  const categoriesWithDisabled = categoryArray.map(category => {
     if (currentCategorySlugs.indexOf(category.slug) !== -1) {
       // eslint-disable-next-line no-param-reassign
       category.disabled = true;

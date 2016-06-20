@@ -1,31 +1,46 @@
-export default [
-  {
+import map from 'lodash/map';
+
+
+/* eslint-disable quote-props */
+export const categories = {
+  'food': {
     label: 'Food',
-    slug: 'food',
     icon: 'local_pizza',
-  }, {
-    label: 'Entertainment',
-    slug: 'entertainment',
-    icon: 'local_play',
-  }, {
-    label: 'Transportation',
-    slug: 'transportation',
-    icon: 'directions_bus',
-  }, {
-    label: 'Hobbies',
-    slug: 'hobbies',
-    icon: 'golf_course',
-  }, {
-    label: 'Clothing',
-    slug: 'clothing',
-    icon: 'local_offer',
-  }, {
-    label: 'Personal care',
-    slug: 'personal care',
-    icon: 'local_hospital',
-  }, {
-    label: 'Custom',
-    slug: 'custom',
-    icon: 'build',
+    colour: '#558B2F',
   },
-];
+  'entertainment': {
+    label: 'Entertainment',
+    icon: 'local_play',
+    colour: '#512DA8',
+  },
+  'transportation': {
+    label: 'Transportation',
+    icon: 'directions_bus',
+    colour: '#FF8F00',
+  },
+  'hobbies': {
+    label: 'Hobbies',
+    icon: 'golf_course',
+    colour: '#1565C0',
+  },
+  'clothing': {
+    label: 'Clothing',
+    icon: 'local_offer',
+    colour: '#C62828',
+  },
+  'personal-care': {
+    label: 'Personal care',
+    icon: 'local_hospital',
+    colour: '#0097A7',
+  },
+  'custom': {
+    label: 'Custom',
+    icon: 'build',
+    colour: '#37474F',
+  },
+};
+
+export const categoryArray = map(categories, (category, slug) => ({
+  ...category,
+  slug,
+}));
