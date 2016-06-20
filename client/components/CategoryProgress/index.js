@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import { getHSLBudgetColour } from 'utils/colour.utils';
 import { budgetProgressSelector } from 'selectors/budget.selectors';
@@ -51,10 +52,7 @@ class CategoryProgress extends Component {
   }
 
   render() {
-    const {
-      // eslint-disable-next-line no-unused-vars
-      label, budgetProgress, monthProgress, actions,
-    } = this.props;
+    const { slug, label, budgetProgress, monthProgress, actions } = this.props;
 
     return (
       <FluidEventHandler
@@ -62,7 +60,7 @@ class CategoryProgress extends Component {
         handler={this.handleDateIndicatorLines}
         lifecycleMethods={['componentDidMount', 'componentDidUpdate']}
       >
-        <div className="category-progress" onTouchTap={actions.showAddCost}>
+        <Link to={`/category/${slug}`} className="category-progress">
           <div className="budget-label" ref={el => this.nameElem = el}>
             {label}
           </div>
@@ -77,7 +75,7 @@ class CategoryProgress extends Component {
             style={{ left: monthProgress + '%' }}
             ref={el => this.monthProgressElem = el}
           />
-        </div>
+        </Link>
       </FluidEventHandler>
     );
   }
@@ -97,6 +95,7 @@ function mapStateToProps(state, ownProps) {
   });
 
   return {
+    slug: category.slug,
     label: category.label,
     budgetProgress: budgetProgressSelector(category),
   };

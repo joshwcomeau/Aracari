@@ -1,71 +1,85 @@
 @import 'variables';
+@import 'animations';
 
 $budget-height: 60px;
 
-.category-progress {
-  position: relative;
-  margin: 4px;
-  background: #FFF;
-  box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-  height: $budget-height;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.category-progress-wrapper {
 
-  .budget-progress {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    background-color: $red;
-    width: 1px;
-    transform-origin: left;
+  & > div:last-child {
+    .month-progress:before, .month-progress.contracted:after {
+      bottom: 0px;
+    }
   }
 
-  .month-progress {
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 1px;
-    transform: translateX(0);
+  .category-progress {
+    position: relative;
+    margin: 6px 12px;
+    background: #FFF;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    height: $budget-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: $dark-gray;
 
-    &.contracted {
-      &:before {
-        bottom: auto;
-        height: 25%;
+
+    .budget-progress {
+      position: absolute;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background-color: $red;
+      width: 1px;
+      transform-origin: left;
+    }
+
+    .month-progress {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 1px;
+      transform: translateX(0);
+      animation: $budget-date-animation;
+
+      &.contracted {
+        &:before {
+          bottom: auto;
+          height: 25%;
+        }
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -3px;
+          left: 0;
+          width: 100%;
+          height: 25%;
+          background-color: rgba(0,0,0,0.25);
+        }
       }
-      &:after {
+
+      &:before {
         content: '';
         position: absolute;
-        bottom: -2px;
+        top: -3px;
+        bottom: -3px;
         left: 0;
         width: 100%;
-        height: 25%;
         background-color: rgba(0,0,0,0.25);
       }
     }
 
-    &:before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      bottom: -2px;
-      left: 0;
-      width: 100%;
-      background-color: rgba(0,0,0,0.25);
+    .budget-label {
+      z-index: 2;
+      font-size: 13px;
+      font-weight: bold;
+      // This padding is important:
+      // The "now" date line will be cut off by this label, but if the label
+      // doesn't have any padding, that line will run right beside it, looks bad.
+      padding: 0 5px;
     }
-  }
-
-  .budget-label {
-    z-index: 2;
-    font-size: 13px;
-    font-weight: bold;
-    // This padding is important:
-    // The "now" date line will be cut off by this label, but if the label
-    // doesn't have any padding, that line will run right beside it, looks bad.
-    padding: 0 5px;
   }
 }

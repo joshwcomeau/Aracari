@@ -6,12 +6,10 @@ import moment from 'moment';
 import { toggleDrawer } from 'ducks/drawer.duck';
 import CategoryProgress from 'components/CategoryProgress';
 import BudgetDate from 'components/BudgetDate';
-import AddBudgetItem from 'components/AddBudgetItem';
-import AddCategory from 'components/AddCategory';
 import FlatButton from 'material-ui/FlatButton';
 
 import { progressThroughMonth } from 'utils/time.utils';
-import 'scss/budget.scss';
+import 'scss/budget-overview.scss';
 
 
 const Budget = ({ categorySlugs, actions }) => {
@@ -30,9 +28,11 @@ const Budget = ({ categorySlugs, actions }) => {
   // Otherwise, show a smaller "Add Category" button.
 
   return (
-    <div id="budget">
+    <div id="budget-overview">
       <BudgetDate monthProgress={monthProgress} dateString={dateString} />
-      {categoriesJsx}
+      <div className="category-progress-wrapper">
+        {categoriesJsx}
+      </div>
       <div className="add-category-button">
         <FlatButton
           secondary
@@ -40,9 +40,6 @@ const Budget = ({ categorySlugs, actions }) => {
           icon={<i className="material-icons">playlist_add</i>}
         />
       </div>
-
-      <AddBudgetItem />
-      <AddCategory />
     </div>
   );
 };
