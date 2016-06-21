@@ -1,16 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import LineChart from 'react-svg-line-chart';
 
 import { itemGraphDataSelector } from 'selectors/budget.selectors';
 
 
 const CategoryChart = ({ data }) => {
-  console.log(LineChart)
   return (
-    <LineChart
-      data={data}
-    />
+    <h1>Chart goes here</h1>
   );
 };
 
