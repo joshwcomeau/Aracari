@@ -26,10 +26,17 @@
         content: '';
         position: absolute;
         top: 0;
-        left: 1px;
         width: 3px;
         height: 1px;
         background-color: rgba(0,0,0,0.25);
+      }
+
+      &.right:before {
+        right: 1px;
+      }
+
+      &.left:before {
+        left: 1px;
       }
     }
   }

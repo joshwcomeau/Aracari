@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 
 import 'scss/budget-date.scss';
 
@@ -12,18 +13,19 @@ const BudgetDate = ({ monthProgress, dateString }) => {
     ? 100 - monthProgress
     : monthProgress;
 
-  const flagStyle = {
+  const flagStyles = {
     [markerPosition]: adjustedMonthProgress + '%',
   };
 
-  const markerStyle = {
+  const markerStyles = {
     [markerPosition]: markerPosition === 'right' ? '-1px' : 0,
   };
+  const markerClasses = classNames('budget-date-marker', markerPosition);
 
   return (
     <div className="budget-date">
-      <div className="budget-date-flag" style={flagStyle}>
-        <div className="budget-date-marker" style={markerStyle} />
+      <div className="budget-date-flag" style={flagStyles}>
+        <div className={markerClasses} style={markerStyles} />
         {dateString}
       </div>
     </div>
