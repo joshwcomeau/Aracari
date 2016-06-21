@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { createSelector } from 'reselect';
 
 const limitSelector = state => state.limit;
@@ -27,12 +28,15 @@ export const budgetProgressSelector = createSelector(
 //   pizza: 15,                           p2: 25 (10 + 15)
 //   poutine: 5                           p3: 30 (25 + 5)
 // }                                  }
-export const costPointsSelector = createSelector(
+export const itemGraphDataSelector = createSelector(
   itemsSelector,
   items => items.reduce((acc, item) => {
     const previousItem = acc[acc.length - 1];
-    const cumulativeTotal = (previousItem ? previousItem.value : 0) + item.value;
+    const cumulativeTotal = (previousItem ? previousItem.y : 0) + item.value;
 
-    return [...acc, { ...item, value: cumulativeTotal }];
+    return [...acc, {
+      x: Number(moment(item.createdAt).format('D')),
+      y: cumulativeTotal,
+    }];
   }, [])
 );

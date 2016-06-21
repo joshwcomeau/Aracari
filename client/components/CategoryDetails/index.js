@@ -2,36 +2,36 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { costPointsSelector } from 'selectors/budget.selectors';
-import categories from 'data/categories';
 import Avatar from 'material-ui/Avatar';
 import {
   Card, CardActions, CardHeader, CardMedia, CardTitle, CardText,
 } from 'material-ui/Card';
+import CategoryChart from 'components/CategoryChart';
+
 import 'scss/category-details.scss';
 
 
-const CategoryDetails = ({ routeParams, items }) => {
-  const categoryData = categories[routeParams.category] || categories.custom;
-
+const CategoryDetails = ({ category }) => {
   return (
     <div id="category-details">
       <Card>
         <CardHeader
-          title={categoryData.label}
+          title={category.label}
           subtitle="Monthly Expenses"
           actAsExpander
           showExpandableButton
+          style={{ marginTop: '3px', fontWeight: 'bold' }}
+          subtitleStyle={{ marginTop: '6px', fontWeight: 'normal' }}
           avatar={
             <Avatar
-              icon={<i className="material-icons">{categoryData.icon}</i>}
+              icon={<i className="material-icons">{category.icon}</i>}
               color="#FFFFFF"
-              backgroundColor={categoryData.colour}
+              backgroundColor={category.colour}
             />
           }
         />
         <CardText>
-          Graph here!
+          <CategoryChart category={category} />
         </CardText>
 
       </Card>
@@ -43,16 +43,19 @@ CategoryDetails.propTypes = {
   routeParams: PropTypes.shape({
     category: PropTypes.string,
   }),
-  items: PropTypes.arrayOf(PropTypes.object),
+  category: PropTypes.shape({
+    slug: PropTypes.string,
+    label: PropTypes.string,
+    icon: PropTypes.string,
+    colour: PropTypes.string,
+  }),
 };
 
 function mapStateToProps(state, ownProps) {
   const slug = ownProps.routeParams.category;
   const category = state.budget.categories.find(cat => cat.slug === slug);
 
-  return {
-    items: costPointsSelector(category),
-  };
+  return { category };
 }
 
 function mapDispatchToProps(dispatch) {

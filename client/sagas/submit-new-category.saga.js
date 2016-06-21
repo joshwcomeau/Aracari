@@ -1,9 +1,10 @@
 import { take, put } from 'redux-saga/effects';
+import { reset } from 'redux-form';
 
 import { SUBMIT_NEW_CATEGORY, addCategory } from 'ducks/budget.duck';
 import { toggleDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
-import { reset } from 'redux-form';
+import categories from 'data/categories';
 import { delay } from 'utils/misc.utils';
 
 
@@ -24,7 +25,13 @@ export default function* submitNewCategory() {
       limit: Math.round(limit * 100),
     };
 
-    // Capitalize the first letter of every word,
+    // Fetch the presentational data (icon, colour) from our data file.
+    // Is this the best way to do this?
+    const categoryData = categories[presetLabel] || categories.custom;
+    const mergedData = {
+      ...categoryData,
+      ...scrubbedData,
+    };
 
     // Close the New Item drawer
     yield put(toggleDrawer());
@@ -34,7 +41,7 @@ export default function* submitNewCategory() {
       put(reset('add-category')),
 
       // Add the item to the store
-      put(addCategory(scrubbedData)),
+      put(addCategory(mergedData)),
     ];
 
     // Wait for the drawer to close, and show the snackbar
