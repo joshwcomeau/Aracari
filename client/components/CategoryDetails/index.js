@@ -7,6 +7,7 @@ import {
   Card, CardActions, CardHeader, CardMedia, CardTitle, CardText,
 } from 'material-ui/Card';
 import CategoryChart from 'components/CategoryChart';
+import CategoryItem from 'components/CategoryItem';
 
 import 'scss/category-details.scss';
 
@@ -34,6 +35,14 @@ const CategoryDetails = ({ category }) => {
           <CategoryChart category={category} />
         </CardText>
 
+        <CardText>
+          {
+            category.items.map(item => (
+              <CategoryItem key={item.id} item={item} category={category} />
+            ))
+          }
+        </CardText>
+
       </Card>
     </div>
   );
@@ -48,6 +57,7 @@ CategoryDetails.propTypes = {
     label: PropTypes.string,
     icon: PropTypes.string,
     colour: PropTypes.string,
+    items: PropTypes.array,
   }),
 };
 

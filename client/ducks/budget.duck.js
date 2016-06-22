@@ -9,11 +9,11 @@ const initialState = {
       colour: '#558B2F',
       limit: 50000,
       items: [
-        { details: 'Hamburger', value: 1000, createdAt: '2016-06-03' },
-        { details: 'Indian Food', value: 4500, createdAt: '2016-06-06' },
-        { details: 'Groceries', value: 9000, createdAt: '2016-06-07' },
-        { details: 'Burger', value: 100, createdAt: '2016-06-07' },
-        { details: 'Groceries', value: 2500, createdAt: '2016-06-10' },
+        { id: 'a', details: 'Hamburger', value: 1000, createdAt: '2016-06-03' },
+        { id: 'b', details: 'Indian Food', value: 4500, createdAt: '2016-06-06' },
+        { id: 'c', details: 'Groceries', value: 9000, createdAt: '2016-06-07' },
+        { id: 'd', details: 'Burger', value: 100, createdAt: '2016-06-07' },
+        { id: 'e', details: 'Groceries', value: 2500, createdAt: '2016-06-10' },
       ],
     }, {
       label: 'Entertainment',

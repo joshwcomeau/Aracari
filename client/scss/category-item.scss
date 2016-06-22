@@ -1,0 +1,84 @@
+@import 'variables';
+@import 'animations';
+
+$height: 45px;
+
+.category-item {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  width: 100%;
+  overflow: hidden;
+
+  .item-details {
+    height: $height;
+    line-height: $height;
+  }
+
+  .edit, .remove {
+    width: 80px;
+    color: $white;
+  }
+
+  .edit {
+    background-color: $blue;
+  }
+
+  .remove {
+    background-color: $red;
+  }
+
+  .stro-container {
+    width: 300%;
+    margin-left: -100% ;
+    position: relative;
+    height: $height;
+  }
+
+  .stro-container.transition-back {
+    transition: all .4s ease;
+  }
+
+  .stro-left,
+  .stro-content,
+  .stro-right {
+    position: relative;
+    display: inline-block;
+    width: 33.33333333%;
+    height: 100%;
+    vertical-align: top;
+  }
+
+  .stro-button {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+
+  .stro-button span {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: block;
+  }
+
+  .stro-button.stro-right-button {
+    left: 0;
+  }
+  .stro-button.stro-right-button span {
+    left: 0;
+    text-align: center;
+  }
+  .stro-button.stro-left-button {
+    right: 0;
+  }
+  .stro-button.stro-left-button span {
+    right: 0;
+    text-align: center;
+  }
+
+  .stro-container.show-right-buttons,
+  .stro-container.show-left-buttons,
+  .stro-container.show-right-buttons .stro-button,
+  .stro-container.show-left-buttons .stro-button{
+    transition: all .3s ease;
+  }
+}
