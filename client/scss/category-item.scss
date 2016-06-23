@@ -1,16 +1,42 @@
 @import 'variables';
 @import 'animations';
 
-$height: 45px;
+$height: 50px;
 
 .category-item {
   border-bottom: 1px solid rgba(0,0,0,0.1);
   width: 100%;
   overflow: hidden;
 
-  .item-details {
+  &:last-of-type {
+    border-bottom: 0;
+  }
+
+  .item {
+    position: relative;
     height: $height;
-    line-height: $height;
+    padding: 4px 8px;
+
+    .item-details {
+      font-weight: bold;
+      line-height: $height * 0.5;
+      font-size: 14px;
+    }
+    .item-created-at {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      font-weight: 100;
+      color: $light-gray;
+      // line-height: $height * 0.5;
+      font-size: 12px;
+    }
+    .item-price {
+      position: absolute;
+      line-height: $height;
+      top: 0;
+      right: 8px;
+    }
   }
 
   .edit, .remove {

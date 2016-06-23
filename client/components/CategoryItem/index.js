@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Swipe from 'react-swipe-to-reveal-options';
 
+import { formatCurrency } from 'utils/currency.utils';
 import 'scss/category-item.scss';
 
 
@@ -18,7 +19,11 @@ const CategoryItem = ({ item }) => {
   return (
     <div className="category-item">
       <Swipe {...swipeActions}>
-        <div className="item-details">{item.details}</div>
+        <div className="item">
+          <div className="item-details">{item.details}</div>
+          <div className="item-created-at">{item.createdAt}</div>
+          <div className="item-price">{formatCurrency(item.value)}</div>
+        </div>
       </Swipe>
     </div>
   );
