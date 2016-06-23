@@ -43,6 +43,27 @@ body, input, textarea, select, button, p, span, div, h1, h2, h3, h4, h5, h6 {
     padding-top: $gutter-size;
   }
 
+  &.with-border {
+    & > div {
+      padding-top: $gutter-size;
+      padding-bottom: $gutter-size;
+      padding-right: $gutter-size;
+      border-right: 1px solid $light-gray;
+    }
+
+    & > div:last-of-type {
+      padding-right: 0;
+      padding-left: $gutter-size;
+      border-right: none;
+    }
+  }
+
+  &.centered {
+    & > div {
+      text-align: center;
+    }
+  }
+
   .full, .one-half, .one-third, .one-quarter {
     flex: 1;
   }

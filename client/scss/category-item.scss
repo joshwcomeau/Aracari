@@ -15,16 +15,16 @@ $height: 50px;
   .item {
     position: relative;
     height: $height;
-    padding: 4px 8px;
+    padding: 4px 8px 4px 0;
 
     .item-details {
-      font-weight: bold;
+      font-weight: 700;
       line-height: $height * 0.5;
       font-size: 14px;
     }
     .item-created-at {
       position: absolute;
-      left: 8px;
+      left: 0;
       bottom: 8px;
       font-weight: 100;
       color: $light-gray;
