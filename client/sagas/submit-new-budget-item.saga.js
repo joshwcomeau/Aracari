@@ -1,11 +1,12 @@
 import { take, put, select } from 'redux-saga/effects';
+import { reset } from 'redux-form';
 
 import { SUBMIT_NEW_BUDGET_ITEM, addBudgetItem } from 'ducks/budget.duck';
-import { toggleDrawer } from 'ducks/drawer.duck';
+import { closeDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
 import { availableSelector } from 'selectors/budget.selectors';
 import { formatCurrency } from 'utils/currency.utils';
-import { reset } from 'redux-form';
+import { ADD_BUDGET_ITEM } from 'data/drawer-constants';
 import { delay } from 'utils/misc.utils';
 
 
@@ -22,13 +23,13 @@ export default function* submitNewBudgetItem() {
     data.value = Math.round(data.value * 100);
 
     // Close the New Item drawer
-    yield put(toggleDrawer());
+    yield put(closeDrawer(ADD_BUDGET_ITEM));
 
     yield delay(750);
 
     yield [
       // Reset the form, for the next new budget addition.
-      put(reset('add-budget-item')),
+      put(reset(ADD_BUDGET_ITEM)),
 
       // Add the item to the store
       put(addBudgetItem(data)),

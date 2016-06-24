@@ -14,7 +14,8 @@ import CategoryItem from 'components/CategoryItem';
 
 import { formatCurrency } from 'utils/currency.utils';
 import { availableSelector } from 'selectors/budget.selectors';
-import { toggleDrawer } from 'ducks/drawer.duck';
+import { openDrawer } from 'ducks/drawer.duck';
+import { ADD_CATEGORY } from 'data/drawer-constants';
 import 'scss/category-details.scss';
 
 
@@ -41,7 +42,7 @@ const CategoryDetails = props => {
         >
           <IconButton
             className="category-edit-button"
-            onTouchTap={() => actions.toggleDrawer('add-category', category)}
+            onTouchTap={() => actions.openDrawer(ADD_CATEGORY, category)}
           >
             <i className="material-icons">settings</i>
           </IconButton>
@@ -108,7 +109,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      toggleDrawer,
+      openDrawer,
     }, dispatch),
   };
 }

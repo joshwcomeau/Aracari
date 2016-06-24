@@ -2,10 +2,12 @@ import { take, put } from 'redux-saga/effects';
 import { reset } from 'redux-form';
 
 import { SUBMIT_NEW_CATEGORY, addCategory } from 'ducks/budget.duck';
-import { toggleDrawer } from 'ducks/drawer.duck';
+import { closeDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
-import categories from 'data/categories';
 import { delay } from 'utils/misc.utils';
+import categories from 'data/categories';
+import { ADD_CATEGORY } from 'data/drawer-constants';
+
 
 
 export default function* submitNewCategory() {
@@ -33,12 +35,12 @@ export default function* submitNewCategory() {
       ...scrubbedData,
     };
 
-    // Close the New Item drawer
-    yield put(toggleDrawer());
+    // Close the New Category drawer
+    yield put(closeDrawer(ADD_CATEGORY));
 
     yield [
       // Reset the form, for the next new budget addition.
-      put(reset('add-category')),
+      put(reset(ADD_CATEGORY)),
 
       // Add the item to the store
       put(addCategory(mergedData)),

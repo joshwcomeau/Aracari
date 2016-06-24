@@ -3,12 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { toggleDrawer } from 'ducks/drawer.duck';
+import { openDrawer } from 'ducks/drawer.duck';
 import CategoryProgress from 'components/CategoryProgress';
 import BudgetDate from 'components/BudgetDate';
 import FlatButton from 'material-ui/FlatButton';
 
 import { progressThroughMonth } from 'utils/time.utils';
+import { ADD_CATEGORY } from 'data/drawer-constants';
 import 'scss/budget-overview.scss';
 
 
@@ -36,7 +37,7 @@ const Budget = ({ categorySlugs, actions }) => {
       <div className="add-category-button">
         <FlatButton
           secondary
-          onTouchTap={() => actions.toggleDrawer('add-category')}
+          onTouchTap={() => actions.openDrawer(ADD_CATEGORY)}
           icon={<i className="material-icons">playlist_add</i>}
         />
       </div>
@@ -54,7 +55,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({ toggleDrawer }, dispatch),
+  actions: bindActionCreators({ openDrawer }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Budget);

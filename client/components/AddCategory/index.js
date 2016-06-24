@@ -3,19 +3,20 @@ import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
 
 import { submitNewCategory } from 'ducks/budget.duck';
-import { toggleDrawer } from 'ducks/drawer.duck';
+import { closeDrawer } from 'ducks/drawer.duck';
 import { scrollIntoView } from 'utils/animation.utils';
 import ButtonToggleGroup from 'components/ButtonToggleGroup';
 import Drawer from 'components/Drawer';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import 'scss/add-category.scss';
+import { ADD_CATEGORY } from 'data/drawer-constants';
 import { categoryArray } from 'data/categories';
+import 'scss/add-category.scss';
 
 
 const AddCategory = ({
-  fields, isOpen, currentCategorySlugs, actions, handleSubmit,
+  fields, isOpen, categories, actions, handleSubmit,
 }) => {
   const { presetLabel, customLabel, limit } = fields;
 
@@ -40,7 +41,7 @@ const AddCategory = ({
 
   // We want to disable any categories the user has already added.
   const categoriesWithDisabled = categoryArray.map(category => {
-    if (currentCategorySlugs.indexOf(category.slug) !== -1) {
+    if (categories.find(cat => cat.slug === category.slug)) {
       // eslint-disable-next-line no-param-reassign
       category.disabled = true;
     }
@@ -55,7 +56,7 @@ const AddCategory = ({
     <Drawer
       isOpen={isOpen}
       title="Add a New Category"
-      onClose={() => actions.toggleDrawer()}
+      onClose={() => actions.closeDrawer(ADD_CATEGORY)}
       className="add-category"
     >
       <form
@@ -114,15 +115,15 @@ AddCategory.propTypes = {
   fields: PropTypes.object,
   actions: PropTypes.object,
   isOpen: PropTypes.bool,
-  currentCategorySlugs: PropTypes.arrayOf(PropTypes.string),
+  categories: PropTypes.array,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
-    isOpen: state.drawer.name === 'add-category',
-    currentCategorySlugs: state.budget.categories.map(cat => cat.slug),
+    isOpen: state.drawer.name === ADD_CATEGORY,
+    categories: state.budget.categories,
   };
 }
 
@@ -130,13 +131,13 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       submitNewCategory,
-      toggleDrawer,
+      closeDrawer,
     }, dispatch),
   };
 }
 
 const formConfig = {
-  form: 'add-category',
+  form: ADD_CATEGORY,
   fields: [
     'presetLabel',
     'customLabel',

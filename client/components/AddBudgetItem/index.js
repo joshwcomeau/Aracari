@@ -3,14 +3,14 @@ import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
 
 import { submitNewBudgetItem } from 'ducks/budget.duck';
-import { toggleDrawer } from 'ducks/drawer.duck';
+import { closeDrawer } from 'ducks/drawer.duck';
 import Drawer from 'components/Drawer';
 import SelectFieldWrapper from 'components/SelectFieldWrapper';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import { ADD_BUDGET_ITEM } from 'data/drawer-constants';
 import 'scss/add-budget-item.scss';
-
 
 const AddBudgetItem = ({ fields, categories, isOpen, actions, handleSubmit }) => {
   const { category, value, details } = fields;
@@ -25,7 +25,7 @@ const AddBudgetItem = ({ fields, categories, isOpen, actions, handleSubmit }) =>
     <Drawer
       title="Record a New Cost"
       isOpen={isOpen}
-      onClose={() => actions.toggleDrawer()}
+      onClose={() => actions.closeDrawer(ADD_BUDGET_ITEM)}
       className="add-budget-item"
     >
       <form
@@ -99,7 +99,7 @@ AddBudgetItem.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isOpen: state.drawer.name === 'add-budget-item',
+    isOpen: state.drawer.name === ADD_BUDGET_ITEM,
     categories: state.budget.categories,
   };
 }
@@ -108,13 +108,13 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       submitNewBudgetItem,
-      toggleDrawer,
+      closeDrawer,
     }, dispatch),
   };
 }
 
 const formConfig = {
-  form: 'add-budget-item',
+  form: ADD_BUDGET_ITEM,
   fields: [
     'category',
     'value',

@@ -2,10 +2,11 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { toggleDrawer } from 'ducks/drawer.duck';
+import { openDrawer } from 'ducks/drawer.duck';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 
+import { ADD_BUDGET_ITEM } from 'data/drawer-constants';
 import '../../scss/header.scss';
 
 
@@ -16,7 +17,7 @@ const Header = ({ actions }) => {
       style={{ fontFamily: 'inherit' }}
       zDepth={0}
       iconElementRight={
-        <IconButton onTouchTap={() => actions.toggleDrawer('add-budget-item')}>
+        <IconButton onTouchTap={() => actions.openDrawer(ADD_BUDGET_ITEM)}>
           <i
             className="material-icons"
             style={{ fontSize: '32px', lineHeight: '32px' }}
@@ -42,7 +43,7 @@ Header.propTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      toggleDrawer,
+      openDrawer,
     }, dispatch),
   };
 }
