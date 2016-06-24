@@ -1,4 +1,4 @@
-const initialState = '';
+const initialState = {};
 
 
 // ////////////////////////
@@ -10,10 +10,13 @@ export const TOGGLE_DRAWER = 'DRAWER/TOGGLE_DRAWER';
 // ////////////////////////
 // REDUCERS //////////////
 // //////////////////////
-export default function snackbarReducer(state = initialState, action = {}) {
+export default function drawerReducer(state = initialState, action = {}) {
   switch (action.type) {
     case TOGGLE_DRAWER: {
-      return action.name || '';
+      return {
+        name: action.name,
+        data: action.data,
+      };
     }
 
     default:
@@ -25,7 +28,8 @@ export default function snackbarReducer(state = initialState, action = {}) {
 // ////////////////////////
 // ACTION CREATORS ///////
 // //////////////////////
-export const toggleDrawer = (name) => ({
+export const toggleDrawer = (name, data) => ({
   type: TOGGLE_DRAWER,
   name,
+  data,
 });

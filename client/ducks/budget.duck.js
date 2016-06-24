@@ -22,8 +22,8 @@ const initialState = {
       colour: '#512DA8',
       limit: 20000,
       items: [
-        { details: 'Movies', value: 3000 },
-        { details: 'Video Game', value: 14000 },
+        { id: 'f', details: 'Movies', value: 3000, createdAt: '2016-03-04' },
+        { id: 'g', details: 'Video Game', value: 14000, createdAt: '2016-04-04' },
       ],
     }, {
       label: 'Miscellaneous',
@@ -46,7 +46,7 @@ export const SUBMIT_NEW_BUDGET_ITEM = 'BUDGET/SUBMIT_NEW_BUDGET_ITEM';
 export const ADD_BUDGET_ITEM = 'BUDGET/ADD_BUDGET_ITEM';
 export const SUBMIT_NEW_CATEGORY = 'BUDGET/SUBMIT_NEW_CATEGORY';
 export const ADD_CATEGORY = 'BUDGET/ADD_CATEGORY';
-export const TOGGLE_NEW_ITEM_DRAWER = 'BUDGET/TOGGLE_NEW_ITEM_DRAWER';
+export const UPDATE_CATEGORY = 'BUDGET/UPDATE_CATEGORY';
 
 
 // ////////////////////////
@@ -91,6 +91,10 @@ export default function budgetReducer(state = initialState, action = {}) {
       };
     }
 
+    case UPDATE_CATEGORY: {
+      return state;
+    }
+
     case ADD_BUDGET_ITEM: {
       return {
         categories: state.categories.map(category =>
@@ -129,5 +133,10 @@ export const submitNewCategory = data => ({
 
 export const addCategory = data => ({
   type: ADD_CATEGORY,
+  ...data,
+});
+
+export const updateCategory = data => ({
+  type: UPDATE_CATEGORY,
   ...data,
 });

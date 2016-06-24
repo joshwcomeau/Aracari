@@ -121,7 +121,7 @@ AddCategory.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isOpen: state.drawer === 'add-category',
+    isOpen: state.drawer.name === 'add-category',
     currentCategorySlugs: state.budget.categories.map(cat => cat.slug),
   };
 }

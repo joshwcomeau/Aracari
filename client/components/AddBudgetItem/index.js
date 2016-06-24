@@ -99,7 +99,7 @@ AddBudgetItem.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isOpen: state.drawer === 'add-budget-item',
+    isOpen: state.drawer.name === 'add-budget-item',
     categories: state.budget.categories,
   };
 }
