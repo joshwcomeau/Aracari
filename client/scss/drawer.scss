@@ -25,6 +25,7 @@ $drawer-header-height: 50px;
       animation: fadeOut 400ms forwards;
     }
     &.is-transitioning {
+      pointer-events: none;
       top: 0 !important;
     }
   }
