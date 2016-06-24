@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import dynamics from 'dynamics.js';
+import { Motion, spring } from 'react-motion';
 
 import IconButton from 'material-ui/IconButton';
 
@@ -12,6 +12,7 @@ class Drawer extends Component {
 
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
+    this.onRest = this.onRest.bind(this);
 
     this.state = {
       isOpen: typeof props.isOpen !== 'undefined' ? props.isOpen : false,
@@ -19,12 +20,9 @@ class Drawer extends Component {
     };
   }
 
-  componentDidMount() {
-    const currentHeight = this.getDrawerHeight();
-    this.contentElem.style.transform = `translateY(${currentHeight}px)`;
-  }
-
   componentWillReceiveProps(nextProps) {
+    console.log("RECEIVED", nextProps.isOpen);
+
     if (!this.state.isOpen && nextProps.isOpen) {
       this.open();
     } else if (this.state.isOpen && !nextProps.isOpen) {
@@ -32,22 +30,9 @@ class Drawer extends Component {
     }
   }
 
-  getDrawerHeight() {
-    return this.contentElem && this.contentElem.offsetHeight;
-  }
-
   open() {
     this.setState({
       isOpen: true,
-    });
-
-    dynamics.animate(this.contentElem, {
-      translateY: 0,
-    }, {
-      type: dynamics.spring,
-      duration: 1200,
-      frequency: 135,
-      friction: 233,
     });
   }
 
@@ -63,32 +48,25 @@ class Drawer extends Component {
         isTransitioning: true,
         isOpen: false,
       });
-
-      const currentHeight = this.getDrawerHeight();
-
-      dynamics.animate(this.contentElem, {
-        translateY: currentHeight + 20,
-      }, {
-        type: dynamics.spring,
-        duration: 500,
-        frequency: 11,
-        friction: 35,
-        complete: () => {
-          this.setState({ isTransitioning: false });
-          this.props.onClose();
-        },
-      });
     }, 1);
   }
 
-  renderContent() {
+  onRest() {
+    this.setState({ isTransitioning: false });
+
+    // Once the drawer has finished closing, we need to unset the `isTransitioning`
+    // key in our state, and also broadcast that the drawer is closed, by invoking
+    // the supplied callback.
+    if (!this.state.isOpen) {
+      this.props.onClose();
+    }
+  }
+
+  renderContent(y) {
     const { title, children } = this.props;
 
     return (
-      <div
-        className="content"
-        ref={el => { this.contentElem = el; }}
-      >
+      <div className="content" style={{ transform: `translateY(${y}%)` }}>
         <header className="header">
           <h2>{title}</h2>
           <IconButton onTouchTap={this.close}>
@@ -109,22 +87,24 @@ class Drawer extends Component {
       'is-transitioning': this.state.isTransitioning,
     });
 
-    return (
-      <div
-        className={classes}
-        ref={el => { this.backdropElem = el; }}
-        onTouchTap={this.close}
-      />
-    );
+    return <div className={classes} onTouchTap={this.close} />;
   }
 
   render() {
-    const classes = classNames(['drawer', this.props.className]);
+    const { className, springSettings } = this.props;
+
+    const classes = classNames(['drawer', className]);
+    const offset = this.state.isOpen ? 0 : 100;
 
     return (
       <div className={classes}>
         {this.renderBackdrop()}
-        {this.renderContent()}
+        <Motion
+          style={{ y: spring(offset, springSettings) }}
+          onRest={this.onRest}
+        >
+          {({ y }) => this.renderContent(y)}
+        </Motion>
       </div>
     );
   }
@@ -140,6 +120,13 @@ Drawer.propTypes = {
     stiffness: PropTypes.number,
     damping: PropTypes.number,
   }),
+};
+
+Drawer.defaultProps = {
+  springSettings: {
+    stiffness: 120,
+    damping: 14,
+  },
 };
 
 export default Drawer;
