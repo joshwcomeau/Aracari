@@ -13,7 +13,7 @@ import {
 import CategoryChart from 'components/CategoryChart';
 import CategoryItem from 'components/CategoryItem';
 
-import { formatCurrency } from 'utils/currency.utils';
+import { formatCurrency } from 'utils/money.utils';
 import { availableSelector } from 'selectors/budget.selectors';
 import { openDrawer } from 'ducks/drawer.duck';
 import { EDIT_CATEGORY_DRAWER } from 'constants';

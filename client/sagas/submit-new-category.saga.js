@@ -6,6 +6,7 @@ import { closeDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
 import { delay } from 'utils/misc.utils';
 import { formatCategoryForState } from 'utils/data.utils';
+import { shouldBudgetBeProrated, getProratedBudget } from 'utils/money.utils';
 import { ADD_CATEGORY_DRAWER, ADD_CATEGORY_FORM } from 'constants';
 
 
@@ -22,6 +23,10 @@ export default function* submitNewCategory() {
     // - turn the limit into a number in cents
     const formattedData = formatCategoryForState(data);
 
+    if (shouldBudgetBeProrated()) {
+      formattedData.proratedLimit = getProratedBudget(formattedData.limit);
+    }
+
     // Close the New Category drawer
     yield put(closeDrawer(ADD_CATEGORY_DRAWER));
 
@@ -29,7 +34,6 @@ export default function* submitNewCategory() {
       // Reset the form, for the next new budget addition.
       put(reset(ADD_CATEGORY_FORM)),
 
-      // Add the item to the store
       put(addCategory(formattedData)),
     ];
 

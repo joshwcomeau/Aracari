@@ -5,7 +5,7 @@ import { SUBMIT_NEW_BUDGET_ITEM, addBudgetItem } from 'ducks/budget.duck';
 import { closeDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
 import { availableSelector } from 'selectors/budget.selectors';
-import { formatCurrency } from 'utils/currency.utils';
+import { formatCurrency } from 'utils/money.utils';
 import { delay } from 'utils/misc.utils';
 import {
   ADD_BUDGET_ITEM_DRAWER,

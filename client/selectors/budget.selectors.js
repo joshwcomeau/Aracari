@@ -2,7 +2,24 @@ import moment from 'moment';
 import { createSelector } from 'reselect';
 
 const limitSelector = state => state.limit;
+const proratedLimitSelector = state => state.proratedLimit;
 const itemsSelector = state => state.items;
+const createdAtSelector = state => state.createdAt;
+
+const usableLimitSelector = createSelector(
+  limitSelector,
+  proratedLimitSelector,
+  createdAtSelector,
+  (limit, proratedLimit, createdAt) => {
+    // If we're in the month that the budget was created on, and a prorated limit
+    // exists, use that. Otherwise, use the regular limit.
+    const createdAtMonth = moment(createdAt).month();
+    const wasCreatedThisMonth = createdAtMonth === moment().month();
+    const hasProratedLimit = typeof proratedLimit !== 'undefined';
+
+    return wasCreatedThisMonth && hasProratedLimit ? proratedLimit : limit;
+  }
+);
 
 export const spentSelector = createSelector(
   itemsSelector,
@@ -10,13 +27,13 @@ export const spentSelector = createSelector(
 );
 
 export const availableSelector = createSelector(
-  limitSelector,
+  usableLimitSelector,
   spentSelector,
   (limit, spent) => limit - spent
 );
 
 export const budgetProgressSelector = createSelector(
-  limitSelector,
+  usableLimitSelector,
   spentSelector,
   (limit, spent) => (spent / limit) * 100
 );

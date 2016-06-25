@@ -62,15 +62,16 @@ export default function budgetReducer(state = initialState, action = {}) {
     }
 
     case ADD_CATEGORY: {
+      // eslint-disable-next-line no-unused-vars
+      const { type, ...category } = action;
+
       return {
         categories: [
           ...state.categories,
           {
+            ...category,
             label: capitalizeWords(action.label),
             slug: slug(action.label).toLowerCase(),
-            limit: action.limit,
-            icon: action.icon,
-            colour: action.colour,
             items: [],
           },
         ],

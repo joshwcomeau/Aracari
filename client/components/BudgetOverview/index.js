@@ -8,13 +8,13 @@ import CategoryProgress from 'components/CategoryProgress';
 import BudgetDate from 'components/BudgetDate';
 import FlatButton from 'material-ui/FlatButton';
 
-import { progressThroughMonth } from 'utils/time.utils';
+import { getProgressThroughMonth } from 'utils/time.utils';
 import { ADD_CATEGORY_DRAWER } from 'constants';
 import 'scss/budget-overview.scss';
 
 
 const Budget = ({ categorySlugs, actions }) => {
-  const monthProgress = progressThroughMonth();
+  const monthProgress = getProgressThroughMonth();
   const dateString = moment().format('MMMM Do');
 
   const categoriesJsx = categorySlugs.map(slug => (

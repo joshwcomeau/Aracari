@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { convertFromCents } from 'utils/currency.utils';
+import { convertFromCents } from 'utils/money.utils';
 
 import AddBudgetItem from 'components/AddBudgetItem';
 import AddCategory from 'components/AddCategory';

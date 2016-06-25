@@ -5,7 +5,7 @@ import { closeDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
 import { delay } from 'utils/misc.utils';
 import { EDIT_CATEGORY_DRAWER } from 'constants';
-import { convertToCents } from 'utils/currency.utils';
+import { convertToCents } from 'utils/money.utils';
 
 
 export default function* submitUpdatedCategory() {

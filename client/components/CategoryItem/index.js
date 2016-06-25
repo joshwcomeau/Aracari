@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import Swipe from 'react-swipe-to-reveal-options';
 
 import { deleteBudgetItem } from 'ducks/budget.duck';
-import { formatCurrency } from 'utils/currency.utils';
+import { formatCurrency } from 'utils/money.utils';
 import 'scss/category-item.scss';
 
 
