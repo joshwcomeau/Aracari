@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { convertFromCents } from 'utils/currency.utils';
 
 import AddBudgetItem from 'components/AddBudgetItem';
 import AddCategory from 'components/AddCategory';
 import EditCategory from 'components/EditCategory';
-import { formatCategoryFromState } from 'utils/data.utils';
 import { EDIT_CATEGORY_DRAWER } from 'constants';
 
 
@@ -33,9 +33,10 @@ const mapStateToProps = (state) => {
         cat.slug === data.slug
       ));
 
-      return {
-        data: formatCategoryFromState(category),
-      };
+      return { data: {
+        ...category,
+        limit: convertFromCents(category.limit),
+      } };
     }
 
     default:

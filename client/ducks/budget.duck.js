@@ -46,6 +46,7 @@ export const SUBMIT_NEW_BUDGET_ITEM = 'BUDGET/SUBMIT_NEW_BUDGET_ITEM';
 export const ADD_BUDGET_ITEM = 'BUDGET/ADD_BUDGET_ITEM';
 export const SUBMIT_NEW_CATEGORY = 'BUDGET/SUBMIT_NEW_CATEGORY';
 export const ADD_CATEGORY = 'BUDGET/ADD_CATEGORY';
+export const SUBMIT_UPDATED_CATEGORY = 'budget/SUBMIT_UPDATED_CATEGORY';
 export const UPDATE_CATEGORY = 'BUDGET/UPDATE_CATEGORY';
 
 
@@ -92,7 +93,20 @@ export default function budgetReducer(state = initialState, action = {}) {
     }
 
     case UPDATE_CATEGORY: {
-      return state;
+      // eslint-disable-next-line no-unused-vars
+      const { type, ...updatedCategory } = action;
+
+      const categories = state.categories.map(category => {
+        if (category.slug === action.slug) {
+          return { ...category, ...updatedCategory };
+        }
+        return { ...category };
+      });
+
+      return {
+        ...state,
+        categories,
+      };
     }
 
     case ADD_BUDGET_ITEM: {
@@ -134,6 +148,13 @@ export const submitNewCategory = data => ({
 export const addCategory = data => ({
   type: ADD_CATEGORY,
   ...data,
+});
+
+export const submitUpdatedCategory = data => ({
+  // NOTE: This action does not directly affect the state. It is listened to
+  // by the saga of the same name, which dispatches other actions.
+  type: SUBMIT_UPDATED_CATEGORY,
+  data,
 });
 
 export const updateCategory = data => ({

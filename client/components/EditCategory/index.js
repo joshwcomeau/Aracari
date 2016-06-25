@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { reduxForm } from 'redux-form';
 
-import { updateCategory } from 'ducks/budget.duck';
+import { submitUpdatedCategory } from 'ducks/budget.duck';
 import { closeDrawer } from 'ducks/drawer.duck';
 import { scrollIntoView } from 'utils/animation.utils';
 import Drawer from 'components/Drawer';
@@ -16,7 +16,7 @@ import 'scss/add-category.scss';
 const EditCategory = ({ fields, isOpen, actions, handleSubmit }) => {
   const { limit } = fields;
 
-  const onSubmit = handleSubmit(actions.updateCategory);
+  const onSubmit = handleSubmit(actions.submitUpdatedCategory);
 
   return (
     <Drawer
@@ -60,9 +60,9 @@ const EditCategory = ({ fields, isOpen, actions, handleSubmit }) => {
 };
 
 EditCategory.propTypes = {
-  fields: PropTypes.object,
+  fields: PropTypes.object.isRequired,
   actions: PropTypes.object,
-  isOpen: PropTypes.bool,
+  isOpen: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
 };
@@ -76,7 +76,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      updateCategory,
+      submitUpdatedCategory,
       closeDrawer,
     }, dispatch),
   };
@@ -85,6 +85,7 @@ function mapDispatchToProps(dispatch) {
 const formConfig = {
   form: EDIT_CATEGORY_FORM,
   fields: [
+    'slug',
     'limit',
   ],
   touchOnBlur: false,
