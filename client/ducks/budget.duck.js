@@ -44,6 +44,7 @@ const initialState = {
 // //////////////////////
 export const SUBMIT_NEW_BUDGET_ITEM = 'BUDGET/SUBMIT_NEW_BUDGET_ITEM';
 export const ADD_BUDGET_ITEM = 'BUDGET/ADD_BUDGET_ITEM';
+export const DELETE_BUDGET_ITEM = 'BUDGET/DELETE_BUDGET_ITEM';
 export const SUBMIT_NEW_CATEGORY = 'BUDGET/SUBMIT_NEW_CATEGORY';
 export const ADD_CATEGORY = 'BUDGET/ADD_CATEGORY';
 export const SUBMIT_UPDATED_CATEGORY = 'budget/SUBMIT_UPDATED_CATEGORY';
@@ -54,20 +55,24 @@ export const UPDATE_CATEGORY = 'BUDGET/UPDATE_CATEGORY';
 // REDUCERS //////////////
 // //////////////////////
 function budgetCategoryReducer(state, action) {
+  // eslint-disable-next-line no-unused-vars
   const { type, category, ...data } = action;
 
   switch (type) {
     case ADD_BUDGET_ITEM: {
-      if (state.slug !== category) {
-        return state;
-      }
-
       // Ensure values are always numbers
       data.value = Number(data.value);
 
       return {
         ...state,
         items: [...state.items, { ...data }],
+      };
+    }
+
+    case DELETE_BUDGET_ITEM: {
+      return {
+        ...state,
+        items: state.items.filter(item => item.id !== action.id),
       };
     }
 
@@ -78,6 +83,18 @@ function budgetCategoryReducer(state, action) {
 
 export default function budgetReducer(state = initialState, action = {}) {
   switch (action.type) {
+    case ADD_BUDGET_ITEM:
+    case DELETE_BUDGET_ITEM: {
+      return {
+        categories: state.categories.map(category => (
+          action.category === category.slug
+            ? budgetCategoryReducer(category, action)
+            : category
+
+        )),
+      };
+    }
+
     case ADD_CATEGORY: {
       return {
         categories: [
@@ -109,14 +126,6 @@ export default function budgetReducer(state = initialState, action = {}) {
       };
     }
 
-    case ADD_BUDGET_ITEM: {
-      return {
-        categories: state.categories.map(category =>
-          budgetCategoryReducer(category, action)
-        ),
-      };
-    }
-
     default:
       return state;
   }
@@ -136,6 +145,12 @@ export const submitNewBudgetItem = data => ({
 export const addBudgetItem = data => ({
   type: ADD_BUDGET_ITEM,
   ...data,
+});
+
+export const deleteBudgetItem = (category, id) => ({
+  type: DELETE_BUDGET_ITEM,
+  category,
+  id,
 });
 
 export const submitNewCategory = data => ({

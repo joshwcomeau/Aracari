@@ -22,7 +22,7 @@ import 'scss/category-details.scss';
 const CategoryDetails = props => {
   // eslint-disable-next-line no-unused-vars
   const { actions, routeParams, ...category } = props;
-  const { label, icon, colour, limit, items, available } = category;
+  const { label, slug, icon, colour, limit, items, available } = category;
 
   return (
     <div id="category-details">
@@ -73,7 +73,7 @@ const CategoryDetails = props => {
         <CardText>
           {
             items.map(item => (
-              <CategoryItem key={item.id} item={item} />
+              <CategoryItem key={item.id} item={item} categorySlug={slug} />
             ))
           }
         </CardText>
