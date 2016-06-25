@@ -6,15 +6,16 @@ import FlipMove from 'react-flip-move';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import {
-  // eslint-disable-next-line no-unused-vars
   Card, CardActions, CardHeader, CardMedia, CardTitle, CardText,
 } from 'material-ui/Card';
-// eslint-disable-next-line no-unused-vars
-import CategoryChart from 'components/CategoryChart';
 import CategoryItem from 'components/CategoryItem';
 
 import { formatCurrency } from 'utils/money.utils';
-import { availableSelector } from 'selectors/budget.selectors';
+import {
+  availableSelector,
+  isProratedSelector,
+  usableLimitSelector,
+} from 'selectors/budget.selectors';
 import { openDrawer } from 'ducks/drawer.duck';
 import { EDIT_CATEGORY_DRAWER } from 'constants';
 import 'scss/category-details.scss';
@@ -23,7 +24,9 @@ import 'scss/category-details.scss';
 const CategoryDetails = props => {
   // eslint-disable-next-line no-unused-vars
   const { actions, routeParams, ...category } = props;
-  const { label, slug, icon, colour, limit, items, available } = category;
+  const {
+    label, slug, icon, colour, limit, items, available, usableLimit, isProrated,
+  } = category;
 
   return (
     <div id="category-details">
@@ -54,7 +57,14 @@ const CategoryDetails = props => {
           <div className="flex-row centered with-border category-summary">
             <div className="one-half">
               <h3>Monthly Budget</h3>
-              <h5>{formatCurrency(limit)}</h5>
+              <h5>{formatCurrency(usableLimit)}</h5>
+              {
+                isProrated ? (
+                  <h6 className="prorated">
+                    (Prorated from {formatCurrency(limit)})
+                  </h6>
+                ) : null
+              }
             </div>
             <div className="one-half">
               <h3>Amount Remaining</h3>
@@ -110,6 +120,8 @@ function mapStateToProps(state, ownProps) {
 
   return {
     ...category,
+    isProrated: isProratedSelector(category),
+    usableLimit: usableLimitSelector(category),
     available: availableSelector(category),
   };
 }

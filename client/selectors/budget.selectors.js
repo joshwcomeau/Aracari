@@ -6,18 +6,24 @@ const proratedLimitSelector = state => state.proratedLimit;
 const itemsSelector = state => state.items;
 const createdAtSelector = state => state.createdAt;
 
-const usableLimitSelector = createSelector(
-  limitSelector,
+export const isProratedSelector = createSelector(
   proratedLimitSelector,
   createdAtSelector,
-  (limit, proratedLimit, createdAt) => {
-    // If we're in the month that the budget was created on, and a prorated limit
-    // exists, use that. Otherwise, use the regular limit.
+  (proratedLimit, createdAt) => {
     const createdAtMonth = moment(createdAt).month();
     const wasCreatedThisMonth = createdAtMonth === moment().month();
     const hasProratedLimit = typeof proratedLimit !== 'undefined';
 
-    return wasCreatedThisMonth && hasProratedLimit ? proratedLimit : limit;
+    return wasCreatedThisMonth && hasProratedLimit;
+  }
+);
+
+export const usableLimitSelector = createSelector(
+  limitSelector,
+  proratedLimitSelector,
+  isProratedSelector,
+  (limit, proratedLimit, isProrated) => {
+    return isProrated ? proratedLimit : limit;
   }
 );
 
