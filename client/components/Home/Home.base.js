@@ -5,8 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Header from 'components/Header';
 import Snackbar from 'components/Snackbar';
-import AddBudgetItem from 'components/AddBudgetItem';
-import AddCategory from 'components/AddCategory';
+import Drawers from 'components/Drawers';
 
 export default function HomeBase(DevTools = null) {
   const Home = (props) => {
@@ -24,8 +23,7 @@ export default function HomeBase(DevTools = null) {
 
           {DevTools ? <DevTools /> : null}
 
-          <AddBudgetItem />
-          <AddCategory />
+          <Drawers />
 
           <Snackbar />
         </div>

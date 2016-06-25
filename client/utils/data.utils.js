@@ -1,4 +1,4 @@
-import { presetCategoriesArray } from 'data/preset-categories';
+import { presetCategoryArray } from 'data/preset-categories';
 
 export const formatCategoryForState = ({ presetLabel, customLabel, limit }) => {
   // Takes raw form data and processes it for storage in the state.
@@ -9,7 +9,7 @@ export const formatCategoryForState = ({ presetLabel, customLabel, limit }) => {
 
   // Fetch the presentational data (icon, colour) from our data file.
   // Is this the best way to do this?
-  const categoryData = presetCategoriesArray[presetLabel] || presetCategoriesArray.custom;
+  const categoryData = presetCategoryArray[presetLabel] || presetCategoryArray.custom;
 
   return {
     ...categoryData,
@@ -20,8 +20,7 @@ export const formatCategoryForState = ({ presetLabel, customLabel, limit }) => {
 export const formatCategoryFromState = ({ slug, label, limit }) => {
   // The opposite of `formatCategoryForState`. Takes state and formats it
   // so it can be used in the "Edit Category" drawer.
-
-  const isCustomLabel = !presetCategoriesArray.find(cat => cat.slug === slug);
+  const isCustomLabel = !presetCategoryArray.find(cat => cat.slug === slug);
 
   const field = {
     presetLabel: isCustomLabel ? 'custom' : slug,

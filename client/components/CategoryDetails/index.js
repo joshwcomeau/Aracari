@@ -15,7 +15,7 @@ import CategoryItem from 'components/CategoryItem';
 import { formatCurrency } from 'utils/currency.utils';
 import { availableSelector } from 'selectors/budget.selectors';
 import { openDrawer } from 'ducks/drawer.duck';
-import { ADD_CATEGORY } from 'data/drawer-constants';
+import { EDIT_CATEGORY_DRAWER } from 'constants';
 import 'scss/category-details.scss';
 
 
@@ -42,7 +42,9 @@ const CategoryDetails = props => {
         >
           <IconButton
             className="category-edit-button"
-            onTouchTap={() => actions.openDrawer(ADD_CATEGORY, category)}
+            onTouchTap={() => (
+              actions.openDrawer(EDIT_CATEGORY_DRAWER, { slug: category.slug })
+            )}
           >
             <i className="material-icons">settings</i>
           </IconButton>
