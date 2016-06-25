@@ -11,6 +11,7 @@ import 'scss/category-item.scss';
 const CategoryItem = ({ categorySlug, item, actions }) => {
   const swipeActions = {
     maxItemWidth: 80,
+    transitionBackOnRightClick: false,
     rightOptions: [{
       label: 'Remove',
       class: 'remove',

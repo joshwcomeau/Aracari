@@ -3,8 +3,14 @@
 
 #category-details {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   background: $offwhite;
   padding: 12px;
+
+  .category-expenses-card {
+    flex: 1;
+  }
 
   .category-edit-button {
     position: absolute !important;

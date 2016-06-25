@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import FlipMove from 'react-flip-move';
 
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
@@ -63,7 +64,7 @@ const CategoryDetails = props => {
         </CardText>
       </Card>
 
-      <Card>
+      <Card style={{ marginBottom: '16px' }} className="category-expenses-card">
         <CardHeader
           title="Monthly Expenses"
           actAsExpander
@@ -71,11 +72,16 @@ const CategoryDetails = props => {
           style={{ fontWeight: 'bold' }}
         />
         <CardText>
-          {
-            items.map(item => (
-              <CategoryItem key={item.id} item={item} categorySlug={slug} />
-            ))
-          }
+          <FlipMove
+            enterAnimation="accordionVertical"
+            leaveAnimation="accordionVertical"
+          >
+            {
+              items.map(item => (
+                <CategoryItem key={item.id} item={item} categorySlug={slug} />
+              ))
+            }
+          </FlipMove>
         </CardText>
 
       </Card>
