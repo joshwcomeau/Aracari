@@ -21,12 +21,21 @@ class Drawer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("RECEIVED", nextProps.isOpen);
-
     if (!this.state.isOpen && nextProps.isOpen) {
       this.open();
     } else if (this.state.isOpen && !nextProps.isOpen) {
       this.close();
+    }
+  }
+
+  onRest() {
+    this.setState({ isTransitioning: false });
+
+    // Once the drawer has finished closing, we need to unset the `isTransitioning`
+    // key in our state, and also broadcast that the drawer is closed, by invoking
+    // the supplied callback.
+    if (!this.state.isOpen) {
+      this.props.onClose();
     }
   }
 
@@ -49,17 +58,6 @@ class Drawer extends Component {
         isOpen: false,
       });
     }, 1);
-  }
-
-  onRest() {
-    this.setState({ isTransitioning: false });
-
-    // Once the drawer has finished closing, we need to unset the `isTransitioning`
-    // key in our state, and also broadcast that the drawer is closed, by invoking
-    // the supplied callback.
-    if (!this.state.isOpen) {
-      this.props.onClose();
-    }
   }
 
   renderContent(y) {

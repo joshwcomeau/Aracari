@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
@@ -52,7 +51,7 @@ class CategoryProgress extends Component {
   }
 
   render() {
-    const { slug, label, budgetProgress, monthProgress, actions } = this.props;
+    const { slug, label, budgetProgress, monthProgress } = this.props;
 
     return (
       <FluidEventHandler
@@ -82,10 +81,10 @@ class CategoryProgress extends Component {
 }
 
 CategoryProgress.propTypes = {
+  slug: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   budgetProgress: PropTypes.number.isRequired,
   monthProgress: PropTypes.number.isRequired,
-  actions: PropTypes.object,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -101,14 +100,8 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({}, dispatch),
-  };
-}
-
 // Export the component _without_ the Redux bindings,
 // for unit testing and storybook prototyping.
 export { CategoryProgress };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryProgress);
+export default connect(mapStateToProps)(CategoryProgress);

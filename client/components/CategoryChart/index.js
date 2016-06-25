@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { itemGraphDataSelector } from 'selectors/budget.selectors';
 
 
+// eslint-disable-next-line no-unused-vars
 const CategoryChart = ({ data }) => {
   return (
     <h1>Chart goes here</h1>

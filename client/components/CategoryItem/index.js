@@ -14,8 +14,9 @@ const CategoryItem = ({ item }) => {
     }, {
       label: 'Remove',
       class: 'remove',
-    }]
-  }
+    }],
+  };
+
   return (
     <div className="category-item">
       <Swipe {...swipeActions}>

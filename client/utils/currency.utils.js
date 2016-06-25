@@ -6,4 +6,4 @@ export const formatCurrency = (value, symbol = '$') => {
   }
 
   return formattedValue;
-}
+};
