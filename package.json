@@ -43,7 +43,8 @@
     "redux-saga": "^0.10.5",
     "redux-thunk": "^1.0.0",
     "reselect": "^2.5.1",
-    "slug": "^0.9.1"
+    "slug": "^0.9.1",
+    "uuid": "^2.0.2"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.26.0",

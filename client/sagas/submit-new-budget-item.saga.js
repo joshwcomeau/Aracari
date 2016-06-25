@@ -6,6 +6,7 @@ import { closeDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
 import { availableSelector } from 'selectors/budget.selectors';
 import { formatCurrency } from 'utils/money.utils';
+import { formatBudgetItemForState } from 'utils/data.utils';
 import { delay } from 'utils/misc.utils';
 import {
   ADD_BUDGET_ITEM_DRAWER,
@@ -20,27 +21,27 @@ export default function* submitNewBudgetItem() {
 
     // eslint-disable-next-line no-unused-vars
     const { type, data } = action;
-
-    // The form submits `value` in dollars.
-    // We need it as an integer in cents.
-    data.value = Math.round(data.value * 100);
+    const { category, ...budgetItemData } = data;
 
     // Close the New Item drawer
     yield put(closeDrawer(ADD_BUDGET_ITEM_DRAWER));
 
-    yield delay(750);
+    yield delay(500);
 
     yield [
       // Reset the form, for the next new budget addition.
       put(reset(ADD_BUDGET_ITEM_FORM)),
 
       // Add the item to the store
-      put(addBudgetItem(data)),
+      put(addBudgetItem({
+        category,
+        budgetItem: formatBudgetItemForState(budgetItemData),
+      })),
     ];
 
     // After a short pause, show the user what remains of their budget.
     // eslint-disable-next-line no-use-before-define
-    yield showUserRemainingBalance(data.category);
+    yield showUserRemainingBalance(category);
   }
 }
 
@@ -64,6 +65,6 @@ function* showUserRemainingBalance(category) {
       Uh oh! You're ${formattedAvailable} over-budget this month on ${label}.
     `;
   }
-  yield delay(650);
+  yield delay(500);
   yield put(updateSnackbar(snackbarMessage));
 }

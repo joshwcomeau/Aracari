@@ -17,7 +17,10 @@ const CategoryItem = ({ categorySlug, item, actions }) => {
       class: 'remove',
     }],
     onRightClick() {
-      actions.deleteBudgetItem(categorySlug, item.id);
+      actions.deleteBudgetItem({
+        category: categorySlug,
+        id: item.id,
+      });
     },
   };
 

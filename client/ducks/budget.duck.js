@@ -21,17 +21,13 @@ export const UPDATE_CATEGORY = 'BUDGET/UPDATE_CATEGORY';
 // REDUCERS //////////////
 // //////////////////////
 function budgetCategoryReducer(state, action) {
-  // eslint-disable-next-line no-unused-vars
-  const { type, category, ...data } = action;
+  const { type, budgetItem } = action;
 
   switch (type) {
     case ADD_BUDGET_ITEM: {
-      // Ensure values are always numbers
-      data.value = Number(data.value);
-
       return {
         ...state,
-        items: [...state.items, { ...data }],
+        items: [...state.items, { ...budgetItem }],
       };
     }
 
@@ -111,12 +107,13 @@ export const submitNewBudgetItem = data => ({
   data,
 });
 
-export const addBudgetItem = data => ({
+export const addBudgetItem = ({ category, budgetItem }) => ({
   type: ADD_BUDGET_ITEM,
-  ...data,
+  category,
+  budgetItem,
 });
 
-export const deleteBudgetItem = (category, id) => ({
+export const deleteBudgetItem = ({ category, id }) => ({
   type: DELETE_BUDGET_ITEM,
   category,
   id,
