@@ -49,15 +49,10 @@ class Drawer extends Component {
     // We want to 'blur' the active element so that the iOS keyboard closes.
     document.activeElement.blur();
 
-    // Because that blur can change the height of the drawer (by showing an
-    // error message if the field selected is invalid), we need to wait for
-    // that action to run before recalculating the height.
-    window.setTimeout(() => {
-      this.setState({
-        isTransitioning: true,
-        isOpen: false,
-      });
-    }, 1);
+    this.setState({
+      isTransitioning: true,
+      isOpen: false,
+    });
   }
 
   renderContent(y) {

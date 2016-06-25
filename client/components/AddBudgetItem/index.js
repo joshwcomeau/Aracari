@@ -4,6 +4,7 @@ import { reduxForm } from 'redux-form';
 
 import { submitNewBudgetItem } from 'ducks/budget.duck';
 import { closeDrawer } from 'ducks/drawer.duck';
+import { scrollIntoView } from 'utils/animation.utils';
 import Drawer from 'components/Drawer';
 import SelectFieldWrapper from 'components/SelectFieldWrapper';
 import TextField from 'material-ui/TextField';
@@ -53,6 +54,7 @@ const AddBudgetItem = ({ fields, categories, isOpen, actions, handleSubmit }) =>
               floatingLabelText="Cost"
               {...value}
               errorText={value.touched ? value.error : null}
+              onFocus={scrollIntoView}
               style={{
                 width: '100%',
                 fontFamily: 'inherit',
@@ -66,6 +68,7 @@ const AddBudgetItem = ({ fields, categories, isOpen, actions, handleSubmit }) =>
               floatingLabelText="Details"
               {...details}
               errorText={details.touched ? details.error : null}
+              onFocus={scrollIntoView}
               style={{
                 width: '100%',
                 fontFamily: 'inherit',
