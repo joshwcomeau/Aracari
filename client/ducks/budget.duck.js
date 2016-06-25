@@ -1,9 +1,6 @@
-import { slug, capitalizeWords } from 'utils/misc.utils';
-
 const initialState = {
   categories: [],
 };
-
 
 // ////////////////////////
 // ACTION TYPES //////////
@@ -58,25 +55,18 @@ export default function budgetReducer(state = initialState, action = {}) {
     }
 
     case ADD_CATEGORY: {
-      // eslint-disable-next-line no-unused-vars
-      const { type, ...category } = action;
+      const { category } = action;
 
       return {
         categories: [
           ...state.categories,
-          {
-            ...category,
-            label: capitalizeWords(action.label),
-            slug: slug(action.label).toLowerCase(),
-            items: [],
-          },
+          category,
         ],
       };
     }
 
     case UPDATE_CATEGORY: {
-      // eslint-disable-next-line no-unused-vars
-      const { type, ...updatedCategory } = action;
+      const { updatedCategory } = action;
 
       const categories = state.categories.map(category => {
         if (category.slug === action.slug) {
@@ -126,9 +116,9 @@ export const submitNewCategory = data => ({
   data,
 });
 
-export const addCategory = data => ({
+export const addCategory = category => ({
   type: ADD_CATEGORY,
-  ...data,
+  category,
 });
 
 export const submitUpdatedCategory = data => ({
@@ -140,5 +130,5 @@ export const submitUpdatedCategory = data => ({
 
 export const updateCategory = data => ({
   type: UPDATE_CATEGORY,
-  ...data,
+  data,
 });

@@ -4,8 +4,10 @@ import { SUBMIT_UPDATED_CATEGORY, updateCategory } from 'ducks/budget.duck';
 import { closeDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
 import { delay } from 'utils/misc.utils';
+import {
+  convertToCents, shouldBudgetBeProrated, getProratedBudget
+} from 'utils/money.utils';
 import { EDIT_CATEGORY_DRAWER } from 'constants';
-import { convertToCents } from 'utils/money.utils';
 
 
 export default function* submitUpdatedCategory() {
@@ -17,6 +19,10 @@ export default function* submitUpdatedCategory() {
     const { type, data } = action;
 
     data.limit = convertToCents(data.limit);
+
+    if (shouldBudgetBeProrated()) {
+      data.proratedLimit = getProratedBudget(data.limit);
+    }
 
     yield put(closeDrawer(EDIT_CATEGORY_DRAWER));
 

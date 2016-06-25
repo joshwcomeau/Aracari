@@ -21,10 +21,10 @@ export default function* submitNewCategory() {
     // We have some data cleansing to do:
     // - Figure out whether the label is a preset or a custom label
     // - turn the limit into a number in cents
-    const formattedData = formatCategoryForState(data);
+    const category = formatCategoryForState(data);
 
     if (shouldBudgetBeProrated()) {
-      formattedData.proratedLimit = getProratedBudget(formattedData.limit);
+      category.proratedLimit = getProratedBudget(category.limit);
     }
 
     // Close the New Category drawer
@@ -34,7 +34,7 @@ export default function* submitNewCategory() {
       // Reset the form, for the next new budget addition.
       put(reset(ADD_CATEGORY_FORM)),
 
-      put(addCategory(formattedData)),
+      put(addCategory(category)),
     ];
 
     // Wait for the drawer to close, and show the snackbar
