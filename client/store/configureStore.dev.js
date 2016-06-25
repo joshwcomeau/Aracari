@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import persistState from 'redux-localstorage'
 import thunkMiddleware from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
@@ -27,6 +28,7 @@ export default function configureStore() {
     rootReducer,
     compose(
       applyMiddleware.apply(this, middlewares),
+      persistState('budget', { key: 'aracari-dev' }),
       DevTools.instrument()
     )
   );

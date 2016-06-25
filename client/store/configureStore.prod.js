@@ -1,4 +1,5 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import persistState from 'redux-localstorage'
 import thunkMiddleware from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
@@ -18,7 +19,10 @@ export default function configureStore() {
 
   const store = createStore(
     rootReducer,
-    applyMiddleware.apply(null, middlewares)
+    compose(
+      applyMiddleware.apply(null, middlewares),
+      persistState('budget', { key: 'aracari' })
+    )
   );
 
   sagaMiddleware.run(submitNewBudgetItem);

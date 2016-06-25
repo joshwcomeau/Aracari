@@ -1,4 +1,4 @@
-import { presetCategoryArray } from 'data/preset-categories';
+import presetCategories from 'data/preset-categories';
 import { convertToCents } from 'utils/currency.utils';
 
 export const formatCategoryForState = ({ presetLabel, customLabel, limit }) => {
@@ -10,7 +10,7 @@ export const formatCategoryForState = ({ presetLabel, customLabel, limit }) => {
 
   // Fetch the presentational data (icon, colour) from our data file.
   // Is this the best way to do this?
-  const categoryData = presetCategoryArray[presetLabel] || presetCategoryArray.custom;
+  const categoryData = presetCategories[presetLabel] || presetCategories.custom;
 
   return {
     ...categoryData,

@@ -1,41 +1,7 @@
 import { slug, capitalizeWords } from 'utils/misc.utils';
 
 const initialState = {
-  categories: [
-    {
-      label: 'Food',
-      slug: 'food',
-      icon: 'local_pizza',
-      colour: '#558B2F',
-      limit: 50000,
-      items: [
-        { id: 'a', details: 'Hamburger', value: 1000, createdAt: '2016-06-03' },
-        { id: 'b', details: 'Indian Food', value: 4500, createdAt: '2016-06-06' },
-        { id: 'c', details: 'Groceries', value: 9000, createdAt: '2016-06-07' },
-        { id: 'd', details: 'Burger', value: 100, createdAt: '2016-06-07' },
-        { id: 'e', details: 'Groceries', value: 2500, createdAt: '2016-06-10' },
-      ],
-    }, {
-      label: 'Entertainment',
-      slug: 'entertainment',
-      icon: 'local_play',
-      colour: '#512DA8',
-      limit: 20000,
-      items: [
-        { id: 'f', details: 'Movies', value: 3000, createdAt: '2016-03-04' },
-        { id: 'g', details: 'Video Game', value: 14000, createdAt: '2016-04-04' },
-      ],
-    }, {
-      label: 'Miscellaneous',
-      slug: 'miscellaneous',
-      icon: 'build',
-      colour: '#37474F',
-      limit: 15000,
-      items: [
-        { details: 'Bike', value: 1000 },
-      ],
-    },
-  ],
+  categories: [],
 };
 
 
@@ -103,6 +69,8 @@ export default function budgetReducer(state = initialState, action = {}) {
             label: capitalizeWords(action.label),
             slug: slug(action.label).toLowerCase(),
             limit: action.limit,
+            icon: action.icon,
+            colour: action.colour,
             items: [],
           },
         ],
