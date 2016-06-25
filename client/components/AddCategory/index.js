@@ -11,12 +11,12 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { ADD_CATEGORY } from 'data/drawer-constants';
-import { categoryArray } from 'data/categories';
+import { presetCategoryArray } from 'data/preset-categories';
 import 'scss/add-category.scss';
 
 
 const AddCategory = ({
-  fields, isOpen, categories, actions, handleSubmit,
+  fields, isOpen, activeCategories, actions, handleSubmit,
 }) => {
   const { presetLabel, customLabel, limit } = fields;
 
@@ -40,11 +40,13 @@ const AddCategory = ({
   );
 
   // We want to disable any categories the user has already added.
-  const categoriesWithDisabled = categoryArray.map(category => {
-    if (categories.find(cat => cat.slug === category.slug)) {
-      // eslint-disable-next-line no-param-reassign
-      category.disabled = true;
-    }
+  const categoriesWithDisabled = presetCategoryArray.map(category => {
+    const wasPreviouslyAdded = activeCategories.find(activeCategory => (
+      activeCategory.slug === category.slug
+    ));
+
+    // eslint-disable-next-line no-param-reassign
+    category.disabled = wasPreviouslyAdded;
 
     // eslint-disable-next-line no-param-reassign
     category.value = category.slug;
@@ -123,7 +125,7 @@ AddCategory.propTypes = {
 function mapStateToProps(state) {
   return {
     isOpen: state.drawer.name === ADD_CATEGORY,
-    categories: state.budget.categories,
+    activeCategories: state.budget.categories,
   };
 }
 

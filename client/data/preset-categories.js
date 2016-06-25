@@ -2,7 +2,7 @@ import map from 'lodash/map';
 
 
 /* eslint-disable quote-props */
-const categories = {
+const presetCategories = {
   'food': {
     label: 'Food',
     icon: 'local_pizza',
@@ -40,9 +40,9 @@ const categories = {
   },
 };
 
-export default categories;
+export default presetCategories;
 
-export const categoryArray = map(categories, (category, slug) => ({
+export const presetCategoryArray = map(presetCategories, (category, slug) => ({
   ...category,
   slug,
 }));

@@ -5,9 +5,8 @@ import { SUBMIT_NEW_CATEGORY, addCategory } from 'ducks/budget.duck';
 import { closeDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
 import { delay } from 'utils/misc.utils';
-import categories from 'data/categories';
+import { formatCategoryForState } from 'utils/data.utils';
 import { ADD_CATEGORY } from 'data/drawer-constants';
-
 
 
 export default function* submitNewCategory() {
@@ -21,19 +20,7 @@ export default function* submitNewCategory() {
     // We have some data cleansing to do:
     // - Figure out whether the label is a preset or a custom label
     // - turn the limit into a number in cents
-    const { presetLabel, customLabel, limit } = data;
-    const scrubbedData = {
-      label: presetLabel === 'custom' ? customLabel : presetLabel,
-      limit: Math.round(limit * 100),
-    };
-
-    // Fetch the presentational data (icon, colour) from our data file.
-    // Is this the best way to do this?
-    const categoryData = categories[presetLabel] || categories.custom;
-    const mergedData = {
-      ...categoryData,
-      ...scrubbedData,
-    };
+    const formattedData = formatCategoryForState(data);
 
     // Close the New Category drawer
     yield put(closeDrawer(ADD_CATEGORY));
@@ -43,7 +30,7 @@ export default function* submitNewCategory() {
       put(reset(ADD_CATEGORY)),
 
       // Add the item to the store
-      put(addCategory(mergedData)),
+      put(addCategory(formattedData)),
     ];
 
     // Wait for the drawer to close, and show the snackbar
