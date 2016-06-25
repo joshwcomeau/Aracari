@@ -8,9 +8,7 @@ import Snackbar from 'components/Snackbar';
 import Drawers from 'components/Drawers';
 
 export default function HomeBase(DevTools = null) {
-  const Home = (props) => {
-    const { children } = props;
-
+  const Home = ({ children }) => {
     let classes = classNames({
       'wrapped-for-devtools': process.env.NODE_ENV !== 'production',
     });
@@ -19,12 +17,12 @@ export default function HomeBase(DevTools = null) {
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <div id="home" className={classes}>
           <Header />
+
           {children}
 
           {DevTools ? <DevTools /> : null}
 
           <Drawers />
-
           <Snackbar />
         </div>
       </MuiThemeProvider>
