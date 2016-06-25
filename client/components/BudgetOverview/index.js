@@ -9,7 +9,7 @@ import BudgetDate from 'components/BudgetDate';
 import FlatButton from 'material-ui/FlatButton';
 
 import { progressThroughMonth } from 'utils/time.utils';
-import { ADD_CATEGORY } from 'data/drawer-constants';
+import { ADD_CATEGORY_DRAWER } from 'constants';
 import 'scss/budget-overview.scss';
 
 
@@ -37,7 +37,7 @@ const Budget = ({ categorySlugs, actions }) => {
       <div className="add-category-button">
         <FlatButton
           secondary
-          onTouchTap={() => actions.openDrawer(ADD_CATEGORY)}
+          onTouchTap={() => actions.openDrawer(ADD_CATEGORY_DRAWER)}
           icon={<i className="material-icons">playlist_add</i>}
         />
       </div>

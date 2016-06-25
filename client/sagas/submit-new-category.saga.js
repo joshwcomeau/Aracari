@@ -6,7 +6,7 @@ import { closeDrawer } from 'ducks/drawer.duck';
 import { updateSnackbar } from 'ducks/snackbar.duck';
 import { delay } from 'utils/misc.utils';
 import { formatCategoryForState } from 'utils/data.utils';
-import { ADD_CATEGORY } from 'data/drawer-constants';
+import { ADD_CATEGORY_DRAWER, ADD_CATEGORY_FORM } from 'constants';
 
 
 export default function* submitNewCategory() {
@@ -23,11 +23,11 @@ export default function* submitNewCategory() {
     const formattedData = formatCategoryForState(data);
 
     // Close the New Category drawer
-    yield put(closeDrawer(ADD_CATEGORY));
+    yield put(closeDrawer(ADD_CATEGORY_DRAWER));
 
     yield [
       // Reset the form, for the next new budget addition.
-      put(reset(ADD_CATEGORY)),
+      put(reset(ADD_CATEGORY_FORM)),
 
       // Add the item to the store
       put(addCategory(formattedData)),

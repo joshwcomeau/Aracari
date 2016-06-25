@@ -6,7 +6,7 @@ import { openDrawer } from 'ducks/drawer.duck';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 
-import { ADD_BUDGET_ITEM } from 'data/drawer-constants';
+import { ADD_BUDGET_ITEM_DRAWER } from 'constants';
 import '../../scss/header.scss';
 
 
@@ -17,7 +17,7 @@ const Header = ({ actions }) => {
       style={{ fontFamily: 'inherit' }}
       zDepth={0}
       iconElementRight={
-        <IconButton onTouchTap={() => actions.openDrawer(ADD_BUDGET_ITEM)}>
+        <IconButton onTouchTap={() => actions.openDrawer(ADD_BUDGET_ITEM_DRAWER)}>
           <i
             className="material-icons"
             style={{ fontSize: '32px', lineHeight: '32px' }}

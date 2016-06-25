@@ -9,7 +9,7 @@ import SelectFieldWrapper from 'components/SelectFieldWrapper';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
-import { ADD_BUDGET_ITEM } from 'data/drawer-constants';
+import { ADD_BUDGET_ITEM_FORM, ADD_BUDGET_ITEM_DRAWER } from 'constants';
 import 'scss/add-budget-item.scss';
 
 const AddBudgetItem = ({ fields, categories, isOpen, actions, handleSubmit }) => {
@@ -25,7 +25,7 @@ const AddBudgetItem = ({ fields, categories, isOpen, actions, handleSubmit }) =>
     <Drawer
       title="Record a New Cost"
       isOpen={isOpen}
-      onClose={() => actions.closeDrawer(ADD_BUDGET_ITEM)}
+      onClose={() => actions.closeDrawer(ADD_BUDGET_ITEM_DRAWER)}
       className="add-budget-item"
     >
       <form
@@ -99,7 +99,7 @@ AddBudgetItem.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isOpen: state.drawer.name === ADD_BUDGET_ITEM,
+    isOpen: state.drawer.name === ADD_BUDGET_ITEM_DRAWER,
     categories: state.budget.categories,
   };
 }
@@ -114,7 +114,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 const formConfig = {
-  form: ADD_BUDGET_ITEM,
+  form: ADD_BUDGET_ITEM_FORM,
   fields: [
     'category',
     'value',

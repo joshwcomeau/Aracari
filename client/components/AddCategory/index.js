@@ -10,7 +10,7 @@ import Drawer from 'components/Drawer';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import { ADD_CATEGORY } from 'data/drawer-constants';
+import { ADD_CATEGORY_FORM, ADD_CATEGORY_DRAWER } from 'constants';
 import { presetCategoryArray } from 'data/preset-categories';
 import 'scss/add-category.scss';
 
@@ -41,7 +41,7 @@ const AddCategory = ({
 
   // We want to disable any categories the user has already added.
   const categoriesWithDisabled = presetCategoryArray.map(category => {
-    const wasPreviouslyAdded = activeCategories.find(activeCategory => (
+    const wasPreviouslyAdded = !!activeCategories.find(activeCategory => (
       activeCategory.slug === category.slug
     ));
 
@@ -58,7 +58,7 @@ const AddCategory = ({
     <Drawer
       isOpen={isOpen}
       title="Add a New Category"
-      onClose={() => actions.closeDrawer(ADD_CATEGORY)}
+      onClose={() => actions.closeDrawer(ADD_CATEGORY_DRAWER)}
       className="add-category"
     >
       <form
@@ -117,14 +117,14 @@ AddCategory.propTypes = {
   fields: PropTypes.object,
   actions: PropTypes.object,
   isOpen: PropTypes.bool,
-  categories: PropTypes.array,
+  activeCategories: PropTypes.array,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
-    isOpen: state.drawer.name === ADD_CATEGORY,
+    isOpen: state.drawer.name === ADD_CATEGORY_DRAWER,
     activeCategories: state.budget.categories,
   };
 }
@@ -139,7 +139,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 const formConfig = {
-  form: ADD_CATEGORY,
+  form: ADD_CATEGORY_FORM,
   fields: [
     'presetLabel',
     'customLabel',
