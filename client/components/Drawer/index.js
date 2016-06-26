@@ -10,56 +10,21 @@ class Drawer extends Component {
   constructor(props) {
     super(props);
 
-    this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this.onRest = this.onRest.bind(this);
-
-    this.state = {
-      isOpen: typeof props.isOpen !== 'undefined' ? props.isOpen : false,
-      isTransitioning: false,
-    };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.state.isOpen && nextProps.isOpen) {
-      this.open();
-    } else if (this.state.isOpen && !nextProps.isOpen) {
-      this.close();
-    }
-  }
-
-  onRest() {
-    this.setState({ isTransitioning: false });
-
-    // Once the drawer has finished closing, we need to unset the `isTransitioning`
-    // key in our state, and also broadcast that the drawer is closed, by invoking
-    // the supplied callback.
-    if (!this.state.isOpen) {
-      this.props.onClose();
-    }
-  }
-
-  open() {
-    this.setState({
-      isOpen: true,
-    });
-  }
-
-  close() {
+  close(ev) {
     // We want to 'blur' the active element so that the iOS keyboard closes.
     document.activeElement.blur();
 
-    this.setState({
-      isTransitioning: true,
-      isOpen: false,
-    });
+    this.props.onClose(ev);
   }
 
-  renderContent(y) {
+  renderContent(offset) {
     const { title, children } = this.props;
 
     return (
-      <div className="content" style={{ transform: `translateY(${y}%)` }}>
+      <div className="content" style={{ transform: `translateY(${offset}%)` }}>
         <header className="header">
           <h2>{title}</h2>
           <IconButton onTouchTap={this.close}>
@@ -73,32 +38,40 @@ class Drawer extends Component {
     );
   }
 
-  renderBackdrop() {
-    const classes = classNames('backdrop', {
-      'is-open': this.state.isOpen,
-      'is-closed': !this.state.isOpen,
-      'is-transitioning': this.state.isTransitioning,
-    });
+  renderBackdrop(opacity) {
+    const styles = {
+      opacity,
+      pointerEvents: opacity > 0.5 ? 'auto' : 'none',
+    };
 
-    return <div className={classes} onTouchTap={this.close} />;
+    return <div className="backdrop" style={styles} onTouchTap={this.close} />;
   }
 
-  render() {
-    const { className, springSettings } = this.props;
-
-    const classes = classNames(['drawer', className]);
-    const offset = this.state.isOpen ? 0 : 100;
+  renderAnimated({ offset, opacity }) {
+    const classes = classNames(['drawer', this.props.className]);
 
     return (
       <div className={classes}>
-        {this.renderBackdrop()}
-        <Motion
-          style={{ y: spring(offset, springSettings) }}
-          onRest={this.onRest}
-        >
-          {({ y }) => this.renderContent(y)}
-        </Motion>
+        {this.renderContent(offset)}
+        {this.renderBackdrop(opacity)}
       </div>
+    );
+  }
+
+  render() {
+    const { isOpen, springSettings } = this.props;
+    const drawerOffset = isOpen ? 0 : 100;
+    const backdropOpacity = isOpen ? 1 : 0;
+
+    return (
+      <Motion
+        style={{
+          offset: spring(drawerOffset, springSettings),
+          opacity: spring(backdropOpacity, springSettings),
+        }}
+      >
+        {this.renderAnimated.bind(this)}
+      </Motion>
     );
   }
 }

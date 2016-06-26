@@ -8,37 +8,12 @@ $budget-date-animation: fadeIn 750ms $dramatic-ease 1000ms backwards;
 }
 
 @keyframes fadeOut {
-  from { opacity: 1 }
-  to { opacity: 0.01 }
-}
-
-
-@keyframes teleportAndFadeIn {
-  0% {
-    top: 100%;
-    opacity: 0.01;
-  }
-  1% {
-    top: 0;
-    opacity: 0.01;
-  }
-  100% {
-    top: 0;
+  from {
     opacity: 1;
+    pointer-events: auto;
   }
-}
-
-@keyframes teleportAndFadeOut {
-  0% {
-    top: 0;
-    opacity: 1;
-  }
-  99% {
-    top: 0;
+  to {
     opacity: 0.01;
-  }
-  100% {
-    top: 100%;
-    opacity: 0.01;
+    pointer-events: none;
   }
 }

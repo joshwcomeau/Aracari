@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 import Swipe from 'react-swipe-to-reveal-options';
 
 import { deleteBudgetItem } from 'ducks/budget.duck';
@@ -24,13 +25,16 @@ const CategoryItem = ({ categorySlug, item, actions }) => {
     },
   };
 
+  const formattedCreatedAt = moment(item.createdAt).format('MMM Do, h:mm a');
+  const formattedValue = formatCurrency(item.value);
+
   return (
     <div className="category-item">
       <Swipe {...swipeActions}>
         <div className="item">
           <div className="item-details">{item.details}</div>
-          <div className="item-created-at">{item.createdAt}</div>
-          <div className="item-price">{formatCurrency(item.value)}</div>
+          <div className="item-created-at">{formattedCreatedAt}</div>
+          <div className="item-price">{formattedValue}</div>
         </div>
       </Swipe>
     </div>
