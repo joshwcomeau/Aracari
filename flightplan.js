@@ -6,8 +6,6 @@
 
 'use strict';
 
-require('babel-core/register');
-
 const plan = require('flightplan');
 const _ = require('lodash');
 const nconf = require('nconf');
@@ -66,14 +64,14 @@ plan.local('deploy', local => {
   local.transfer(files, `/tmp/${newDirectoryName}`);
 });
 
-plan.remote( 'deploy', remote => {
-  remote.log('Move folder to web root')
+plan.remote('deploy', remote => {
+  remote.log('Move folder to web root');
   remote.sudo(`cp -R ${tempDir} ${newDirectory}`, { user });
   remote.rm(`-rf ${tempDir}`); // clean up after ourselves
 
-  if ( !plan.runtime.options['fresh-dependencies'] ) {
+  if (!plan.runtime.options['fresh-dependencies']) {
     remote.log('Copying dependencies from last deploy');
-    remote.exec(`cp -R ${linkedDirectory}/node_modules ${newDirectory}/node_modules`)
+    remote.exec(`cp -R ${linkedDirectory}/node_modules ${newDirectory}/node_modules`);
   }
 
   remote.log('Installing dependencies');
@@ -88,18 +86,17 @@ plan.remote( 'deploy', remote => {
 
   // Start/Restart the application
   // First, figure out if the app is already running
-  let appDetails = remote.exec(`pm2 show ${appName}`, {failsafe: true});
-  let appNotRunning = !!appDetails.stderr;
+  const appDetails = remote.exec(`pm2 show ${appName}`, { failsafe: true });
+  const appNotRunning = !!appDetails.stderr;
 
-  if ( appNotRunning ) {
-    remote.log("App is not already running. Starting it fresh")
-    remote.exec(`pm2 start ${linkedDirectory}/server --name="${appName}"`)
+  if (appNotRunning) {
+    remote.log('App is not already running. Starting it fresh');
+    remote.exec(`pm2 start ${linkedDirectory}/server --name="${appName}"`);
   } else {
-    remote.log("Restarting app")
-    remote.exec(`pm2 restart ${appName}`)
+    remote.log('Restarting app');
+    remote.exec(`pm2 restart ${appName}`);
   }
 
   remote.log('Removing oldest copies of deploy');
-  remote.exec(`cd ${projectDir} && rm -rf \`ls -td wws_* | awk 'NR>${MAX_SAVED_DEPLOYS}'\``);
-
+  remote.exec(`cd ${projectDir} && rm -rf \`ls -td aracari_* | awk 'NR>${MAX_SAVED_DEPLOYS}'\``);
 });
